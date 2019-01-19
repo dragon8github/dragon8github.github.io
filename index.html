@@ -70,12 +70,117 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-laravel-demo1" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/19/laravel-demo1/" class="article-date">
+  <time datetime="2019-01-19T13:46:39.000Z" itemprop="datePublished">2019-01-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel/">laravel</a>►<a class="article-category-link" href="/categories/laravel/php/">php</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、先用 <strong>artisan</strong> 命令新建一个 <strong>Controller</strong>，命名为 <strong>SitesController</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan make:controller SitesController</span><br></pre></td></tr></table></figure>
+<p>生成的文件在目录： <strong>\app\Http\Controllers\SitesController.php</strong>，添加内容如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SitesController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// Route::get('/', 'SitesController@index');</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> view(<span class="string">'welcome'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 welcome 页面是在：<strong>\resources\views\welcome.blade.php</strong></p>
+<p>2、打开 <strong>\routes\web.php</strong>，修改内容为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Route::get('/', function () &#123;</span></span><br><span class="line"><span class="comment">//     return view('welcome');</span></span><br><span class="line"><span class="comment">// &#125;);</span></span><br><span class="line"></span><br><span class="line">Route::get(<span class="string">'/'</span>, <span class="string">'SitesController@index'</span>);</span><br></pre></td></tr></table></figure>
+<p>刷新页面，一切如故。 </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjr3jk5za0000qkvw94vnhplf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-laravel安装与启动" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/19/laravel安装与启动/" class="article-date">
+  <time datetime="2019-01-19T12:51:42.000Z" itemprop="datePublished">2019-01-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel/">laravel</a>►<a class="article-category-link" href="/categories/laravel/php/">php</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/19/laravel安装与启动/">laravel 安装与启动</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、使用-composer-安装-laravel"><a href="#1、使用-composer-安装-laravel" class="headerlink" title="1、使用 composer 安装 laravel"></a>1、使用 composer 安装 laravel</h2><p><a href="https://packagist.org/packages/laravel/laravel" target="_blank" rel="noopener">https://packagist.org/packages/laravel/laravel</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ composer create-project laravel/laravel laravel5</span><br></pre></td></tr></table></figure>
+<p>&#8195;&#8195;</p>
+<h2 id="2、启动-laravel"><a href="#2、启动-laravel" class="headerlink" title="2、启动 laravel"></a>2、启动 laravel</h2><h5 id="方式一：php-内置服务器"><a href="#方式一：php-内置服务器" class="headerlink" title="方式一：php 内置服务器"></a>方式一：php 内置服务器</h5><p>指定 public 文件夹即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php -S localhost:8000 -t public</span><br></pre></td></tr></table></figure>
+<h5 id="方式二：使用laravel提供的命令行工具artisan"><a href="#方式二：使用laravel提供的命令行工具artisan" class="headerlink" title="方式二：使用laravel提供的命令行工具artisan"></a>方式二：使用laravel提供的命令行工具artisan</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan serve</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/19/laravel安装与启动/laravel-start/2.png" alt=""></p>
+<p>预览 <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a> ，效果如下：</p>
+<p><img src="/2019/01/19/laravel安装与启动/laravel-start/1.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjr3jk601000oqkvwmnns0buz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hexo插入本地图片" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/19/hexo插入本地图片/" class="article-date">
   <time datetime="2019-01-19T12:06:45.000Z" itemprop="datePublished">2019-01-19</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -103,9 +208,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjr3fr4eq0002sovw6tm4k1mi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjr3jk5zj0005qkvw5f4cndgx" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
     </footer>
   </div>
   
@@ -119,6 +226,10 @@
   <time datetime="2019-01-19T11:27:19.000Z" itemprop="datePublished">2019-01-19</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/cpmposer/">cpmposer</a>►<a class="article-category-link" href="/categories/cpmposer/php/">php</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -141,9 +252,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjr3fr4eb0000sovwjtj8d9s3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjr3jk5zi0004qkvwv1qpu4ab" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+
     </footer>
   </div>
   
@@ -186,7 +299,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjr3fr4ef0001sovw1t7aut0n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjr3jk5ze0001qkvwjd85ktxb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,12 +316,33 @@
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/">laravel</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/php/">php</a></li></ul></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/php/" style="font-size: 20px;">php</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -225,6 +359,14 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel安装与启动/">laravel 安装与启动</a>
+          </li>
         
           <li>
             <a href="/2019/01/19/hexo插入本地图片/">hexo插入本地图片</a>
