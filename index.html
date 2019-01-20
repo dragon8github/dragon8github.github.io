@@ -70,6 +70,77 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-laravel-demo3" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/20/laravel-demo3/" class="article-date">
+  <time datetime="2019-01-20T00:28:20.000Z" itemprop="datePublished">2019-01-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel/">laravel</a>►<a class="article-category-link" href="/categories/laravel/php/">php</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/20/laravel-demo3/">Laravel 入门示例（三）：常用的blade语法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="yield-语法"><a href="#yield-语法" class="headerlink" title="@yield 语法"></a>@yield 语法</h1><p>中文理解为区域，在母版页（layouts）中会使用。类似 Vue 中的 <code>&lt;slot name=&#39;content&#39;&gt;</code> 标签。 </p>
+<p>新建 <strong>\resources\views\layouts\app.blade.php</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/css/bootstrap.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    @yield('content')</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>\resources\views\sites\about.blade.php</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>about me &#123;&#123;$first&#125;&#125; &#123;&#123;$last&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
+<h3 id="语法说明："><a href="#语法说明：" class="headerlink" title="语法说明："></a>语法说明：</h3><ul>
+<li><strong>@extends</strong>：继承 <code>\resources\views\layouts\app.blade.php</code> 模板；</li>
+<li><strong>@section</strong>：将内容填充到 <code>@yield(&#39;content&#39;)</code> 中；</li>
+<li><strong>@stop</strong>：通常一个 <code>@section</code> 对应一个 <code>$stop</code>；</li>
+</ul>
+<p>可以发现 <strong>bootstrap</strong> 的样式起到效果了：</p>
+<p><img src="/2019/01/20/laravel-demo3/1.png" alt=""></p>
+<hr>
+
+<h1 id="特定的页面加载特定的js文件"><a href="#特定的页面加载特定的js文件" class="headerlink" title="特定的页面加载特定的js文件"></a>特定的页面加载特定的js文件</h1><p>其实非常简单，只需要在 <code>layouts</code> 中新增多个@yield，在特定的页面选择性填充这个区域即可。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/css/bootstrap.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    @yield('content')</span><br><span class="line">    @yield('footer')</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>about me &#123;&#123;$first&#125;&#125; &#123;&#123;$last&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">@stop</span><br><span class="line"></span><br><span class="line">@section('footer')</span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">alert('yesh！！')</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/20/laravel-demo3/2.png" alt=""></p>
+<hr>
+
+<h1 id="if-语法"><a href="#if-语法" class="headerlink" title="@if 语法"></a>@if 语法</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    @if ($first == "Zhou")</span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>about me &#123;&#123;$first&#125;&#125; &#123;&#123;$last&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    @else</span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>nothing<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    @endif</span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
+<hr>
+
+<h1 id="foreach-语法"><a href="#foreach-语法" class="headerlink" title="@foreach 语法"></a>@foreach 语法</h1><p>先在控制器中导出数组 </p>
+<p>\app\Http\Controllers\SitesController.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">about</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    $people = [<span class="string">'Taylor Otwell'</span>, <span class="string">'Jeffray Way'</span>, <span class="string">'Happy Petter'</span>];</span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'sites/about'</span>, compact(<span class="string">'people'</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常 @foreach 会结合 @if 使用，否则会出现多余的html标签的情况</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    @if (count($people) &gt; 0)</span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            @foreach ($people as $p)</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; $p &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            @endforeach</span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    @endif</span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/20/laravel-demo3/3.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/20/laravel-demo3/" data-id="cjr473p5v00067gvwellap1z7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-laravel-demo2" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/19/laravel-demo2/" class="article-date">
@@ -130,7 +201,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjr3obgvd0007rgvwqkyl7a8j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjr473p5z00097gvw6rwey175" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -180,7 +251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjr3obgvb0006rgvw4enz574u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjr473p5t00057gvwl7c72uet" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -231,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjr3obgva0005rgvwfz9g43fq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjr473p7w00157gvwn47pgjrh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -280,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjr3obgv20001rgvw9b1pw8no" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjr473p5s00047gvwoczjoxf4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -324,7 +395,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjr3obgv50002rgvwx1we4cuj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjr473p5i00007gvw9b6xtbw1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -371,7 +442,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjr3obguv0000rgvwe8jeypt7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjr473p5m00017gvwnwqmt8jn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -433,6 +504,10 @@
       <ul>
         
           <li>
+            <a href="/2019/01/20/laravel-demo3/">Laravel 入门示例（三）：常用的blade语法</a>
+          </li>
+        
+          <li>
             <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
           </li>
         
@@ -446,10 +521,6 @@
         
           <li>
             <a href="/2019/01/19/hexo插入本地图片/">hexo插入本地图片</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/19/composer疑难杂症/">composer疑难杂症</a>
           </li>
         
       </ul>
