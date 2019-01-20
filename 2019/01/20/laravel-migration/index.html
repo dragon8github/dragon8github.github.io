@@ -7,13 +7,13 @@
   
   <title>Laravel Mysql 数据库配置 与 Migration 基础 | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Laravel 最强大工具之一：migration 如果对 migration 的概念不清晰，可以简单理解为数据库的版本控制工具。有了它我们就可以对数据库进行方便的管理和愉快地开发了。 MySql 数据库配置先来配置一下数据库，打开 Laravel 的环境配置 \.env 文件，简单配置你的数据库信息： 123456DB_CONNECTION=mysqlDB_HOST=127.0.0.1DB_PO">
+  <meta name="description" content="一、MySql 数据库配置先来配置一下数据库，打开 Laravel 的环境配置 \.env 文件，简单配置你的数据库信息： 123456DB_CONNECTION=mysqlDB_HOST=127.0.0.1DB_PORT=3306DB_DATABASE=laravelDB_USERNAME=rootDB_PASSWORD=root 再打开数据库配置文件 \config\database.php，">
 <meta name="keywords" content="php,laravel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Laravel Mysql 数据库配置 与 Migration 基础">
 <meta property="og:url" content="http://yoursite.com/2019/01/20/laravel-migration/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="Laravel 最强大工具之一：migration 如果对 migration 的概念不清晰，可以简单理解为数据库的版本控制工具。有了它我们就可以对数据库进行方便的管理和愉快地开发了。 MySql 数据库配置先来配置一下数据库，打开 Laravel 的环境配置 \.env 文件，简单配置你的数据库信息： 123456DB_CONNECTION=mysqlDB_HOST=127.0.0.1DB_PO">
+<meta property="og:description" content="一、MySql 数据库配置先来配置一下数据库，打开 Laravel 的环境配置 \.env 文件，简单配置你的数据库信息： 123456DB_CONNECTION=mysqlDB_HOST=127.0.0.1DB_PORT=3306DB_DATABASE=laravelDB_USERNAME=rootDB_PASSWORD=root 再打开数据库配置文件 \config\database.php，">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/01/20/laravel-migration/1.png">
 <meta property="og:image" content="http://yoursite.com/2019/01/20/laravel-migration/2.png">
@@ -22,10 +22,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/01/20/laravel-migration/5.png">
 <meta property="og:image" content="http://yoursite.com/2019/01/20/laravel-migration/6.png">
 <meta property="og:image" content="http://yoursite.com/2019/01/20/laravel-migration/7.png">
-<meta property="og:updated_time" content="2019-01-20T06:17:43.844Z">
+<meta property="og:updated_time" content="2019-01-20T14:31:05.030Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel Mysql 数据库配置 与 Migration 基础">
-<meta name="twitter:description" content="Laravel 最强大工具之一：migration 如果对 migration 的概念不清晰，可以简单理解为数据库的版本控制工具。有了它我们就可以对数据库进行方便的管理和愉快地开发了。 MySql 数据库配置先来配置一下数据库，打开 Laravel 的环境配置 \.env 文件，简单配置你的数据库信息： 123456DB_CONNECTION=mysqlDB_HOST=127.0.0.1DB_PO">
+<meta name="twitter:description" content="一、MySql 数据库配置先来配置一下数据库，打开 Laravel 的环境配置 \.env 文件，简单配置你的数据库信息： 123456DB_CONNECTION=mysqlDB_HOST=127.0.0.1DB_PORT=3306DB_DATABASE=laravelDB_USERNAME=rootDB_PASSWORD=root 再打开数据库配置文件 \config\database.php，">
 <meta name="twitter:image" content="http://yoursite.com/2019/01/20/laravel-migration/1.png">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
@@ -103,12 +103,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Laravel 最强大工具之一：<strong>migration</strong></p>
-<p>如果对 <code>migration</code> 的概念不清晰，可以简单理解为数据库的版本控制工具。有了它我们就可以对数据库进行方便的管理和愉快地开发了。</p>
-<h1 id="MySql-数据库配置"><a href="#MySql-数据库配置" class="headerlink" title="MySql 数据库配置"></a>MySql 数据库配置</h1><p>先来配置一下数据库，打开 Laravel 的环境配置 <code>\.env</code> 文件，简单配置你的数据库信息：</p>
+        <h1 id="一、MySql-数据库配置"><a href="#一、MySql-数据库配置" class="headerlink" title="一、MySql 数据库配置"></a>一、MySql 数据库配置</h1><p>先来配置一下数据库，打开 Laravel 的环境配置 <code>\.env</code> 文件，简单配置你的数据库信息：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DB_CONNECTION=mysql</span><br><span class="line">DB_HOST=127.0.0.1</span><br><span class="line">DB_PORT=3306</span><br><span class="line">DB_DATABASE=laravel</span><br><span class="line">DB_USERNAME=root</span><br><span class="line">DB_PASSWORD=root</span><br></pre></td></tr></table></figure>
 <p>再打开数据库配置文件 <code>\config\database.php</code>，检查当前的 Mysql 数据库配置：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="string">'default'</span> =&gt; env(<span class="string">'DB_CONNECTION'</span>, <span class="string">'mysql'</span>),</span><br><span class="line"></span><br><span class="line"><span class="string">'mysql'</span> =&gt; [</span><br><span class="line">    <span class="string">'driver'</span> =&gt; <span class="string">'mysql'</span>,</span><br><span class="line">    <span class="string">'host'</span> =&gt; env(<span class="string">'DB_HOST'</span>),</span><br><span class="line">    <span class="string">'port'</span> =&gt; env(<span class="string">'DB_PORT'</span>),</span><br><span class="line">    <span class="string">'database'</span> =&gt; env(<span class="string">'DB_DATABASE'</span>),</span><br><span class="line">    <span class="string">'username'</span> =&gt; env(<span class="string">'DB_USERNAME'</span>),</span><br><span class="line">    <span class="string">'password'</span> =&gt; env(<span class="string">'DB_PASSWORD'</span>),</span><br><span class="line">    <span class="string">'prefix'</span> =&gt; <span class="string">''</span>,</span><br><span class="line">],</span><br><span class="line"></span><br><span class="line"><span class="comment">// ... otherthing</span></span><br></pre></td></tr></table></figure>
+<hr>
+
+<h1 id="二、migrate-初体验"><a href="#二、migrate-初体验" class="headerlink" title="二、migrate 初体验"></a>二、migrate 初体验</h1><p>Laravel 最强大工具之一：<strong>migration</strong></p>
+<p>如果对 <code>migration</code> 的概念不清晰，可以简单理解为数据库的版本控制工具。有了它我们就可以对数据库进行方便的管理和愉快地开发了。</p>
 <p>找到 <code>\database\migrations\</code>，可以看到Laravel默认帮我们准备了两个 migrations 示例文件。</p>
 <p><img src="/2019/01/20/laravel-migration/1.png" alt="migrations 示例文件"></p>
 <p>我们就来学习和使用一下 <code>2014_10_12_000000_create_users_table.php</code> 文件：</p>
@@ -118,14 +120,12 @@
 <li>up： 负责创建一个 <code>users</code> 表；</li>
 <li>down： 为了避免重复新建，负责删除 <code>users</code> 表，<strong>但这也说明每次执行都会清空该表的数据</strong>；</li>
 </ul>
-<hr>
-
-<h1 id="执行-migrate-文件"><a href="#执行-migrate-文件" class="headerlink" title="执行 migrate 文件"></a>执行 migrate 文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan migrate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan migrate</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/01/20/laravel-migration/2.png" alt="successfully！！！"></p>
 <p><img src="/2019/01/20/laravel-migration/3.png" alt="Navicat for MySql"></p>
 <hr>
 
-<h1 id="创建-migration-文件"><a href="#创建-migration-文件" class="headerlink" title="创建 migration 文件"></a>创建 migration 文件</h1><p>刚刚我们使用了 Laravel 示例的 migration 文件，现在我们自己新建一个文章表 <code>articles</code>，依然可以通过 <code>artisan</code> 命令来创建：</p>
+<h1 id="三、创建-migration-文件"><a href="#三、创建-migration-文件" class="headerlink" title="三、创建 migration 文件"></a>三、创建 migration 文件</h1><p>刚刚我们使用了 Laravel 示例的 migration 文件，现在我们新建一个自己的文章表 <code>articles</code>，依然可以通过 <code>artisan</code> 命令来创建：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan make:migration create-articles_table --create=articles</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/01/20/laravel-migration/4.png" alt="Created Migration successfully"></p>
 <p><img src="/2019/01/20/laravel-migration/5.png" alt="2019_01_20_042528_create-articles_table"></p>
@@ -139,7 +139,7 @@
 <p><img src="/2019/01/20/laravel-migration/6.png" alt="New DataTable articles"></p>
 <hr>
 
-<h1 id="添加字段"><a href="#添加字段" class="headerlink" title="添加字段"></a>添加字段</h1><p>假设我们现在需要为 <code>articles</code> 表添加一个简介字段 <code>intro</code>。</p>
+<h1 id="四、添加字段"><a href="#四、添加字段" class="headerlink" title="四、添加字段"></a>四、添加字段</h1><p>假设我们现在需要为 <code>articles</code> 表添加一个简介字段 <code>intro</code>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan make:migration add_intro_column_to_articles --table=articles</span><br></pre></td></tr></table></figure>
 <p><code>\database\migrations\2019_01_20_060259_add_intro_column_to_articles.php</code> 默认代码如下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddIntroColumnToArticles</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::table(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::table(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -153,7 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjr4ig008000bz0vw0p2uupng" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjr528xbx000bd8vw9wt91pba" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -163,6 +163,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/01/20/laravel-Eloquent/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Laravel Eloquent 入门
+        
+      </div>
+    </a>
   
   
     <a href="/2019/01/20/laravel-demo3/" id="article-nav-older" class="article-nav-link-wrap">
@@ -225,6 +234,10 @@
       <ul>
         
           <li>
+            <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
+          </li>
+        
+          <li>
             <a href="/2019/01/20/laravel-migration/">Laravel Mysql 数据库配置 与 Migration 基础</a>
           </li>
         
@@ -238,10 +251,6 @@
         
           <li>
             <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/19/laravel安装与启动/">laravel 安装与启动</a>
           </li>
         
       </ul>
