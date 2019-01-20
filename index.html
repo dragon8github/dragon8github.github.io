@@ -118,6 +118,8 @@
 <p>也可以使用 <code>$article-&gt;toArray()</code> 打印出 Model 信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;toArray()</span><br><span class="line">=&gt; [</span><br><span class="line">     <span class="string">"title"</span> =&gt; <span class="string">"My first Title"</span>,</span><br><span class="line">     <span class="string">"content"</span> =&gt; <span class="string">"content"</span>,</span><br><span class="line">     <span class="string">"published_at"</span> =&gt; Carbon\Carbon @1547995347 &#123;<span class="comment">#2913</span></span><br><span class="line">       date: 2019-01-20 14:42:27.721241 UTC (+00:00),</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="string">"updated_at"</span> =&gt; <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     <span class="string">"created_at"</span> =&gt; <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     <span class="string">"id"</span> =&gt; 1,</span><br><span class="line">   ]</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
 <h4 id="示例-2-查找数据"><a href="#示例-2-查找数据" class="headerlink" title="示例 2 - 查找数据"></a>示例 2 - 查找数据</h4><p>查找刚刚插入 <code>id</code> 为 <strong>1</strong> 的数据：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span> = App\Article::find(1);</span><br><span class="line">=&gt; App\Article &#123;<span class="comment">#2924</span></span><br><span class="line">     id: 1,</span><br><span class="line">     title: <span class="string">"My first Title"</span>,</span><br><span class="line">     content: <span class="string">"content"</span>,</span><br><span class="line">     published_at: <span class="string">"2019-01-20 14:42:27"</span>,</span><br><span class="line">     created_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     updated_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     introl: <span class="string">""</span>,</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以使用 <code>App\Article::all()</code> 方法无条件查找所有数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>=App\Article::all()</span><br><span class="line"></span><br><span class="line">=&gt; Illuminate\Database\Eloquent\Collection &#123;<span class="comment">#2924</span></span><br><span class="line">     all: [</span><br><span class="line">       App\Article &#123;<span class="comment">#2906</span></span><br><span class="line">         id: 1,</span><br><span class="line">         title: <span class="string">"My first Title"</span>,</span><br><span class="line">         content: <span class="string">"content"</span>,</span><br><span class="line">         published_at: <span class="string">"2019-01-20 14:42:27"</span>,</span><br><span class="line">         created_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">         updated_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">         introl: <span class="string">""</span>,</span><br><span class="line">       &#125;,</span><br><span class="line">     ],</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 <h4 id="示例-3-更新数据"><a href="#示例-3-更新数据" class="headerlink" title="示例 3 - 更新数据"></a>示例 3 - 更新数据</h4><p>和插入很相似，依然是使用 <code>save()</code> 方法：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>-&gt;title=<span class="string">"Update"</span>;</span><br><span class="line">=&gt; <span class="string">"Update"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>-&gt;save();</span><br><span class="line">=&gt; <span class="literal">true</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 <h4 id="示例-4-where-查询"><a href="#示例-4-where-查询" class="headerlink" title="示例 4 - where 查询"></a>示例 4 - where 查询</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>=App\Article::<span class="built_in">where</span>(<span class="string">'content'</span>, <span class="string">'='</span>, <span class="string">'content'</span>)-&gt;get()</span><br><span class="line"></span><br><span class="line">=&gt; Illuminate\Database\Eloquent\Collection &#123;<span class="comment">#2911</span></span><br><span class="line">     all: [</span><br><span class="line">       App\Article &#123;<span class="comment">#2929</span></span><br><span class="line">         id: 1,</span><br><span class="line">         title: <span class="string">"Update"</span>,</span><br><span class="line">         content: <span class="string">"content"</span>,</span><br><span class="line">         published_at: <span class="string">"2019-01-20 23:02:45"</span>,</span><br><span class="line">         created_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">         updated_at: <span class="string">"2019-01-20 15:02:45"</span>,</span><br><span class="line">         introl: <span class="string">""</span>,</span><br><span class="line">       &#125;,</span><br><span class="line">     ],</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
@@ -132,10 +134,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>=App\Article::create([<span class="string">'title'</span>=&gt;<span class="string">'Second Title'</span>, <span class="string">'content'</span>=&gt;<span class="string">'Second Content'</span>, <span class="string">'published_at'</span>=&gt;Carbon\Carbon::now() ]);</span><br><span class="line"></span><br><span class="line">=&gt; App\Article &#123;<span class="comment">#2913</span></span><br><span class="line">     title: <span class="string">"Second Title"</span>,</span><br><span class="line">     content: <span class="string">"Second Content"</span>,</span><br><span class="line">     published_at: Carbon\Carbon @1547998078 &#123;<span class="comment">#2923</span></span><br><span class="line">       date: 2019-01-20 15:27:58.713977 UTC (+00:00),</span><br><span class="line">     &#125;,</span><br><span class="line">     updated_at: <span class="string">"2019-01-20 15:27:58"</span>,</span><br><span class="line">     created_at: <span class="string">"2019-01-20 15:27:58"</span>,</span><br><span class="line">     id: 2,</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 <p>使用 <code>$model-&gt;udate([...])</code> 来更新数据：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;update([<span class="string">'title'</span>=&gt;<span class="string">'Change Title'</span>]);</span><br><span class="line">=&gt; <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-Eloquent/" data-id="cjr528xbr0005d8vwyrpi3tt5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-Eloquent/" data-id="cjr52hubt0005l4vw5ls6ktcf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -223,7 +226,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjr528xbx000bd8vw9wt91pba" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjr52hucs001kl4vw7uf9808k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -294,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-demo3/" data-id="cjr528xbw000ad8vwgx5oxpxj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-demo3/" data-id="cjr52huby000bl4vwjql7x919" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -366,7 +369,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjr528xbu0007d8vwl4ouieyr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjr52hubv0007l4vwdqhs8lql" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -416,7 +419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjr528xbl0002d8vwoxgkqj0d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjr52hubo0002l4vwtn3q8hvl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -467,7 +470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjr528xcw001kd8vwrao3ws2p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjr52hubx000al4vwj6fldtri" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -516,7 +519,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjr528xbs0006d8vwnbcgbvx5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjr52hubu0006l4vw91g1l5pv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -560,7 +563,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjr528xbk0001d8vwazs61p6u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjr52hubm0001l4vwrjfxvwrq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -607,7 +610,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjr528xbg0000d8vwutb170y8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjr52hubi0000l4vwnwx7r6dv" class="article-share-link">Share</a>
       
       
     </footer>
