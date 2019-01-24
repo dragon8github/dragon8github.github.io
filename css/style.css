@@ -117,13 +117,18 @@ button::-moz-focus-inner {
   src: url("fonts/fontawesome-webfont.eot?v=#4.0.3");
   src: url("fonts/fontawesome-webfont.eot?#iefix&v=#4.0.3") format("embedded-opentype"), url("fonts/fontawesome-webfont.woff?v=#4.0.3") format("woff"), url("fonts/fontawesome-webfont.ttf?v=#4.0.3") format("truetype"), url("fonts/fontawesome-webfont.svg#fontawesomeregular?v=#4.0.3") format("svg");
 }
+@font-face {
+  font-family: 'HYLeMiaoTiW';
+  src: url("./fonts/HYLeMiaoTiW.ttf");
+}
 html,
 body,
 #container,
 .line,
 code {
   height: 100%;
-  font-family: 'comic sans ms', sans-serif !important;
+  font-family: 'comic sans ms', 'HYLeMiaoTiW', sans-serif !important;
+  font-size: 16px;
 }
 body {
   background: #eee;
