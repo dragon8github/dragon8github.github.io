@@ -119,8 +119,11 @@ button::-moz-focus-inner {
 }
 html,
 body,
-#container {
+#container,
+.line,
+code {
   height: 100%;
+  font-family: 'comic sans ms', sans-serif !important;
 }
 body {
   background: #eee;
