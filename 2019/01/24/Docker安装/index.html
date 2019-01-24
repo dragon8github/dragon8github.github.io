@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Centos 7 Docker 安装 | cy&#39;lee 贝尔塔猫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="操作预览： 安装一些基本依赖软件 为了使用 yum-config-manager 需要先安装一下 yum-utils 设置稳定版仓库 更新仓库（可选） 查看所有仓库中所有docker版本（可选） 正式下载安装 启动 (并开机启动) 检查是否安装成功  //////////////////////////////////////////////前戏准备////////////////////////">
+<meta name="keywords" content="docker,centos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos 7 Docker 安装">
+<meta property="og:url" content="http://yoursite.com/2019/01/24/Docker安装/index.html">
+<meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:description" content="操作预览： 安装一些基本依赖软件 为了使用 yum-config-manager 需要先安装一下 yum-utils 设置稳定版仓库 更新仓库（可选） 查看所有仓库中所有docker版本（可选） 正式下载安装 启动 (并开机启动) 检查是否安装成功  //////////////////////////////////////////////前戏准备////////////////////////">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/01/24/Docker安装/1.png">
+<meta property="og:updated_time" content="2019-01-24T06:33:48.311Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Centos 7 Docker 安装">
+<meta name="twitter:description" content="操作预览： 安装一些基本依赖软件 为了使用 yum-config-manager 需要先安装一下 yum-utils 设置稳定版仓库 更新仓库（可选） 查看所有仓库中所有docker版本（可选） 正式下载安装 启动 (并开机启动) 检查是否安装成功  //////////////////////////////////////////////前戏准备////////////////////////">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/24/Docker安装/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cy&#39;lee 贝尔塔猫</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">前端哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Docker安装" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/24/Docker安装/" class="article-date">
+  <time datetime="2019-01-24T06:20:40.000Z" itemprop="datePublished">2019-01-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>►<a class="article-category-link" href="/categories/docker/centos/">centos</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Centos 7 Docker 安装
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
+<li>安装一些基本依赖软件</li>
+<li>为了使用 yum-config-manager 需要先安装一下 yum-utils</li>
+<li>设置稳定版仓库</li>
+<li>更新仓库（可选）</li>
+<li>查看所有仓库中所有docker版本（可选）</li>
+<li>正式下载安装</li>
+<li>启动 (并开机启动)</li>
+<li>检查是否安装成功</li>
+</ol>
+<p>//////////////////////////////////////////////<br>前戏准备<br>//////////////////////////////////////////////</p>
+<h6 id="1、安装一些基本依赖软件"><a href="#1、安装一些基本依赖软件" class="headerlink" title="1、安装一些基本依赖软件"></a>1、安装一些基本依赖软件</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y yum-utilsdevice-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+<h6 id="2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils"><a href="#2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils" class="headerlink" title="2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils"></a>2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install yum-utils</span><br></pre></td></tr></table></figure>
+<h6 id="3、设置稳定版仓库"><a href="#3、设置稳定版仓库" class="headerlink" title="3、设置稳定版仓库"></a>3、设置稳定版仓库</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+<h6 id="4、更新仓库（可选）"><a href="#4、更新仓库（可选）" class="headerlink" title="4、更新仓库（可选）"></a>4、更新仓库（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-edge</span><br></pre></td></tr></table></figure>
+<p>//////////////////////////////////////////////<br>正式开始<br>//////////////////////////////////////////////</p>
+<h6 id="5、查看所有仓库中所有docker版本（可选）"><a href="#5、查看所有仓库中所有docker版本（可选）" class="headerlink" title="5、查看所有仓库中所有docker版本（可选）"></a>5、查看所有仓库中所有docker版本（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
+<h6 id="6、正式下载安装"><a href="#6、正式下载安装" class="headerlink" title="6、正式下载安装"></a>6、正式下载安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install docker-ce -y</span><br></pre></td></tr></table></figure>
+<h6 id="7、启动-并开机启动"><a href="#7、启动-并开机启动" class="headerlink" title="7、启动 (并开机启动)"></a>7、启动 (并开机启动)</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start docker</span><br><span class="line">$ sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+<h6 id="8、检查是否安装成功"><a href="#8、检查是否安装成功" class="headerlink" title="8、检查是否安装成功"></a>8、检查是否安装成功</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker -v</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/24/Docker安装/1.png" alt="Docker version 18.09.1"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/24/Docker安装/" data-id="cjra8ejmu0000n8vw5bocfdfm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/20/laravel-Eloquent/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Laravel Eloquent 入门</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/">laravel</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/php/">php</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/php/" style="font-size: 20px;">php</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-migration/">Laravel Mysql 数据库配置 与 Migration 基础</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-demo3/">Laravel 入门示例（三）：常用的blade语法</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 贝尔塔猫<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

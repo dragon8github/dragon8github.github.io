@@ -70,6 +70,69 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Docker安装" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/24/Docker安装/" class="article-date">
+  <time datetime="2019-01-24T06:20:40.000Z" itemprop="datePublished">2019-01-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>►<a class="article-category-link" href="/categories/docker/centos/">centos</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
+<li>安装一些基本依赖软件</li>
+<li>为了使用 yum-config-manager 需要先安装一下 yum-utils</li>
+<li>设置稳定版仓库</li>
+<li>更新仓库（可选）</li>
+<li>查看所有仓库中所有docker版本（可选）</li>
+<li>正式下载安装</li>
+<li>启动 (并开机启动)</li>
+<li>检查是否安装成功</li>
+</ol>
+<p>//////////////////////////////////////////////<br>前戏准备<br>//////////////////////////////////////////////</p>
+<h6 id="1、安装一些基本依赖软件"><a href="#1、安装一些基本依赖软件" class="headerlink" title="1、安装一些基本依赖软件"></a>1、安装一些基本依赖软件</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y yum-utilsdevice-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+<h6 id="2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils"><a href="#2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils" class="headerlink" title="2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils"></a>2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install yum-utils</span><br></pre></td></tr></table></figure>
+<h6 id="3、设置稳定版仓库"><a href="#3、设置稳定版仓库" class="headerlink" title="3、设置稳定版仓库"></a>3、设置稳定版仓库</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+<h6 id="4、更新仓库（可选）"><a href="#4、更新仓库（可选）" class="headerlink" title="4、更新仓库（可选）"></a>4、更新仓库（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-edge</span><br></pre></td></tr></table></figure>
+<p>//////////////////////////////////////////////<br>正式开始<br>//////////////////////////////////////////////</p>
+<h6 id="5、查看所有仓库中所有docker版本（可选）"><a href="#5、查看所有仓库中所有docker版本（可选）" class="headerlink" title="5、查看所有仓库中所有docker版本（可选）"></a>5、查看所有仓库中所有docker版本（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
+<h6 id="6、正式下载安装"><a href="#6、正式下载安装" class="headerlink" title="6、正式下载安装"></a>6、正式下载安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install docker-ce -y</span><br></pre></td></tr></table></figure>
+<h6 id="7、启动-并开机启动"><a href="#7、启动-并开机启动" class="headerlink" title="7、启动 (并开机启动)"></a>7、启动 (并开机启动)</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start docker</span><br><span class="line">$ sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+<h6 id="8、检查是否安装成功"><a href="#8、检查是否安装成功" class="headerlink" title="8、检查是否安装成功"></a>8、检查是否安装成功</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker -v</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/24/Docker安装/1.png" alt="Docker version 18.09.1"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/24/Docker安装/" data-id="cjra8ejmu0000n8vw5bocfdfm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-laravel-Eloquent" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/20/laravel-Eloquent/" class="article-date">
@@ -138,7 +201,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-Eloquent/" data-id="cjr52hubt0005l4vw5ls6ktcf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-Eloquent/" data-id="cjra8ejnc0006n8vwm332h2ko" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -226,7 +289,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjr52hucs001kl4vw7uf9808k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjra8ejnr000fn8vw3vitho5p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -297,7 +360,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-demo3/" data-id="cjr52huby000bl4vwjql7x919" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-demo3/" data-id="cjra8ejno000dn8vwlomrsfxm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -369,7 +432,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjr52hubv0007l4vwdqhs8lql" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjra8ejnl000an8vwbnzsr3x6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -419,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjr52hubo0002l4vwtn3q8hvl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjra8ejni0009n8vwkba7c1gz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -470,7 +533,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjr52hubx000al4vwj6fldtri" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjra8ejnw000jn8vw6jgd742u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -519,7 +582,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjr52hubu0006l4vw91g1l5pv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/hexo插入本地图片/" data-id="cjra8ejn70004n8vwnlu9hou6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -563,7 +626,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjr52hubm0001l4vwrjfxvwrq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/composer疑难杂症/" data-id="cjra8ejn10001n8vwngh6fioq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -610,7 +673,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjr52hubi0000l4vwnwx7r6dv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/17/hello-world/" data-id="cjra8ejn80005n8vwb52iknie" class="article-share-link">Share</a>
       
       
     </footer>
@@ -630,7 +693,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/">laravel</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/php/">php</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/">laravel</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/php/">php</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -640,7 +703,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li></ul>
     </div>
   </div>
 
@@ -650,7 +713,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/php/" style="font-size: 20px;">php</a>
+      <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/php/" style="font-size: 20px;">php</a>
     </div>
   </div>
 
@@ -672,6 +735,10 @@
       <ul>
         
           <li>
+            <a href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
+          </li>
+        
+          <li>
             <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
           </li>
         
@@ -685,10 +752,6 @@
         
           <li>
             <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
           </li>
         
       </ul>
