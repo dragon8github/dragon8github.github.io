@@ -5,22 +5,19 @@
   
 
   
-  <title>Centos 7 Docker 安装 | cy&#39;lee 贝尔塔猫</title>
+  <title>Category: MP4 | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="操作预览： 安装一些基本依赖软件 为了使用 yum-config-manager 需要先安装一下 yum-utils 设置稳定版仓库 更新仓库（可选） 查看所有仓库中所有docker版本（可选） 正式下载安装 启动 (并开机启动) 检查是否安装成功  //////////////////////////////////////////////前戏准备////////////////////////">
-<meta name="keywords" content="docker,centos">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Centos 7 Docker 安装">
-<meta property="og:url" content="http://yoursite.com/2019/01/24/Docker安装/index.html">
+  <meta name="description" content="贝尔塔猫,前端,web,Vue,React">
+<meta name="keywords" content="贝尔塔猫,前端,web,Vue,React">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:url" content="http://yoursite.com/categories/HTML/video/MP4/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="操作预览： 安装一些基本依赖软件 为了使用 yum-config-manager 需要先安装一下 yum-utils 设置稳定版仓库 更新仓库（可选） 查看所有仓库中所有docker版本（可选） 正式下载安装 启动 (并开机启动) 检查是否安装成功  //////////////////////////////////////////////前戏准备////////////////////////">
+<meta property="og:description" content="贝尔塔猫,前端,web,Vue,React">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/01/24/Docker安装/1.png">
-<meta property="og:updated_time" content="2019-01-25T09:33:01.271Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos 7 Docker 安装">
-<meta name="twitter:description" content="操作预览： 安装一些基本依赖软件 为了使用 yum-config-manager 需要先安装一下 yum-utils 设置稳定版仓库 更新仓库（可选） 查看所有仓库中所有docker版本（可选） 正式下载安装 启动 (并开机启动) 检查是否安装成功  //////////////////////////////////////////////前戏准备////////////////////////">
-<meta name="twitter:image" content="http://yoursite.com/2019/01/24/Docker安装/1.png">
+<meta name="twitter:title" content="cy&#39;lee 贝尔塔猫">
+<meta name="twitter:description" content="贝尔塔猫,前端,web,Vue,React">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
   
@@ -71,87 +68,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Docker安装" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/24/Docker安装/" class="article-date">
-  <time datetime="2019-01-24T06:20:40.000Z" itemprop="datePublished">2019-01-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/docker/">docker</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      Centos 7 Docker 安装
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2019/01/25/网页无法播放MP4的解决方案/" class="archive-article-date">
+  <time datetime="2019-01-25T06:51:40.000Z" itemprop="datePublished">Jan 25</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
-<li>安装一些基本依赖软件</li>
-<li>为了使用 yum-config-manager 需要先安装一下 yum-utils</li>
-<li>设置稳定版仓库</li>
-<li>更新仓库（可选）</li>
-<li>查看所有仓库中所有docker版本（可选）</li>
-<li>正式下载安装</li>
-<li>启动 (并开机启动)</li>
-<li>检查是否安装成功</li>
-</ol>
-<p>//////////////////////////////////////////////<br>前戏准备<br>//////////////////////////////////////////////</p>
-<h6 id="1、安装一些基本依赖软件"><a href="#1、安装一些基本依赖软件" class="headerlink" title="1、安装一些基本依赖软件"></a>1、安装一些基本依赖软件</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y yum-utilsdevice-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
-<h6 id="2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils"><a href="#2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils" class="headerlink" title="2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils"></a>2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install yum-utils</span><br></pre></td></tr></table></figure>
-<h6 id="3、设置稳定版仓库"><a href="#3、设置稳定版仓库" class="headerlink" title="3、设置稳定版仓库"></a>3、设置稳定版仓库</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
-<h6 id="4、更新仓库（可选）"><a href="#4、更新仓库（可选）" class="headerlink" title="4、更新仓库（可选）"></a>4、更新仓库（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-edge</span><br></pre></td></tr></table></figure>
-<p>//////////////////////////////////////////////<br>正式开始<br>//////////////////////////////////////////////</p>
-<h6 id="5、查看所有仓库中所有docker版本（可选）"><a href="#5、查看所有仓库中所有docker版本（可选）" class="headerlink" title="5、查看所有仓库中所有docker版本（可选）"></a>5、查看所有仓库中所有docker版本（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
-<h6 id="6、正式下载安装"><a href="#6、正式下载安装" class="headerlink" title="6、正式下载安装"></a>6、正式下载安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install docker-ce -y</span><br></pre></td></tr></table></figure>
-<h6 id="7、启动-并开机启动"><a href="#7、启动-并开机启动" class="headerlink" title="7、启动 (并开机启动)"></a>7、启动 (并开机启动)</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start docker</span><br><span class="line">$ sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
-<h6 id="8、检查是否安装成功"><a href="#8、检查是否安装成功" class="headerlink" title="8、检查是否安装成功"></a>8、检查是否安装成功</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker -v</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/24/Docker安装/1.png" alt="Docker version 18.09.1"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/24/Docker安装/" data-id="cjrbuk2ja0000r0vwq8vx7fqa" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/01/24/nginx安装/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          centos7 nginx 安装
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/01/20/laravel-Eloquent/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Laravel Eloquent 入门</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         
