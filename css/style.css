@@ -9,6 +9,86 @@ body:after {
 body:after {
   clear: both;
 }
+@font-face {
+  font-family: 'HYLeMiaoTiW';
+  src: url("./fonts/HYLeMiaoTiW.ttf");
+}
+html,
+body,
+#container,
+.line,
+code,
+.article-entry p,
+.article-entry table {
+  height: 100%;
+  font-family: 'comic sans ms', 'HYLeMiaoTiW', sans-serif !important;
+  font-size: 17px;
+}
+#header {
+  height: 200px !important;
+}
+#header:after {
+  display: none;
+}
+#header-inner {
+  position: absolute !important;
+  bottom: 0%;
+}
+#subtitle {
+  font-size: 20px;
+}
+.nav-icon,
+.main-nav-link {
+  opacity: 1 !important;
+}
+.nav-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+.article-entry .highlight pre {
+  overflow: visible;
+}
+.article-entry blockquote {
+  margin: 20px 0 !important;
+  text-align: left !important;
+  padding: 20px;
+  border-left: 6px solid #ff8b00;
+  background-color: #feffdb;
+  color: #2f2f2f;
+}
+.article-entry blockquote p {
+  margin: auto !important;
+  font-weight: bold;
+  color: #ffc60b;
+}
+.widget.widget-tag {
+  background: url("./images/hy.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  border: 0;
+  -webkit-box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+}
+.widget.widget-category {
+  background: url("./images/qlz.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  border: 0;
+  -webkit-box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+}
+.widget.widget-posts {
+  background: url("./images/hzw.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  border: 0;
+  -webkit-box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+}
 html,
 body,
 div,
@@ -116,37 +196,6 @@ button::-moz-focus-inner {
   font-weight: normal;
   src: url("fonts/fontawesome-webfont.eot?v=#4.0.3");
   src: url("fonts/fontawesome-webfont.eot?#iefix&v=#4.0.3") format("embedded-opentype"), url("fonts/fontawesome-webfont.woff?v=#4.0.3") format("woff"), url("fonts/fontawesome-webfont.ttf?v=#4.0.3") format("truetype"), url("fonts/fontawesome-webfont.svg#fontawesomeregular?v=#4.0.3") format("svg");
-}
-@font-face {
-  font-family: 'HYLeMiaoTiW';
-  src: url("./fonts/HYLeMiaoTiW.ttf");
-}
-.article-entry .highlight pre {
-  overflow: visible;
-}
-.article-entry blockquote {
-  margin: 20px 0 !important;
-  text-align: left !important;
-  padding: 20px;
-  border-left: 6px solid #ff8b00;
-  background-color: #feffdb;
-  color: #2f2f2f;
-}
-.article-entry blockquote p {
-  margin: auto !important;
-  font-weight: bold;
-  color: #ffc60b;
-}
-html,
-body,
-#container,
-.line,
-code,
-.article-entry p,
-.article-entry table {
-  height: 100%;
-  font-family: 'comic sans ms', 'HYLeMiaoTiW', sans-serif !important;
-  font-size: 17px;
 }
 body {
   background: #eee;
