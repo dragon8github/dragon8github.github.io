@@ -121,6 +121,9 @@ button::-moz-focus-inner {
   font-family: 'HYLeMiaoTiW';
   src: url("./fonts/HYLeMiaoTiW.ttf");
 }
+.article-entry .highlight pre {
+  overflow: visible;
+}
 html,
 body,
 #container,
@@ -128,7 +131,7 @@ body,
 code {
   height: 100%;
   font-family: 'comic sans ms', 'HYLeMiaoTiW', sans-serif !important;
-  font-size: 16px;
+  font-size: 18px;
 }
 body {
   background: #eee;
