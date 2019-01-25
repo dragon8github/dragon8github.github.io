@@ -62,14 +62,25 @@ code,
   font-weight: bold;
   color: #ffc60b;
 }
-.widget.widget-tag {
-  background: url("./images/hy.jpg");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  border: 0;
-  -webkit-box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
-  box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+article.is-index {
+  position: relative;
+}
+article.is-index::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25px;
+  background: -webkit-linear-gradient(rgba(255,255,255,0.001), #fff);
+  background: -moz-linear-gradient(rgba(255,255,255,0.001), #fff);
+  background: -ms-linear-gradient(rgba(255,255,255,0.001), #fff);
+  background: linear-gradient(rgba(255,255,255,0.001), #fff);
+  pointer-events: none;
+}
+article.is-index .article-inner {
+  height: 295px;
+  position: relative;
+  overflow-y: scroll;
 }
 .widget.widget-category {
   background: url("./images/qlz.jpg");
@@ -77,8 +88,21 @@ code,
   -moz-background-size: cover;
   background-size: cover;
   border: 0;
-  -webkit-box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
-  box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+  height: 350px;
+  -webkit-box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  overflow: hidden;
+}
+.widget.widget-tag {
+  background: url("./images/hy.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  border: 0;
+  height: 350px;
+  -webkit-box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  overflow: hidden;
 }
 .widget.widget-posts {
   background: url("./images/hzw.jpg");
@@ -86,8 +110,33 @@ code,
   -moz-background-size: cover;
   background-size: cover;
   border: 0;
-  -webkit-box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
-  box-shadow: 4px 4px 0 rgba(125,115,115,0.2);
+  height: 350px;
+  -webkit-box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  overflow: hidden;
+  height: 425px;
+}
+.widget.widget-tagcloud {
+  background: url("./images/jjdjr2.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  border: 0;
+  height: 350px;
+  -webkit-box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  overflow: hidden;
+}
+.widget.widget-archives {
+  background: url("./images/jjdjr.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  border: 0;
+  height: 350px;
+  -webkit-box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  overflow: hidden;
 }
 html,
 body,

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo的认知 | cy&#39;lee 贝尔塔猫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 Hexo 内置全局变量 如何打印全局变量  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\themes\landscape\sourc">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo的认知">
+<meta property="og:url" content="http://yoursite.com/2019/01/25/Hexo的认知/index.html">
+<meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 Hexo 内置全局变量 如何打印全局变量  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\themes\landscape\sourc">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/01/25/Hexo的认知/1.png">
+<meta property="og:updated_time" content="2019-01-25T09:29:40.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo的认知">
+<meta name="twitter:description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 Hexo 内置全局变量 如何打印全局变量  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\themes\landscape\sourc">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/25/Hexo的认知/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cy&#39;lee 贝尔塔猫</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">前端哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Hexo的认知" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/25/Hexo的认知/" class="article-date">
+  <time datetime="2019-01-25T08:33:32.000Z" itemprop="datePublished">2019-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo的认知
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<h3 id="预览："><a href="#预览：" class="headerlink" title="预览："></a>预览：</h3><ol>
+<li>自定义文章模板</li>
+<li>加入 <code>&lt;script&gt;</code></li>
+<li>加入全局样式</li>
+<li>Hexo 内置全局变量</li>
+<li>如何打印全局变量</li>
+</ol>
+<h4 id="1-自定义文章模板"><a href="#1-自定义文章模板" class="headerlink" title="1. 自定义文章模板"></a>1. 自定义文章模板</h4><blockquote>
+<p>\themes\landscape\layout_partial\after-footer.ejs</p>
+</blockquote>
+<h4 id="2-加入-lt-script-gt"><a href="#2-加入-lt-script-gt" class="headerlink" title="2. 加入 &lt;script&gt;"></a>2. 加入 <code>&lt;script&gt;</code></h4><blockquote>
+<p>\scaffolds\post.md</p>
+</blockquote>
+<h4 id="3-加入全局样式"><a href="#3-加入全局样式" class="headerlink" title="3. 加入全局样式"></a>3. 加入全局样式</h4><blockquote>
+<p>\my\themes\landscape\source\css\style.styl</p>
+</blockquote>
+<h4 id="4-Hexo-内置全局变量"><a href="#4-Hexo-内置全局变量" class="headerlink" title="4. Hexo 内置全局变量"></a>4. Hexo 内置全局变量</h4><blockquote>
+<p><a href="https://hexo.io/zh-cn/docs/variables" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/variables</a></p>
+</blockquote>
+<h4 id="5-如何打印全局变量"><a href="#5-如何打印全局变量" class="headerlink" title="5. 如何打印全局变量"></a>5. 如何打印全局变量</h4><p>打开任意一个ejs文件如：<code>my\themes\landscape\layout\_partial\article.ejs</code>，顶部加入JavaScript代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">	console.log(20190125172431, post) </span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></p>
+<p>不过并不会打印到页面，而是打印到控制台。</p>
+<p><img src="/2019/01/25/Hexo的认知/1.png" alt="console.log"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/25/Hexo的认知/" data-id="cjrbshg8u0000tcvwo2h660rd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/25/网页无法播放MP4的解决方案/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">网页无法播放MP4的解决方案</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget widget-category">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MP4/">MP4</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MP4/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MP4/video/HTML/">HTML</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/">Nodejs</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/yum/">yum</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/">laravel</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/centos/">centos</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget widget-tag">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget widget-posts">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/25/Hexo的认知/">Hexo的认知</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-migration/">Laravel Mysql 数据库配置 与 Migration 基础</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-demo3/">Laravel 入门示例（三）：常用的blade语法</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel安装与启动/">laravel 安装与启动</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/hexo插入本地图片/">hexo插入本地图片</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/composer疑难杂症/">composer疑难杂症</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/17/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget widget-tagcloud">
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 13.33px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget widget-archives">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <canvas class="fireworks" style="position: fixed; left: 0px; top: 0px; z-index: 1; pointer-events: none;" width="2880" height="832"></canvas>
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 贝尔塔猫<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/Lee.js"></script>
+<script src="/js/fireworks.js"></script>
+
+
+  </div>
+</body>
+</html>
