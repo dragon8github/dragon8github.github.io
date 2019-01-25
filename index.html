@@ -70,6 +70,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-php安装" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/25/php安装/" class="article-date">
+  <time datetime="2019-01-25T01:13:58.000Z" itemprop="datePublished">2019-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PHP/">PHP</a>►<a class="article-category-link" href="/categories/PHP/centos/">centos</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>参考官方 UNIX 编译教程： <a href="http://php.net/manual/zh/install.unix.php" target="_blank" rel="noopener">http://php.net/manual/zh/install.unix.php</a></p>
+<h6 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install libxml2 libxml2-devel</span><br></pre></td></tr></table></figure>
+<h6 id="2、下载php（China）-http-php-net-get-php-7-3-1-tar-gz-from-a-mirror"><a href="#2、下载php（China）-http-php-net-get-php-7-3-1-tar-gz-from-a-mirror" class="headerlink" title="2、下载php（China）: http://php.net/get/php-7.3.1.tar.gz/from/a/mirror"></a>2、下载php（China）: <a href="http://php.net/get/php-7.3.1.tar.gz/from/a/mirror" target="_blank" rel="noopener">http://php.net/get/php-7.3.1.tar.gz/from/a/mirror</a></h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget -O php-7.3.1.tar.gz http://cn2.php.net/get/php-7.3.1.tar.gz/from/this/mirror</span><br></pre></td></tr></table></figure>
+<h6 id="3、检查配置是否健康"><a href="#3、检查配置是否健康" class="headerlink" title="3、检查配置是否健康"></a>3、检查配置是否健康</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --<span class="built_in">disable</span>-fileinfo --<span class="built_in">enable</span>-fpm --<span class="built_in">enable</span>-so --with-mysql</span><br></pre></td></tr></table></figure>
+<p>加入–disable-fileinfo是为了避免make时出现如下错误：</p>
+<blockquote>
+<p>virtual memory exhausted: Cannot allocate memory<br>make: *** [ext/fileinfo/libmagic/apprentice.lo] Error 1</p>
+</blockquote>
+<p>其中 –enable-fpm 是支持fpm扩展，–enable-so 是支持apache，–with-mysql 是支持mysql</p>
+<h6 id="4、make-编译"><a href="#4、make-编译" class="headerlink" title="4、make 编译"></a>4、make 编译</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br></pre></td></tr></table></figure>
+<h6 id="5、make-安装"><a href="#5、make-安装" class="headerlink" title="5、make 安装"></a>5、make 安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+<p>安装完成之后，会出现如下提示语：</p>
+<blockquote>
+<p>Wrote PEAR system config file at: /usr/local/etc/pear.conf<br>You may want to add: /usr/local/lib/php to your php.ini include_path<br>/home/dc2-user/php-7.3.1/build/shtool install -c ext/phar/phar.phar /usr/local/bin<br>ln -s -f phar.phar /usr/local/bin/phar<br>Installing PDO headers:           /usr/local/include/php/ext/pdo/</p>
+</blockquote>
+<p>请放心这是正常的，实际上此时你的php已经安装成功了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ php -v</span><br><span class="line"></span><br><span class="line">PHP 7.3.1 (cli) (built: Jan 24 2019 21:37:18) ( NTS )</span><br><span class="line">Copyright (c) 1997-2018 The PHP Group</span><br><span class="line">Zend Engine v3.3.1, Copyright (c) 1998-2018 Zend Technologies</span><br></pre></td></tr></table></figure></p>
+<h6 id="6、创建配置文件，并将其复制到正确的位置。"><a href="#6、创建配置文件，并将其复制到正确的位置。" class="headerlink" title="6、创建配置文件，并将其复制到正确的位置。"></a>6、创建配置文件，并将其复制到正确的位置。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp php.ini-development /usr/<span class="built_in">local</span>/php/php.ini</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/25/php安装/" data-id="cjrbdw7q6002vp8vwty5anwnr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Centos7依赖全家桶" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/24/Centos7依赖全家桶/" class="article-date">
@@ -103,7 +164,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/24/Centos7依赖全家桶/" data-id="cjrbcm5gi000514vwxsphflv6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/24/Centos7依赖全家桶/" data-id="cjrbdw7op0000p8vwhahgc3xo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum/">yum</a></li></ul>
@@ -158,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/24/Nodejs安装/" data-id="cjrbcm5gd000114vwb3kglcxy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/24/Nodejs安装/" data-id="cjrbdw7p00006p8vw1vhgk3iy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -227,7 +288,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/24/nginx安装/" data-id="cjrbcm5gx000p14vwm75vixyb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/24/nginx安装/" data-id="cjrbdw7pe000pp8vw5wvrs6nk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
@@ -290,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/24/Docker安装/" data-id="cjrbcm5g8000014vwmb5fkrbj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/24/Docker安装/" data-id="cjrbdw7ot0001p8vwsfit9gbt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -370,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-Eloquent/" data-id="cjrbcm5gq000f14vws7bmr72d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-Eloquent/" data-id="cjrbdw7p3000ap8vw5ve5cq7k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -458,7 +519,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjrbcm5gw000n14vw0dnqy1o9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-migration/" data-id="cjrbdw7pb000kp8vwjqh7ng4u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -529,7 +590,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/laravel-demo3/" data-id="cjrbcm5gp000d14vw5k2r11oe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/laravel-demo3/" data-id="cjrbdw7p9000jp8vwqdj10uze" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -601,7 +662,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjrbcm5gt000j14vwzqp5h3yk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo2/" data-id="cjrbdw7p6000fp8vw3uj4olq5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -651,58 +712,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjrbcm5gj000614vw779kcgc8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-laravel安装与启动" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/19/laravel安装与启动/" class="article-date">
-  <time datetime="2019-01-19T12:51:42.000Z" itemprop="datePublished">2019-01-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/laravel/">laravel</a>►<a class="article-category-link" href="/categories/laravel/php/">php</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/19/laravel安装与启动/">laravel 安装与启动</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1、使用-composer-安装-laravel"><a href="#1、使用-composer-安装-laravel" class="headerlink" title="1、使用 composer 安装 laravel"></a>1、使用 composer 安装 laravel</h2><p><a href="https://packagist.org/packages/laravel/laravel" target="_blank" rel="noopener">https://packagist.org/packages/laravel/laravel</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ composer create-project laravel/laravel laravel5</span><br></pre></td></tr></table></figure>
-<p>&#8195;&#8195;</p>
-<h2 id="2、启动-laravel"><a href="#2、启动-laravel" class="headerlink" title="2、启动 laravel"></a>2、启动 laravel</h2><h5 id="方式一：php-内置服务器"><a href="#方式一：php-内置服务器" class="headerlink" title="方式一：php 内置服务器"></a>方式一：php 内置服务器</h5><p>指定 public 文件夹即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php -S localhost:8000 -t public</span><br></pre></td></tr></table></figure>
-<h5 id="方式二：使用laravel提供的命令行工具artisan"><a href="#方式二：使用laravel提供的命令行工具artisan" class="headerlink" title="方式二：使用laravel提供的命令行工具artisan"></a>方式二：使用laravel提供的命令行工具artisan</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan serve</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/19/laravel安装与启动/laravel-start/2.png" alt=""></p>
-<p>预览 <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a> ，效果如下：</p>
-<p><img src="/2019/01/19/laravel安装与启动/laravel-start/1.png" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/19/laravel安装与启动/" data-id="cjrbcm5gu000k14vwn1rv507a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/19/laravel-demo1/" data-id="cjrbdw7p5000dp8vwjhs0oxc3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -729,7 +739,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/">Nodejs</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/yum/">yum</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/">laravel</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/centos/">centos</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/">Nodejs</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/yum/">yum</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/centos/">centos</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/">laravel</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/laravel/php/">php</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/centos/">centos</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -739,7 +749,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
     </div>
   </div>
 
@@ -749,7 +759,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/centos/" style="font-size: 13.33px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+      <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 13.33px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
     </div>
   </div>
 
@@ -771,6 +781,10 @@
       <ul>
         
           <li>
+            <a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
+          </li>
+        
+          <li>
             <a href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
           </li>
         
@@ -784,10 +798,6 @@
         
           <li>
             <a href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
           </li>
         
       </ul>

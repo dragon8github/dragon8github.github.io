@@ -124,14 +124,29 @@ button::-moz-focus-inner {
 .article-entry .highlight pre {
   overflow: visible;
 }
+.article-entry blockquote {
+  margin: 20px 0 !important;
+  text-align: left !important;
+  padding: 20px;
+  border-left: 6px solid #ff8b00;
+  background-color: #feffdb;
+  color: #2f2f2f;
+}
+.article-entry blockquote p {
+  margin: auto !important;
+  font-weight: bold;
+  color: #ffc60b;
+}
 html,
 body,
 #container,
 .line,
-code {
+code,
+.article-entry p,
+.article-entry table {
   height: 100%;
   font-family: 'comic sans ms', 'HYLeMiaoTiW', sans-serif !important;
-  font-size: 18px;
+  font-size: 17px;
 }
 body {
   background: #eee;
