@@ -11,11 +11,11 @@
 <meta name="keywords" content="centos,PHP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Centos7 PHP-lastest 安装">
-<meta property="og:url" content="http://yoursite.com/2019/01/25/php安装/index.html">
+<meta property="og:url" content="http://cylee.top/2019/01/25/php安装/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
 <meta property="og:description" content="参考官方 UNIX 编译教程： http://php.net/manual/zh/install.unix.php 1、安装依赖1$ sudo yum install libxml2 libxml2-devel 2、下载php（China）: http://php.net/get/php-7.3.1.tar.gz/from/a/mirror1$ wget -O php-7.3.1.tar.gz">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-25T09:34:18.845Z">
+<meta property="og:updated_time" content="2019-01-25T13:18:18.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos7 PHP-lastest 安装">
 <meta name="twitter:description" content="参考官方 UNIX 编译教程： http://php.net/manual/zh/install.unix.php 1、安装依赖1$ sudo yum install libxml2 libxml2-devel 2、下载php（China）: http://php.net/get/php-7.3.1.tar.gz/from/a/mirror1$ wget -O php-7.3.1.tar.gz">
@@ -57,14 +57,8 @@
         
       </nav>
       <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon"></a>
       </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
     </div>
   </div>
 </header>
@@ -105,7 +99,7 @@
 <blockquote>
 <p>virtual memory exhausted: Cannot allocate memory<br>make: *** [ext/fileinfo/libmagic/apprentice.lo] Error 1</p>
 </blockquote>
-<p>其中 <code>--enable-fpm</code> 是支持fpm扩展，<code>--enable-so</code> 是支持apache，<code>--with-mysql</code> 是支持mysql</p>
+<p>其中 <code>--enable-fpm</code> 是支持fpm扩展nginx，<code>--enable-so</code> 是支持apache，<code>--with-mysql</code> 是支持mysql</p>
 <h6 id="4、make-编译"><a href="#4、make-编译" class="headerlink" title="4、make 编译"></a>4、make 编译</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br></pre></td></tr></table></figure>
 <h6 id="5、make-安装"><a href="#5、make-安装" class="headerlink" title="5、make 安装"></a>5、make 安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
 <p>安装完成之后，会出现如下提示语：</p>
@@ -113,13 +107,17 @@
 <p>Wrote PEAR system config file at: /usr/local/etc/pear.conf<br>You may want to add: /usr/local/lib/php to your php.ini include_path<br>/home/dc2-user/php-7.3.1/build/shtool install -c ext/phar/phar.phar /usr/local/bin<br>ln -s -f phar.phar /usr/local/bin/phar<br>Installing PDO headers:           /usr/local/include/php/ext/pdo/</p>
 </blockquote>
 <p>请放心这是正常的，实际上此时你的php已经安装成功了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ php -v</span><br><span class="line"></span><br><span class="line">PHP 7.3.1 (cli) (built: Jan 24 2019 21:37:18) ( NTS )</span><br><span class="line">Copyright (c) 1997-2018 The PHP Group</span><br><span class="line">Zend Engine v3.3.1, Copyright (c) 1998-2018 Zend Technologies</span><br></pre></td></tr></table></figure></p>
-<h6 id="6、创建配置文件，并将其复制到正确的位置。"><a href="#6、创建配置文件，并将其复制到正确的位置。" class="headerlink" title="6、创建配置文件，并将其复制到正确的位置。"></a>6、创建配置文件，并将其复制到正确的位置。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp php.ini-development /usr/<span class="built_in">local</span>/php/php.ini</span><br></pre></td></tr></table></figure>
-<h6 id="7、如果你执行-configure-时加入了-enable-fpm-扩展才需要进行以下操作："><a href="#7、如果你执行-configure-时加入了-enable-fpm-扩展才需要进行以下操作：" class="headerlink" title="7、如果你执行 ./configure 时加入了 --enable-fpm 扩展才需要进行以下操作："></a>7、如果你执行 <code>./configure</code> 时加入了 <code>--enable-fpm</code> 扩展才需要进行以下操作：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp /usr/<span class="built_in">local</span>/etc/php-fpm.conf.default /usr/<span class="built_in">local</span>/etc/php-fpm.conf</span><br><span class="line">$ sudo cp sapi/fpm/php-fpm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
+<h6 id="6、创建配置文件，并将其复制到正确的位置。"><a href="#6、创建配置文件，并将其复制到正确的位置。" class="headerlink" title="6、创建配置文件，并将其复制到正确的位置。"></a>6、创建配置文件，并将其复制到正确的位置。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp php.ini-development /usr/<span class="built_in">local</span>/php/php.ini</span><br><span class="line">$ sudo cp /usr/<span class="built_in">local</span>/etc/php-fpm.conf.default /usr/<span class="built_in">local</span>/etc/php-fpm.conf</span><br><span class="line">$ sudo cp sapi/fpm/php-fpm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
+<p>接下来你可能想要了解：</p>
+<ul>
+<li>nginx 与 php 结合使用</li>
+<li>nginx 与 apache 结合使用</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/25/php安装/" data-id="cjrbuxxz8000xuovw9duztt9b" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjrc3e6iw0010bsvwbk58vowb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -158,7 +156,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -168,7 +166,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
     </div>
   </div>
 
@@ -181,7 +179,11 @@
       <ul>
         
           <li>
-            <a href="/2019/01/25/Hexo的认知/">Hexo的认知</a>
+            <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/hexo的认知/">hexo的认知</a>
           </li>
         
           <li>
@@ -240,10 +242,6 @@
             <a href="/2019/01/19/composer疑难杂症/">composer疑难杂症</a>
           </li>
         
-          <li>
-            <a href="/2019/01/17/hello-world/">Hello World</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -253,7 +251,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 13.33px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
     </div>
   </div>
 
@@ -272,12 +270,15 @@
         
       </div>
       <canvas class="fireworks" style="position: fixed; left: 0px; top: 0px; z-index: 1; pointer-events: none;" width="2880" height="832"></canvas>
+
 <footer id="footer">
   
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 贝尔塔猫<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
+
+      <div class="fr">按下 [Home] 键返回顶部</div>
     </div>
   </div>
 </footer>
