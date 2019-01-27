@@ -3,28 +3,39 @@ $(function() {
 	// 搜索框
 	//////////////////////////////////////////////
 
-    // 9位 简易版
+    // uuid 生成器
     var MdUuid =function () {
         return Math.random().toString(36).slice(4)  
     } 
 
+    // 参数标记缓存器
+    var memoized = function (fn) {
+          var cache = {};
+          return function () {
+            // 我们约定以第一个参数作为key
+            var __KEY__ = arguments[0]
+            // 记录缓存
+            return cache[__KEY__] || (cache[__KEY__] = fn.apply(this, arguments));
+          };
+    };
+
     // 生成一个 Uuid
     var PANEL_ID = MdUuid()
 
- 	// （回调版）单例模式，通常用于ajax类异步回调处理函数
- 	var getCallBackSingle = function(fn) {
- 		// 缓存
- 	    var cache
- 	    // 接受一个回调函数
-	    return function (cb) {
-	    	// 如果有缓存存在，那么直接使用缓存作为回调值，否则使用默认函数
-	    	cache ? cb.apply(this, cache) : fn(function () {
-	    		console.log('no cache')
-	    		// 保存到缓存并且执行回调
-	    		cb.apply(this, cache = arguments)
-	    	})
-	    }
- 	}
+    // （回调版）单例模式，通常用于ajax类异步回调处理函数
+    var getCallBackSingle = function(fn) {
+        // 缓存
+        var cache
+        // 接受一个回调函数
+        return function (cb) {
+            // 如果有缓存存在，那么直接使用缓存作为回调值，否则使用默认函数
+            cache ? cb.apply(this, cache) : fn(function () {
+                console.log('no cache')
+                // 保存到缓存并且执行回调
+                cb.apply(this, cache = arguments)
+            })
+        }
+    }
 
     // 获取所有内容
     var getData = function (successcb) {
@@ -39,23 +50,40 @@ $(function() {
     	})
     }
 
+    var whileTrue = function () {
+        return true
+    }
+
     // 单例模式
     var _getData = getCallBackSingle(getData)
+
+    var getListHtmlByfilter = function (__KEY__, data, condition) {
+        // 如果存在缓存则直接返回，否则重新过滤
+        return data.filter(condition).map(function (item) {
+            // 转化为li（HTML String）
+            var liHTML = (item.tags || []).map(function (tag) { return '<li class="myPanel__body--tag">' + tag + '</li>' }).join('')
+            // 转化为ul（HTML String）
+            var ulHTML = liHTML ? '<ul class="myPanel__body--tags">' + liHTML + '</ul>' : ''
+            // 转化为title（HTML String）
+            var titletHTML = '<div class="myPanel__body--title"><a class="myPanel__body--link" target="_blank" href="' + item.url + '">' + item.title + '</a></div>'
+            // 最终返回
+            return '<li class="myPanel__body--li">' + ulHTML + titletHTML + '</li>'
+        }).join('')
+    }
+
+    var getCacheListHtmlByfilter = memoized(getListHtmlByfilter)
 
     // 搜搜
     var search = function (e) {
         // 转化为小写
-        var v = e.target.value.toLocaleLowerCase()
+        var key = e.target.value.toLocaleLowerCase()
         // 数据获取和清洗
         _getData(function (data) {
-            // 数据过滤
-            var filterData = data.filter(function (item) {
+            // 过滤数据
+            var listHTML = getCacheListHtmlByfilter(key, data, function (item) {
                 // 判断标题和tags是否包含关键词
-                return ~item.title.toLocaleLowerCase().indexOf(v) || ~(item.tags || []).join('').toLocaleLowerCase().indexOf(v)
+                return ~item.title.toLocaleLowerCase().indexOf(key) || ~(item.tags || []).join('').toLocaleLowerCase().indexOf(key)
             })
-
-            // 生成list
-            var listHTML = getListHtml(filterData)
 
             // 替换内容
             $('.myPanel__body--ul').html(listHTML)
@@ -65,26 +93,9 @@ $(function() {
         })
     }
 
-    // 生成list
-    var getListHtml = function (data) {
-        // 列表内容（HTML String）
-        return data.map(function (item) {
-            // 转化为li（HTML String）
-            var liHTML = (item.tags || []).map(function (tag) { 
-                return '<li class="myPanel__body--tag">' + tag + '</li>'
-            }).join('')
-            // 转化为ul（HTML String）
-            var ulHTML = liHTML ? '<ul class="myPanel__body--tags">' + liHTML + '</ul>' : ''
-            // 转化为title（HTML String）
-            var titletHTML = '<div class="myPanel__body--title"><a class="myPanel__body--link" href="' + item.url + '">' + item.title + '</a></div>'
-            // 最终返回
-            return '<li class="myPanel__body--li">' + ulHTML + titletHTML + '</li>'
-        }).join('')
-    }
-
     var render = function (data) {
         // 生成list
-        var listHTML = getListHtml(data);
+        var listHTML = getCacheListHtmlByfilter('', data, whileTrue);
 
         // 最终的dom
         var $myPanel = $('<div class="myPanel" id="' + PANEL_ID + '"">\
@@ -104,7 +115,7 @@ $(function() {
         $('#container').append($myPanel)
 
         // 聚焦文本框，绑定keyup搜索
-        $('.myPanel__header--input').focus().keyup(search)
+        $('.myPanel__header--input').focus().on('input', search)
 
         // 美化滚动条
         $('.myPanel__body').niceScroll(niceScrollConfig())
@@ -150,11 +161,47 @@ $(function() {
             // 打开搜索框
     		openPanel()
     	}
+
         // 监听esc键隐藏
-        if (event.keyCode == 27) {
+        if (isVisible() && isExist() && event.keyCode == 27) {
             // 隐藏
             hide()
         }
+
+        // enter键跳转页面
+        if (isVisible() && isExist() && event.keyCode == 13) {
+            var link = document.querySelector('.myPanel__body--li.is-active .myPanel__body--link')
+            link && link.click()
+        }
+
+        // 按下down
+        if (isVisible() && isExist() && event.keyCode == 40) {
+            // 获取当前聚焦的索引
+            var index = $('.myPanel__body--li.is-active').index()
+            // 如果未-1说明没有任何聚焦，那么聚焦到第一位
+            if (index === -1) {
+                $('.myPanel__body--li').eq(0).addClass('is-active')
+            } else {
+                $('.myPanel__body--li').removeClass('is-active')
+                $('.myPanel__body--li').eq(++index).addClass('is-active');
+            }
+        }
+
+        // 按下up
+        if (isVisible() && isExist() && event.keyCode == 38) {
+            // 获取当前聚焦的索引
+            var index = $('.myPanel__body--li.is-active').index()
+            // 如果未-1说明没有任何聚焦，那么聚焦到第一位
+            if (index === 0) {
+                $('.myPanel__body--li').removeClass('is-active')
+                $('.myPanel__header--input').focus()
+            } else {
+                $('.myPanel__body--li').removeClass('is-active')
+                $('.myPanel__body--li').eq(--index).addClass('is-active');
+            }
+        }
+
+
     }).click(function (event) {
         // 获取dom
         var panel = document.getElementById(PANEL_ID)

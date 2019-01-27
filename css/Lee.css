@@ -175,7 +175,11 @@ article.is-index .article-inner {
 .myPanel .myPanel__body--li:hover {
   background: rgba(200,200,200,0.25);
 }
-.myPanel .myPanel__body--li:hover .myPanel__body--link {
+.myPanel .myPanel__body--li.is-active {
+  background: rgba(200,200,200,0.25);
+}
+.myPanel .myPanel__body--li:hover .myPanel__body--link,
+.myPanel .myPanel__body--li.is-active .myPanel__body--link {
   box-shadow: 1px 10px 10px -10px rgba(0,0,24,0.5);
   transform: scale(1.2);
 }
