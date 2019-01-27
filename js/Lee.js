@@ -191,8 +191,8 @@ $(function() {
         if (isVisible() && isExist() && event.keyCode == 38) {
             // 获取当前聚焦的索引
             var index = $('.myPanel__body--li.is-active').index()
-            // 如果未-1说明没有任何聚焦，那么聚焦到第一位
-            if (index === 0) {
+            // 如果未-1说明没有任何聚焦，保持原样即可
+            if (index === 0 || index === -1) {
                 $('.myPanel__body--li').removeClass('is-active')
                 $('.myPanel__header--input').focus()
             } else {
