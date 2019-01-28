@@ -8,7 +8,7 @@
   <title>Nginx与php结合 | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="传送门： Centos7 PHP-lastest 安装 centos7 nginx 安装  操作预览： 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0 修改 php-fpm.conf 路径引用错误的bug 添加 www.conf，并且修改权限 启动 php-fpm 配置 Nginx 使其支持 PHP 应用 配置 .php 文件的请求将被传送到后端的 PHP-F">
-<meta name="keywords" content="php,nginx">
+<meta name="keywords" content="nginx,php">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx与php结合">
 <meta property="og:url" content="http://cylee.top/2019/01/25/Nginx与php结合/index.html">
@@ -16,7 +16,7 @@
 <meta property="og:description" content="传送门： Centos7 PHP-lastest 安装 centos7 nginx 安装  操作预览： 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0 修改 php-fpm.conf 路径引用错误的bug 添加 www.conf，并且修改权限 启动 php-fpm 配置 Nginx 使其支持 PHP 应用 配置 .php 文件的请求将被传送到后端的 PHP-F">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://cylee.top/2019/01/25/Nginx与php结合/1.png">
-<meta property="og:updated_time" content="2019-01-28T03:10:17.655Z">
+<meta property="og:updated_time" content="2019-01-28T03:25:33.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx与php结合">
 <meta name="twitter:description" content="传送门： Centos7 PHP-lastest 安装 centos7 nginx 安装  操作预览： 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0 修改 php-fpm.conf 路径引用错误的bug 添加 www.conf，并且修改权限 启动 php-fpm 配置 Nginx 使其支持 PHP 应用 配置 .php 文件的请求将被传送到后端的 PHP-F">
@@ -104,7 +104,14 @@
 <li>启动 php-fpm</li>
 <li>配置 Nginx 使其支持 PHP 应用</li>
 <li>配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</li>
+<li>重启 Nginx。</li>
+<li>创建测试文件</li>
 </ol>
+<hr>
+
+<blockquote>
+<p>补充：搭建环境最怕的就是路径不同，建议配合 <code>$ find / -name &quot;你要搜索的文件名&quot;</code> 来辅助。<br>建议结合<a href="http://php.net/manual/zh/install.unix.php" target="_blank" rel="noopener">官网教程](http://php.net/manual/zh/install.unix.php</a>使用。<br>但实际上官网的内容部分也是过时的无效的。所以要结合第三方文章来排坑。</p>
+</blockquote>
 <h6 id="1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0"><a href="#1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0" class="headerlink" title="1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0"></a>1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/php/php.ini</span><br></pre></td></tr></table></figure>
 <p>定位到 <code>cgi.fix_pathinfo</code> 并将其修改为如下所示：</p>
 <blockquote>
@@ -122,14 +129,14 @@
 <h6 id="5-配置-Nginx-使其支持-PHP-应用"><a href="#5-配置-Nginx-使其支持-PHP-应用" class="headerlink" title="5. 配置 Nginx 使其支持 PHP 应用"></a>5. 配置 Nginx 使其支持 PHP 应用</h6><p><code>$ vim /usr/local/nginx/conf/nginx.conf</code>，修改默认的 location 块，使其支持 .php 文件：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="attribute">root</span>   html;</span><br><span class="line">    <span class="attribute">index</span>  index.php index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h6 id="6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块"><a href="#6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块" class="headerlink" title="6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块"></a>6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</h6><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~* \.php$</span> &#123;</span><br><span class="line">    <span class="attribute">fastcgi_index</span>   index.php;</span><br><span class="line">    <span class="attribute">fastcgi_pass</span>    <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">    <span class="attribute">include</span>         fastcgi_params;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_FILENAME    <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_NAME        <span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="7-重启-Nginx。"><a href="#7-重启-Nginx。" class="headerlink" title="7. 重启 Nginx。"></a>7. 重启 Nginx。</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s stop</span><br><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
-<h5 id="8-创建测试文件"><a href="#8-创建测试文件" class="headerlink" title="8. 创建测试文件"></a>8. 创建测试文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm /usr/<span class="built_in">local</span>/nginx/html/index.html</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"&lt;?php phpinfo(); ?&gt;"</span> &gt;&gt; /usr/<span class="built_in">local</span>/nginx/html/index.php</span><br></pre></td></tr></table></figure>
+<h6 id="7-重启-Nginx。"><a href="#7-重启-Nginx。" class="headerlink" title="7. 重启 Nginx。"></a>7. 重启 Nginx。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s stop</span><br><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+<h6 id="8-创建测试文件"><a href="#8-创建测试文件" class="headerlink" title="8. 创建测试文件"></a>8. 创建测试文件</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm /usr/<span class="built_in">local</span>/nginx/html/index.html</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"&lt;?php phpinfo(); ?&gt;"</span> &gt;&gt; /usr/<span class="built_in">local</span>/nginx/html/index.php</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/01/25/Nginx与php结合/1.png" alt="php.info"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjrezk6ka0004p8vwjb7ol2s6" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjrfrnat100046cvw1scfegk1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>

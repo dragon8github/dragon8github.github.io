@@ -103,7 +103,14 @@
 <li>启动 php-fpm</li>
 <li>配置 Nginx 使其支持 PHP 应用</li>
 <li>配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</li>
+<li>重启 Nginx。</li>
+<li>创建测试文件</li>
 </ol>
+<hr>
+
+<blockquote>
+<p>补充：搭建环境最怕的就是路径不同，建议配合 <code>$ find / -name &quot;你要搜索的文件名&quot;</code> 来辅助。<br>建议结合<a href="http://php.net/manual/zh/install.unix.php" target="_blank" rel="noopener">官网教程](http://php.net/manual/zh/install.unix.php</a>使用。<br>但实际上官网的内容部分也是过时的无效的。所以要结合第三方文章来排坑。</p>
+</blockquote>
 <h6 id="1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0"><a href="#1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0" class="headerlink" title="1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0"></a>1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/php/php.ini</span><br></pre></td></tr></table></figure>
 <p>定位到 <code>cgi.fix_pathinfo</code> 并将其修改为如下所示：</p>
 <blockquote>
@@ -121,14 +128,14 @@
 <h6 id="5-配置-Nginx-使其支持-PHP-应用"><a href="#5-配置-Nginx-使其支持-PHP-应用" class="headerlink" title="5. 配置 Nginx 使其支持 PHP 应用"></a>5. 配置 Nginx 使其支持 PHP 应用</h6><p><code>$ vim /usr/local/nginx/conf/nginx.conf</code>，修改默认的 location 块，使其支持 .php 文件：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="attribute">root</span>   html;</span><br><span class="line">    <span class="attribute">index</span>  index.php index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h6 id="6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块"><a href="#6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块" class="headerlink" title="6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块"></a>6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</h6><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~* \.php$</span> &#123;</span><br><span class="line">    <span class="attribute">fastcgi_index</span>   index.php;</span><br><span class="line">    <span class="attribute">fastcgi_pass</span>    <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">    <span class="attribute">include</span>         fastcgi_params;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_FILENAME    <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_NAME        <span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="7-重启-Nginx。"><a href="#7-重启-Nginx。" class="headerlink" title="7. 重启 Nginx。"></a>7. 重启 Nginx。</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s stop</span><br><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
-<h5 id="8-创建测试文件"><a href="#8-创建测试文件" class="headerlink" title="8. 创建测试文件"></a>8. 创建测试文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm /usr/<span class="built_in">local</span>/nginx/html/index.html</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"&lt;?php phpinfo(); ?&gt;"</span> &gt;&gt; /usr/<span class="built_in">local</span>/nginx/html/index.php</span><br></pre></td></tr></table></figure>
+<h6 id="7-重启-Nginx。"><a href="#7-重启-Nginx。" class="headerlink" title="7. 重启 Nginx。"></a>7. 重启 Nginx。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s stop</span><br><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+<h6 id="8-创建测试文件"><a href="#8-创建测试文件" class="headerlink" title="8. 创建测试文件"></a>8. 创建测试文件</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm /usr/<span class="built_in">local</span>/nginx/html/index.html</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"&lt;?php phpinfo(); ?&gt;"</span> &gt;&gt; /usr/<span class="built_in">local</span>/nginx/html/index.php</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/01/25/Nginx与php结合/1.png" alt="php.info"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjrezk6ka0004p8vwjb7ol2s6" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjrfrnat100046cvw1scfegk1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -174,6 +181,8 @@
 <li>加入全局样式</li>
 <li>hexo 内置全局变量</li>
 <li>如何打印全局变量</li>
+<li>本地搜索功能</li>
+<li>部署的git和项目的git</li>
 </ol>
 <h4 id="1-自定义文章模板"><a href="#1-自定义文章模板" class="headerlink" title="1. 自定义文章模板"></a>1. 自定义文章模板</h4><blockquote>
 <p>\themes\landscape\layout_partial\after-footer.ejs</p>
@@ -190,11 +199,23 @@
 <h4 id="5-如何打印全局变量"><a href="#5-如何打印全局变量" class="headerlink" title="5. 如何打印全局变量"></a>5. 如何打印全局变量</h4><p>打开任意一个ejs文件如：<code>my\themes\landscape\layout\_partial\article.ejs</code>，顶部加入JavaScript代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">	console.log(20190125172431, post) </span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></p>
 <p>不过并不会打印到页面，而是打印到控制台。</p>
 <p><img src="/2019/01/25/hexo的认知/1.png" alt="console.log"></p>
+<h4 id="6-本地搜索功能"><a href="#6-本地搜索功能" class="headerlink" title="6.本地搜索功能"></a>6.本地搜索功能</h4><p>需要结合插件 <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener">hexo-generator-search</a> 来使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install https://github.com/wzpan/hexo-generator-search</span><br></pre></td></tr></table></figure>
+<p>配置 <code>_config.yml</code></p>
+<blockquote>
+<p>search:<br>  path: search.json<br>  field: post<br>  content: true</p>
+</blockquote>
+<p>当你使用 <code>$ hexo g</code> 之后，publish 目录下就生成了search.json了。我们就可以根据这个json来做本地搜索。</p>
+<h4 id="7-部署的git和项目的git"><a href="#7-部署的git和项目的git" class="headerlink" title="7. 部署的git和项目的git"></a>7. 部署的git和项目的git</h4><p>我们希望部署/publish到github.io和项目本身的git不一样。只需要加入一个 <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a> 插件即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure>
+<p>配置 <code>_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repository:</span> <span class="attr">https://github.com/dragon8github/dragon8github.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<p>这样我们就可以使用 <code>$ hexo g &amp;&amp; hexo d</code> 来部署到github.io了。就不会和我们项目本身的git冲突了。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjrezk6kf000ap8vwrq8pd9so" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjrfrnat7000a6cvwcekb49f9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -247,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjrezk6m3002jp8vwwj7lkn5i" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjrfrnatp00106cvw67pbwz8v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MP4/">MP4</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/video/">video</a></li></ul>
@@ -306,14 +327,14 @@
 <h6 id="6、创建配置文件，并将其复制到正确的位置。"><a href="#6、创建配置文件，并将其复制到正确的位置。" class="headerlink" title="6、创建配置文件，并将其复制到正确的位置。"></a>6、创建配置文件，并将其复制到正确的位置。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp php.ini-development /usr/<span class="built_in">local</span>/php/php.ini</span><br><span class="line">$ sudo cp /usr/<span class="built_in">local</span>/etc/php-fpm.conf.default /usr/<span class="built_in">local</span>/etc/php-fpm.conf</span><br><span class="line">$ sudo cp sapi/fpm/php-fpm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
 <p>接下来你可能想要了解：</p>
 <ul>
-<li>nginx 与 php 结合使用</li>
+<li><a href="/2019/01/25/Nginx与php结合/">nginx 与 php 结合使用</a></li>
 <li>nginx 与 apache 结合使用</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjrezk6ly002hp8vwwzp6jf83" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjrfrnato000y6cvwxkodhl7m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -358,7 +379,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjrezk6k20000p8vw3tpcxwjj" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjrfrnass00006cvwgec5mbhk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum/">yum</a></li></ul>
@@ -413,7 +434,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjrezk6ke0009p8vw11pxk5g5" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjrfrnat400066cvwarwyarxr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -482,7 +503,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjrezk6lw002fp8vwro2jjcn1" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjrfrnatn000w6cvwr5snt8ol" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
@@ -545,7 +566,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Docker安装/" data-id="cjrezk6kb0005p8vwoh316so5" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Docker安装/" data-id="cjrfrnasw00016cvwencmwxhw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -625,7 +646,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-Eloquent/" data-id="cjrezk6ki000ep8vwu5gkr2xg" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/20/laravel-Eloquent/" data-id="cjrfrnat9000e6cvw2yw8bu2l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -713,7 +734,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-migration/" data-id="cjrezk6kr000qp8vwbpummjez" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/20/laravel-migration/" data-id="cjrfrnatg000l6cvwckzvn8sk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>

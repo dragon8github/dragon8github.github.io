@@ -7,19 +7,19 @@
   
   <title>hexo的认知 | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 hexo 内置全局变量 如何打印全局变量  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\themes\landscape\sourc">
+  <meta name="description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 hexo 内置全局变量 如何打印全局变量 本地搜索功能 部署的git和项目的git  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\t">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo的认知">
 <meta property="og:url" content="http://cylee.top/2019/01/25/hexo的认知/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 hexo 内置全局变量 如何打印全局变量  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\themes\landscape\sourc">
+<meta property="og:description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 hexo 内置全局变量 如何打印全局变量 本地搜索功能 部署的git和项目的git  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\t">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://cylee.top/2019/01/25/hexo的认知/1.png">
-<meta property="og:updated_time" content="2019-01-26T10:04:04.940Z">
+<meta property="og:updated_time" content="2019-01-28T03:35:33.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo的认知">
-<meta name="twitter:description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 hexo 内置全局变量 如何打印全局变量  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\themes\landscape\sourc">
+<meta name="twitter:description" content="预览： 自定义文章模板 加入 &amp;lt;script&amp;gt; 加入全局样式 hexo 内置全局变量 如何打印全局变量 本地搜索功能 部署的git和项目的git  1. 自定义文章模板 \themes\landscape\layout_partial\after-footer.ejs  2. 加入 &amp;lt;script&amp;gt; \scaffolds\post.md  3. 加入全局样式 \my\t">
 <meta name="twitter:image" content="http://cylee.top/2019/01/25/hexo的认知/1.png">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
@@ -99,6 +99,8 @@
 <li>加入全局样式</li>
 <li>hexo 内置全局变量</li>
 <li>如何打印全局变量</li>
+<li>本地搜索功能</li>
+<li>部署的git和项目的git</li>
 </ol>
 <h4 id="1-自定义文章模板"><a href="#1-自定义文章模板" class="headerlink" title="1. 自定义文章模板"></a>1. 自定义文章模板</h4><blockquote>
 <p>\themes\landscape\layout_partial\after-footer.ejs</p>
@@ -115,11 +117,23 @@
 <h4 id="5-如何打印全局变量"><a href="#5-如何打印全局变量" class="headerlink" title="5. 如何打印全局变量"></a>5. 如何打印全局变量</h4><p>打开任意一个ejs文件如：<code>my\themes\landscape\layout\_partial\article.ejs</code>，顶部加入JavaScript代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">	console.log(20190125172431, post) </span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></p>
 <p>不过并不会打印到页面，而是打印到控制台。</p>
 <p><img src="/2019/01/25/hexo的认知/1.png" alt="console.log"></p>
+<h4 id="6-本地搜索功能"><a href="#6-本地搜索功能" class="headerlink" title="6.本地搜索功能"></a>6.本地搜索功能</h4><p>需要结合插件 <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener">hexo-generator-search</a> 来使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install https://github.com/wzpan/hexo-generator-search</span><br></pre></td></tr></table></figure>
+<p>配置 <code>_config.yml</code></p>
+<blockquote>
+<p>search:<br>  path: search.json<br>  field: post<br>  content: true</p>
+</blockquote>
+<p>当你使用 <code>$ hexo g</code> 之后，publish 目录下就生成了search.json了。我们就可以根据这个json来做本地搜索。</p>
+<h4 id="7-部署的git和项目的git"><a href="#7-部署的git和项目的git" class="headerlink" title="7. 部署的git和项目的git"></a>7. 部署的git和项目的git</h4><p>我们希望部署/publish到github.io和项目本身的git不一样。只需要加入一个 <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a> 插件即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure>
+<p>配置 <code>_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repository:</span> <span class="attr">https://github.com/dragon8github/dragon8github.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<p>这样我们就可以使用 <code>$ hexo g &amp;&amp; hexo d</code> 来部署到github.io了。就不会和我们项目本身的git冲突了。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjrezk6kf000ap8vwrq8pd9so" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjrfrnat7000a6cvwcekb49f9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>

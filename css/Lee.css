@@ -58,6 +58,9 @@ input {
   font-weight: bold;
   color: #ffc60b;
 }
+.article-entry blockquote code {
+  color: #8a2be2;
+}
 article.is-index {
   position: relative;
 }
