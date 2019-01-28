@@ -92,12 +92,43 @@
       
         <hr>
 
-<h6 id="1-配置-Nginx-使其支持-PHP-应用"><a href="#1-配置-Nginx-使其支持-PHP-应用" class="headerlink" title="1. 配置 Nginx 使其支持 PHP 应用"></a>1. 配置 Nginx 使其支持 PHP 应用</h6><p><code>$ vim /usr/local/nginx/conf/nginx.conf</code>，修改默认的 location 块，使其支持 .php 文件：</p>
+<h3 id="传送门："><a href="#传送门：" class="headerlink" title="传送门："></a>传送门：</h3><ul>
+<li><a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a></li>
+<li><a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a></li>
+</ul>
+<h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
+<li>将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0</li>
+<li>修改 <code>php-fpm.conf</code> 路径引用错误的bug</li>
+<li>添加 <a href="http://www.conf，并且修改权限" target="_blank" rel="noopener">www.conf，并且修改权限</a></li>
+<li>启动 php-fpm</li>
+<li>配置 Nginx 使其支持 PHP 应用</li>
+<li>配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</li>
+</ol>
+<h6 id="1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0"><a href="#1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0" class="headerlink" title="1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0"></a>1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/php/php.ini</span><br></pre></td></tr></table></figure>
+<p>定位到 <code>cgi.fix_pathinfo</code> 并将其修改为如下所示：</p>
+<blockquote>
+<p>cgi.fix_pathinfo=0</p>
+</blockquote>
+<h6 id="2-修改-php-fpm-conf-路径引用错误的bug"><a href="#2-修改-php-fpm-conf-路径引用错误的bug" class="headerlink" title="2. 修改 php-fpm.conf 路径引用错误的bug"></a>2. 修改 <code>php-fpm.conf</code> 路径引用错误的bug</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/etc/php-fpm.conf</span><br></pre></td></tr></table></figure>
+<p>找到最后一行 <code>include=NONE/etc/php-fpm.d/*.conf</code>，改为 <code>include=etc/php-fpm.d/*.conf</code></p>
+<blockquote>
+<p>include=NONE/etc/php-fpm.d/<em>.conf<br>改为<br>include=etc/php-fpm.d/</em>.conf</p>
+</blockquote>
+<h6 id="3-添加-www-conf，并且修改权限"><a href="#3-添加-www-conf，并且修改权限" class="headerlink" title="3. 添加 www.conf，并且修改权限"></a>3. 添加 <a href="http://www.conf，并且修改权限" target="_blank" rel="noopener">www.conf，并且修改权限</a></h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/etc/php-fpm.d</span><br><span class="line">$ cp www.conf.default www.conf</span><br><span class="line">$ vim www.conf</span><br></pre></td></tr></table></figure>
+<p>找到并修改以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">; Unix user/group of processes</span><br><span class="line">; Note: The user is mandatory. If the group is not <span class="built_in">set</span>, the default user<span class="string">'s group</span></span><br><span class="line"><span class="string">;       will be used.</span></span><br><span class="line"><span class="string">user = nobody</span></span><br><span class="line"><span class="string">group = nobody</span></span><br></pre></td></tr></table></figure>
+<h6 id="4-启动-php-fpm"><a href="#4-启动-php-fpm" class="headerlink" title="4. 启动 php-fpm"></a>4. 启动 php-fpm</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/<span class="built_in">local</span>/bin/php-fpm</span><br></pre></td></tr></table></figure>
+<h6 id="5-配置-Nginx-使其支持-PHP-应用"><a href="#5-配置-Nginx-使其支持-PHP-应用" class="headerlink" title="5. 配置 Nginx 使其支持 PHP 应用"></a>5. 配置 Nginx 使其支持 PHP 应用</h6><p><code>$ vim /usr/local/nginx/conf/nginx.conf</code>，修改默认的 location 块，使其支持 .php 文件：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="attribute">root</span>   html;</span><br><span class="line">    <span class="attribute">index</span>  index.php index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块"><a href="#6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块" class="headerlink" title="6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块"></a>6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</h6><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~* \.php$</span> &#123;</span><br><span class="line">    <span class="attribute">fastcgi_index</span>   index.php;</span><br><span class="line">    <span class="attribute">fastcgi_pass</span>    <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">    <span class="attribute">include</span>         fastcgi_params;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_FILENAME    <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_NAME        <span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="7-重启-Nginx。"><a href="#7-重启-Nginx。" class="headerlink" title="7. 重启 Nginx。"></a>7. 重启 Nginx。</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s stop</span><br><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+<h5 id="8-创建测试文件"><a href="#8-创建测试文件" class="headerlink" title="8. 创建测试文件"></a>8. 创建测试文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm /usr/<span class="built_in">local</span>/nginx/html/index.html</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"&lt;?php phpinfo(); ?&gt;"</span> &gt;&gt; /usr/<span class="built_in">local</span>/nginx/html/index.php</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/25/Nginx与php结合/1.png" alt="php.info"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjreu5qzv0004ykvwhpdyaplw" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjrezk6ka0004p8vwjb7ol2s6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -163,7 +194,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjreu5r06000aykvwqw4ixjsk" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjrezk6kf000ap8vwrq8pd9so" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -216,7 +247,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjreu5r0x0010ykvwn0pps3gg" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjrezk6m3002jp8vwwj7lkn5i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MP4/">MP4</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/video/">video</a></li></ul>
@@ -282,7 +313,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjreu5r0v000xykvwf2lwo4ba" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjrezk6ly002hp8vwwzp6jf83" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -327,7 +358,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjreu5qzy0005ykvwgt9wprg1" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjrezk6k20000p8vw3tpcxwjj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum/">yum</a></li></ul>
@@ -382,7 +413,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjreu5qzp0001ykvwcs8ojwo7" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjrezk6ke0009p8vw11pxk5g5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -451,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjreu5r0t000wykvws42csh71" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjrezk6lw002fp8vwro2jjcn1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
@@ -514,7 +545,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Docker安装/" data-id="cjreu5qzh0000ykvwmjhoukkt" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Docker安装/" data-id="cjrezk6kb0005p8vwoh316so5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -594,7 +625,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-Eloquent/" data-id="cjreu5r0a000eykvwxzzdqbt2" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/20/laravel-Eloquent/" data-id="cjrezk6ki000ep8vwu5gkr2xg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -682,7 +713,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-migration/" data-id="cjreu5r0p000pykvwz7fxbupe" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/20/laravel-migration/" data-id="cjrezk6kr000qp8vwbpummjez" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
