@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>《Docker每天五分钟》一：启动第一个httpd容器 | cy&#39;lee 贝尔塔猫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1$ sudo docker run -d -p 8080:80 httpd 1）从 Docker Hub 下载 httpd 镜像。镜像中已经安装好了 Apache HTTP Server.2）启动容器，并将容器的80端口映射到宿主机的8080端口。 这样当我们访问宿主机的8080端口时，就能看到HTTP服务页面了。  如果外网ip访问不了。请确保你服务器的安全组，以及本机的防火墙配置。  1">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Docker每天五分钟》一：启动第一个httpd容器">
+<meta property="og:url" content="http://cylee.top/2019/01/31/Docker每天五分钟1/index.html">
+<meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:description" content="1$ sudo docker run -d -p 8080:80 httpd 1）从 Docker Hub 下载 httpd 镜像。镜像中已经安装好了 Apache HTTP Server.2）启动容器，并将容器的80端口映射到宿主机的8080端口。 这样当我们访问宿主机的8080端口时，就能看到HTTP服务页面了。  如果外网ip访问不了。请确保你服务器的安全组，以及本机的防火墙配置。  1">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://cylee.top/2019/01/31/Docker每天五分钟1/2.png">
+<meta property="og:updated_time" content="2019-01-31T07:44:37.439Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Docker每天五分钟》一：启动第一个httpd容器">
+<meta name="twitter:description" content="1$ sudo docker run -d -p 8080:80 httpd 1）从 Docker Hub 下载 httpd 镜像。镜像中已经安装好了 Apache HTTP Server.2）启动容器，并将容器的80端口映射到宿主机的8080端口。 这样当我们访问宿主机的8080端口时，就能看到HTTP服务页面了。  如果外网ip访问不了。请确保你服务器的安全组，以及本机的防火墙配置。  1">
+<meta name="twitter:image" content="http://cylee.top/2019/01/31/Docker每天五分钟1/2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cy&#39;lee 贝尔塔猫</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">前端哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Docker每天五分钟1" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/31/Docker每天五分钟1/" class="article-date">
+  <time datetime="2019-01-31T07:25:33.000Z" itemprop="datePublished">2019-01-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      《Docker每天五分钟》一：启动第一个httpd容器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -d -p 8080:80 httpd</span><br></pre></td></tr></table></figure>
+<p>1）从 Docker Hub 下载 httpd 镜像。镜像中已经安装好了 Apache HTTP Server.<br>2）启动容器，并将容器的80端口映射到宿主机的8080端口。</p>
+<p>这样当我们访问宿主机的8080端口时，就能看到HTTP服务页面了。</p>
+<blockquote>
+<p>如果外网ip访问不了。请确保你服务器的安全组，以及本机的防火墙配置。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl localhost:8080</span><br><span class="line"></span><br><span class="line">&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/31/Docker每天五分钟1/2.png" alt="It works!"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjrms7hl30004fovw6owawbid" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/31/Docker每天五分钟2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          《Docker每天五分钟》二：切换 DaoCloud 镜像源
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/25/Nginx与php结合/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Nginx与php结合</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget widget-category">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget widget-tag">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget widget-posts">
+      <ul>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟3/">《Docker每天五分钟》三：hello-world、初识dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟2/">《Docker每天五分钟》二：切换 DaoCloud 镜像源</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/hexo的认知/">hexo的认知</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-migration/">Laravel Mysql 数据库配置 与 Migration 基础</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-demo3/">Laravel 入门示例（三）：常用的blade语法</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget widget-tagcloud">
+      <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12.5px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget widget-archives">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <canvas class="fireworks" style="position: fixed; left: 0px; top: 0px; z-index: 1; pointer-events: none;" width="2880" height="832"></canvas>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 贝尔塔猫<br>
+      Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
+
+      <div class="fr">按下 [Home] 键返回顶部</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/Lee.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -64,6 +64,470 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-php安装" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/25/php安装/" class="article-date">
+  <time datetime="2019-01-25T01:13:58.000Z" itemprop="datePublished">2019-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/centos/">centos</a>►<a class="article-category-link" href="/categories/centos/PHP/">PHP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>参考官方 UNIX 编译教程： <a href="http://php.net/manual/zh/install.unix.php" target="_blank" rel="noopener">http://php.net/manual/zh/install.unix.php</a></p>
+<h6 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install libxml2 libxml2-devel</span><br></pre></td></tr></table></figure>
+<h6 id="2、下载php（China）-http-php-net-get-php-7-3-1-tar-gz-from-a-mirror"><a href="#2、下载php（China）-http-php-net-get-php-7-3-1-tar-gz-from-a-mirror" class="headerlink" title="2、下载php（China）: http://php.net/get/php-7.3.1.tar.gz/from/a/mirror"></a>2、下载php（China）: <a href="http://php.net/get/php-7.3.1.tar.gz/from/a/mirror" target="_blank" rel="noopener">http://php.net/get/php-7.3.1.tar.gz/from/a/mirror</a></h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget -O php-7.3.1.tar.gz http://cn2.php.net/get/php-7.3.1.tar.gz/from/this/mirror</span><br></pre></td></tr></table></figure>
+<h6 id="3、编译三兄贵"><a href="#3、编译三兄贵" class="headerlink" title="3、编译三兄贵"></a>3、编译三兄贵</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --<span class="built_in">disable</span>-fileinfo --<span class="built_in">enable</span>-fpm</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>加入–disable-fileinfo是为了避免make时出现如下错误：</p>
+<blockquote>
+<p>virtual memory exhausted: Cannot allocate memory<br>make: *** [ext/fileinfo/libmagic/apprentice.lo] Error 1</p>
+</blockquote>
+<p>其中 <code>--enable-fpm</code> 是支持fpm扩展</p>
+<p>安装完成之后，会出现如下提示语：</p>
+<blockquote>
+<p>Wrote PEAR system config file at: /usr/local/etc/pear.conf<br>You may want to add: /usr/local/lib/php to your php.ini include_path<br>/home/dc2-user/php-7.3.1/build/shtool install -c ext/phar/phar.phar /usr/local/bin<br>ln -s -f phar.phar /usr/local/bin/phar<br>Installing PDO headers:           /usr/local/include/php/ext/pdo/</p>
+</blockquote>
+<p>请放心这是正常的，实际上此时你的php已经安装成功了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ php -v</span><br><span class="line"></span><br><span class="line">PHP 7.3.1 (cli) (built: Jan 24 2019 21:37:18) ( NTS )</span><br><span class="line">Copyright (c) 1997-2018 The PHP Group</span><br><span class="line">Zend Engine v3.3.1, Copyright (c) 1998-2018 Zend Technologies</span><br></pre></td></tr></table></figure></p>
+<h6 id="4、创建配置文件，并将其复制到正确的位置。"><a href="#4、创建配置文件，并将其复制到正确的位置。" class="headerlink" title="4、创建配置文件，并将其复制到正确的位置。"></a>4、创建配置文件，并将其复制到正确的位置。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp php.ini-development /usr/<span class="built_in">local</span>/php/php.ini</span><br><span class="line">$ sudo cp /usr/<span class="built_in">local</span>/etc/php-fpm.conf.default /usr/<span class="built_in">local</span>/etc/php-fpm.conf</span><br><span class="line">$ sudo cp sapi/fpm/php-fpm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
+<p>接下来你可能想要了解：</p>
+<ul>
+<li><a href="/2019/01/25/Nginx与php结合/">nginx 与 php 结合使用</a></li>
+<li>nginx 与 apache 结合使用</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjrms7hlw001ffovwrcwg0y9s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Centos7依赖全家桶" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/24/Centos7依赖全家桶/" class="article-date">
+  <time datetime="2019-01-24T13:20:17.000Z" itemprop="datePublished">2019-01-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/centos/">centos</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>该文收集我安装 Centos7 环境中所有依赖的第三方包。只需要执行以下一句代码即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install \</span><br><span class="line">gcc-c++ \</span><br><span class="line">zlib-devel \</span><br><span class="line">pcre-devel \</span><br><span class="line">libxml2 \</span><br><span class="line">libxml2-devel \</span><br><span class="line">yum-utilsdevice-mapper-persistent-data \</span><br><span class="line">lvm2 \</span><br><span class="line">yum-utils \</span><br><span class="line">autoconf \</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjrms7hkw0000fovw0wy8qhx6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum/">yum</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Nodejs安装" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/24/Nodejs安装/" class="article-date">
+  <time datetime="2019-01-24T13:12:28.000Z" itemprop="datePublished">2019-01-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/centos/">centos</a>►<a class="article-category-link" href="/categories/centos/Nodejs/">Nodejs</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<h3 id="操作预览"><a href="#操作预览" class="headerlink" title="操作预览"></a>操作预览</h3><ol>
+<li>下载nodejs： <a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">https://nodejs.org/en/download/</a></li>
+<li>检查配置是否健康</li>
+<li>make 编译（大概需要半小时）</li>
+<li>安装（root）</li>
+<li>验证</li>
+</ol>
+<h6 id="1-下载nodejs：-https-nodejs-org-en-download"><a href="#1-下载nodejs：-https-nodejs-org-en-download" class="headerlink" title="1. 下载nodejs： https://nodejs.org/en/download/"></a>1. 下载nodejs： <a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">https://nodejs.org/en/download/</a></h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://nodejs.org/dist/v10.15.0/node-v10.15.0.tar.gz</span><br></pre></td></tr></table></figure>
+<h6 id="2-检查配置是否健康"><a href="#2-检查配置是否健康" class="headerlink" title="2. 检查配置是否健康"></a>2. 检查配置是否健康</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure</span><br></pre></td></tr></table></figure>
+<h6 id="3-make-编译（大概需要半小时）"><a href="#3-make-编译（大概需要半小时）" class="headerlink" title="3. make 编译（大概需要半小时）"></a>3. make 编译（大概需要半小时）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br></pre></td></tr></table></figure>
+<h6 id="4-安装（root）"><a href="#4-安装（root）" class="headerlink" title="4. 安装（root）"></a>4. 安装（root）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+<h6 id="5-验证安装是否成功"><a href="#5-验证安装是否成功" class="headerlink" title="5. 验证安装是否成功"></a>5. 验证安装是否成功</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node -v </span><br><span class="line">v10.15.0</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjrms7hlj000qfovw6p1gumfx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-nginx安装" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/24/nginx安装/" class="article-date">
+  <time datetime="2019-01-24T08:45:03.000Z" itemprop="datePublished">2019-01-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/centos/">centos</a>►<a class="article-category-link" href="/categories/centos/nginx/">nginx</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
+<li>安装依赖</li>
+<li>下载nginx ： <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a></li>
+<li>解压</li>
+<li>检查配置是否健康</li>
+<li>开始安装</li>
+<li>检查是否安装成功，默认安装目录是在/usr/local/nginx</li>
+<li>启动nginx服务</li>
+<li>查看服务是否开启</li>
+<li>使用 <code>$ curl localhost</code> 查看 nginx 欢迎页 </li>
+</ol>
+<p>//////////////////////////////////////////////</p>
+<h5 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum -y install gcc-c++ zlib-devel pcre-devel</span><br></pre></td></tr></table></figure>
+<h5 id="2、下载nginx-：-http-nginx-org-en-download-html"><a href="#2、下载nginx-：-http-nginx-org-en-download-html" class="headerlink" title="2、下载nginx ： http://nginx.org/en/download.html"></a>2、下载nginx ： <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://nginx.org/download/nginx-1.15.8.tar.gz</span><br></pre></td></tr></table></figure>
+<h5 id="3、解压"><a href="#3、解压" class="headerlink" title="3、解压"></a>3、解压</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf nginx-1.15.8.tar.gz</span><br></pre></td></tr></table></figure>
+<p>//////////////////////////////////////////////</p>
+<h5 id="4、检查配置是否健康"><a href="#4、检查配置是否健康" class="headerlink" title="4、检查配置是否健康"></a>4、检查配置是否健康</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure</span><br></pre></td></tr></table></figure>
+<h5 id="5、开始安装"><a href="#5、开始安装" class="headerlink" title="5、开始安装"></a>5、开始安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>//////////////////////////////////////////////</p>
+<h5 id="6、检查是否安装成功，默认安装目录是在-usr-local-nginx"><a href="#6、检查是否安装成功，默认安装目录是在-usr-local-nginx" class="headerlink" title="6、检查是否安装成功，默认安装目录是在/usr/local/nginx"></a>6、检查是否安装成功，默认安装目录是在/usr/local/nginx</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/<span class="built_in">local</span>/nginx/sbin/nginx -t</span><br><span class="line"></span><br><span class="line">nginx: the configuration file /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf <span class="built_in">test</span> is successful</span><br></pre></td></tr></table></figure>
+<h5 id="7、启动nginx服务"><a href="#7、启动nginx服务" class="headerlink" title="7、启动nginx服务"></a>7、启动nginx服务</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/<span class="built_in">local</span>/nginx/sbin/nginx -c /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
+<p>//////////////////////////////////////////////</p>
+<h5 id="8、查看服务是否开启"><a href="#8、查看服务是否开启" class="headerlink" title="8、查看服务是否开启"></a>8、查看服务是否开启</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps -ef | grep nginx</span><br></pre></td></tr></table></figure>
+<h5 id="9、使用-curl-localhost-查看-nginx-欢迎页"><a href="#9、使用-curl-localhost-查看-nginx-欢迎页" class="headerlink" title="9、使用 $ curl localhost 查看 nginx 欢迎页"></a>9、使用 <code>$ curl localhost</code> 查看 nginx 欢迎页</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome to nginx!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body &#123;</span></span><br><span class="line"><span class="undefined">        width: 35em;</span></span><br><span class="line"><span class="undefined">        margin: 0 auto;</span></span><br><span class="line"><span class="undefined">        font-family: Tahoma, Verdana, Arial, sans-serif;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome to nginx!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>If you see this page, the nginx web server is successfully installed and</span><br><span class="line">working. Further configuration is required.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>For online documentation and support please refer to</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://nginx.org/"</span>&gt;</span>nginx.org<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">Commercial support is available at</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://nginx.com/"</span>&gt;</span>nginx.com<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>Thank you for using nginx.<span class="tag">&lt;/<span class="name">em</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/24/nginx安装/1.png" alt="Welcome to nginx!"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjrms7hmv003qfovwngjvurhy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Docker安装" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/24/Docker安装/" class="article-date">
+  <time datetime="2019-01-24T06:20:40.000Z" itemprop="datePublished">2019-01-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
+<li>安装一些基本依赖软件</li>
+<li>为了使用 yum-config-manager 需要先安装一下 yum-utils</li>
+<li>设置稳定版仓库</li>
+<li>更新仓库（可选）</li>
+<li>查看所有仓库中所有docker版本（可选）</li>
+<li>正式下载安装</li>
+<li>启动 (并开机启动)</li>
+<li>检查是否安装成功</li>
+</ol>
+<p>//////////////////////////////////////////////<br>前戏准备<br>//////////////////////////////////////////////</p>
+<h6 id="1、安装一些基本依赖软件"><a href="#1、安装一些基本依赖软件" class="headerlink" title="1、安装一些基本依赖软件"></a>1、安装一些基本依赖软件</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y yum-utilsdevice-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+<h6 id="2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils"><a href="#2、为了使用-yum-config-manager-需要先安装一下这个-yum-utils" class="headerlink" title="2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils"></a>2、为了使用 yum-config-manager 需要先安装一下这个 yum-utils</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install yum-utils</span><br></pre></td></tr></table></figure>
+<h6 id="3、设置稳定版仓库"><a href="#3、设置稳定版仓库" class="headerlink" title="3、设置稳定版仓库"></a>3、设置稳定版仓库</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+<h6 id="4、更新仓库（可选）"><a href="#4、更新仓库（可选）" class="headerlink" title="4、更新仓库（可选）"></a>4、更新仓库（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --<span class="built_in">enable</span> docker-ce-edge</span><br></pre></td></tr></table></figure>
+<p>//////////////////////////////////////////////<br>正式开始<br>//////////////////////////////////////////////</p>
+<h6 id="5、查看所有仓库中所有docker版本（可选）"><a href="#5、查看所有仓库中所有docker版本（可选）" class="headerlink" title="5、查看所有仓库中所有docker版本（可选）"></a>5、查看所有仓库中所有docker版本（可选）</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
+<h6 id="6、正式下载安装"><a href="#6、正式下载安装" class="headerlink" title="6、正式下载安装"></a>6、正式下载安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install docker-ce -y</span><br></pre></td></tr></table></figure>
+<h6 id="7、启动-并开机启动"><a href="#7、启动-并开机启动" class="headerlink" title="7、启动 (并开机启动)"></a>7、启动 (并开机启动)</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start docker</span><br><span class="line">$ sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+<h6 id="8、检查是否安装成功"><a href="#8、检查是否安装成功" class="headerlink" title="8、检查是否安装成功"></a>8、检查是否安装成功</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker -v</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/24/Docker安装/1.png" alt="Docker version 18.09.1"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/24/Docker安装/" data-id="cjrms7hl00001fovwv3w2opak" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-laravel-Eloquent" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/20/laravel-Eloquent/" class="article-date">
+  <time datetime="2019-01-20T14:33:53.000Z" itemprop="datePublished">2019-01-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/php/">php</a>►<a class="article-category-link" href="/categories/php/laravel/">laravel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、数据建模"><a href="#一、数据建模" class="headerlink" title="一、数据建模"></a>一、数据建模</h1><p>创建一个名为 <code>Article</code> 的 Eloquent Model，Laravel 会自动将其与 Article 数据表关联。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan make:model Article</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/20/laravel-Eloquent/1.png" alt="\app\Article.php"></p>
+<hr>
+
+<h1 id="二、tinker-命令行交互"><a href="#二、tinker-命令行交互" class="headerlink" title="二、tinker 命令行交互"></a>二、tinker 命令行交互</h1><p>输入以下命令进入交互模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan tinker</span><br></pre></td></tr></table></figure>
+<h4 id="示例-1-Model与插入数据："><a href="#示例-1-Model与插入数据：" class="headerlink" title="示例 1 - Model与插入数据："></a>示例 1 - Model与插入数据：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$article</span> = new App\Article;</span><br><span class="line">=&gt; App\Article &#123;<span class="comment">#2909&#125;</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;title=<span class="string">'My first Title'</span>;</span><br><span class="line">=&gt; <span class="string">"My first Title"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;content=<span class="string">'content'</span></span><br><span class="line">=&gt; <span class="string">"content"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;published_at=Carbon\Carbon::now();</span><br><span class="line">=&gt; Carbon\Carbon @1547995347 &#123;<span class="comment">#2913</span></span><br><span class="line">     date: 2019-01-20 14:42:27.721241 UTC (+00:00),</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>;</span><br><span class="line">=&gt; App\Article &#123;<span class="comment">#2909</span></span><br><span class="line">     title: <span class="string">"My first Title"</span>,</span><br><span class="line">     content: <span class="string">"content"</span>,</span><br><span class="line">     published_at: Carbon\Carbon @1547995347 &#123;<span class="comment">#2913</span></span><br><span class="line">       date: 2019-01-20 14:42:27.721241 UTC (+00:00),</span><br><span class="line">     &#125;,</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;save();</span><br><span class="line">=&gt; <span class="literal">true</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>代码说明：</p>
+<ul>
+<li><code>$article = new App\Article</code> ： 新建一个 Article Model；</li>
+<li><code>$article-&gt;title=&#39;My first Title&#39;</code>：填充title字段；</li>
+<li><code>$article-&gt;content=&#39;content&#39;</code>：填充content字段；</li>
+<li><code>$article-&gt;published_at=Carbon\Carbon::now()</code>： 使用 <code>Carbon\Carbon</code> 时间库来获取并设置当前时间；</li>
+<li><code>$article</code>：打印出当前的Model；</li>
+<li><code>$article-&gt;save()</code>：保存到数据库，如果返回true则表示成功；</li>
+</ul>
+<p><img src="/2019/01/20/laravel-Eloquent/3.png" alt="Article Model"></p>
+<p><img src="/2019/01/20/laravel-Eloquent/2.png" alt="Successful！！"></p>
+<p>也可以使用 <code>$article-&gt;toArray()</code> 打印出 Model 信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;toArray()</span><br><span class="line">=&gt; [</span><br><span class="line">     <span class="string">"title"</span> =&gt; <span class="string">"My first Title"</span>,</span><br><span class="line">     <span class="string">"content"</span> =&gt; <span class="string">"content"</span>,</span><br><span class="line">     <span class="string">"published_at"</span> =&gt; Carbon\Carbon @1547995347 &#123;<span class="comment">#2913</span></span><br><span class="line">       date: 2019-01-20 14:42:27.721241 UTC (+00:00),</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="string">"updated_at"</span> =&gt; <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     <span class="string">"created_at"</span> =&gt; <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     <span class="string">"id"</span> =&gt; 1,</span><br><span class="line">   ]</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="示例-2-查找数据"><a href="#示例-2-查找数据" class="headerlink" title="示例 2 - 查找数据"></a>示例 2 - 查找数据</h4><p>查找刚刚插入 <code>id</code> 为 <strong>1</strong> 的数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span> = App\Article::find(1);</span><br><span class="line">=&gt; App\Article &#123;<span class="comment">#2924</span></span><br><span class="line">     id: 1,</span><br><span class="line">     title: <span class="string">"My first Title"</span>,</span><br><span class="line">     content: <span class="string">"content"</span>,</span><br><span class="line">     published_at: <span class="string">"2019-01-20 14:42:27"</span>,</span><br><span class="line">     created_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     updated_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     introl: <span class="string">""</span>,</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以使用 <code>App\Article::all()</code> 方法无条件查找所有数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>=App\Article::all()</span><br><span class="line"></span><br><span class="line">=&gt; Illuminate\Database\Eloquent\Collection &#123;<span class="comment">#2924</span></span><br><span class="line">     all: [</span><br><span class="line">       App\Article &#123;<span class="comment">#2906</span></span><br><span class="line">         id: 1,</span><br><span class="line">         title: <span class="string">"My first Title"</span>,</span><br><span class="line">         content: <span class="string">"content"</span>,</span><br><span class="line">         published_at: <span class="string">"2019-01-20 14:42:27"</span>,</span><br><span class="line">         created_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">         updated_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">         introl: <span class="string">""</span>,</span><br><span class="line">       &#125;,</span><br><span class="line">     ],</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="示例-3-更新数据"><a href="#示例-3-更新数据" class="headerlink" title="示例 3 - 更新数据"></a>示例 3 - 更新数据</h4><p>和插入很相似，依然是使用 <code>save()</code> 方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>-&gt;title=<span class="string">"Update"</span>;</span><br><span class="line">=&gt; <span class="string">"Update"</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>-&gt;save();</span><br><span class="line">=&gt; <span class="literal">true</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="示例-4-where-查询"><a href="#示例-4-where-查询" class="headerlink" title="示例 4 - where 查询"></a>示例 4 - where 查询</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>=App\Article::<span class="built_in">where</span>(<span class="string">'content'</span>, <span class="string">'='</span>, <span class="string">'content'</span>)-&gt;get()</span><br><span class="line"></span><br><span class="line">=&gt; Illuminate\Database\Eloquent\Collection &#123;<span class="comment">#2911</span></span><br><span class="line">     all: [</span><br><span class="line">       App\Article &#123;<span class="comment">#2929</span></span><br><span class="line">         id: 1,</span><br><span class="line">         title: <span class="string">"Update"</span>,</span><br><span class="line">         content: <span class="string">"content"</span>,</span><br><span class="line">         published_at: <span class="string">"2019-01-20 23:02:45"</span>,</span><br><span class="line">         created_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">         updated_at: <span class="string">"2019-01-20 15:02:45"</span>,</span><br><span class="line">         introl: <span class="string">""</span>,</span><br><span class="line">       &#125;,</span><br><span class="line">     ],</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p><code>get()</code> 方法代表获取所有行，返回的是一个Collection数据类型。可以理解为一个加强版的数组。</p>
+<p>通常我们只想返回一条数据，那么可以使用 <code>first()</code> 方法，它只会直接返回一个对象：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>=App\Article::<span class="built_in">where</span>(<span class="string">'content'</span>, <span class="string">'='</span>, <span class="string">'content'</span>)-&gt;first()</span><br><span class="line"></span><br><span class="line">=&gt; App\Article &#123;<span class="comment">#2910</span></span><br><span class="line">     id: 1,</span><br><span class="line">     title: <span class="string">"Update"</span>,</span><br><span class="line">     content: <span class="string">"content"</span>,</span><br><span class="line">     published_at: <span class="string">"2019-01-20 23:02:45"</span>,</span><br><span class="line">     created_at: <span class="string">"2019-01-20 14:43:05"</span>,</span><br><span class="line">     updated_at: <span class="string">"2019-01-20 15:02:45"</span>,</span><br><span class="line">     introl: <span class="string">""</span>,</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="variable">$data</span>-&gt;title</span><br><span class="line">=&gt; <span class="string">"Update"</span></span><br></pre></td></tr></table></figure>
+<h4 id="示例-5-create-update"><a href="#示例-5-create-update" class="headerlink" title="示例 5 - create() / update()"></a>示例 5 - <code>create()</code> / <code>update()</code></h4><p>使用 <code>App\Article::create([...])</code> 和 <code>$model-&gt;udate([...])</code> 可以更便捷的创建和更新数据。</p>
+<p>先来 <code>\app\Article.php</code> 中添加代码，设置字段允许被填充：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Model</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Article</span> <span class="keyword">extends</span> <span class="title">Model</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> $fillable = [<span class="string">'title'</span>, <span class="string">'content'</span>, <span class="string">'published_at'</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>必须重新进入命令行交互！！</strong><br><strong>必须重新进入命令行交互！！</strong><br><strong>必须重新进入命令行交互！！</strong></p>
+<p>使用 <code>App\Article::create([...])</code> 来创建数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>=App\Article::create([<span class="string">'title'</span>=&gt;<span class="string">'Second Title'</span>, <span class="string">'content'</span>=&gt;<span class="string">'Second Content'</span>, <span class="string">'published_at'</span>=&gt;Carbon\Carbon::now() ]);</span><br><span class="line"></span><br><span class="line">=&gt; App\Article &#123;<span class="comment">#2913</span></span><br><span class="line">     title: <span class="string">"Second Title"</span>,</span><br><span class="line">     content: <span class="string">"Second Content"</span>,</span><br><span class="line">     published_at: Carbon\Carbon @1547998078 &#123;<span class="comment">#2923</span></span><br><span class="line">       date: 2019-01-20 15:27:58.713977 UTC (+00:00),</span><br><span class="line">     &#125;,</span><br><span class="line">     updated_at: <span class="string">"2019-01-20 15:27:58"</span>,</span><br><span class="line">     created_at: <span class="string">"2019-01-20 15:27:58"</span>,</span><br><span class="line">     id: 2,</span><br><span class="line">   &#125;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>$model-&gt;udate([...])</code> 来更新数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="variable">$article</span>-&gt;update([<span class="string">'title'</span>=&gt;<span class="string">'Change Title'</span>]);</span><br><span class="line">=&gt; <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/20/laravel-Eloquent/" data-id="cjrms7hln000xfovw1ruy82v9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-laravel-migration" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/20/laravel-migration/" class="article-date">
+  <time datetime="2019-01-20T02:46:07.000Z" itemprop="datePublished">2019-01-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/php/">php</a>►<a class="article-category-link" href="/categories/php/laravel/">laravel</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/20/laravel-migration/">Laravel Mysql 数据库配置 与 Migration 基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、MySql-数据库配置"><a href="#一、MySql-数据库配置" class="headerlink" title="一、MySql 数据库配置"></a>一、MySql 数据库配置</h1><p>先来配置一下数据库，打开 Laravel 的环境配置 <code>\.env</code> 文件，简单配置你的数据库信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DB_CONNECTION=mysql</span><br><span class="line">DB_HOST=127.0.0.1</span><br><span class="line">DB_PORT=3306</span><br><span class="line">DB_DATABASE=laravel</span><br><span class="line">DB_USERNAME=root</span><br><span class="line">DB_PASSWORD=root</span><br></pre></td></tr></table></figure>
+<p>再打开数据库配置文件 <code>\config\database.php</code>，检查当前的 Mysql 数据库配置：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="string">'default'</span> =&gt; env(<span class="string">'DB_CONNECTION'</span>, <span class="string">'mysql'</span>),</span><br><span class="line"></span><br><span class="line"><span class="string">'mysql'</span> =&gt; [</span><br><span class="line">    <span class="string">'driver'</span> =&gt; <span class="string">'mysql'</span>,</span><br><span class="line">    <span class="string">'host'</span> =&gt; env(<span class="string">'DB_HOST'</span>),</span><br><span class="line">    <span class="string">'port'</span> =&gt; env(<span class="string">'DB_PORT'</span>),</span><br><span class="line">    <span class="string">'database'</span> =&gt; env(<span class="string">'DB_DATABASE'</span>),</span><br><span class="line">    <span class="string">'username'</span> =&gt; env(<span class="string">'DB_USERNAME'</span>),</span><br><span class="line">    <span class="string">'password'</span> =&gt; env(<span class="string">'DB_PASSWORD'</span>),</span><br><span class="line">    <span class="string">'prefix'</span> =&gt; <span class="string">''</span>,</span><br><span class="line">],</span><br><span class="line"></span><br><span class="line"><span class="comment">// ... otherthing</span></span><br></pre></td></tr></table></figure>
+<hr>
+
+<h1 id="二、migrate-初体验"><a href="#二、migrate-初体验" class="headerlink" title="二、migrate 初体验"></a>二、migrate 初体验</h1><p>Laravel 最强大工具之一：<strong>migration</strong></p>
+<p>如果对 <code>migration</code> 的概念不清晰，可以简单理解为数据库的版本控制工具。有了它我们就可以对数据库进行方便的管理和愉快地开发了。</p>
+<p>找到 <code>\database\migrations\</code>，可以看到Laravel默认帮我们准备了两个 migrations 示例文件。</p>
+<p><img src="/2019/01/20/laravel-migration/1.png" alt="migrations 示例文件"></p>
+<p>我们就来学习和使用一下 <code>2014_10_12_000000_create_users_table.php</code> 文件：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateUsersTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'users'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;increments(<span class="string">'id'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'name'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'email'</span>)-&gt;unique();</span><br><span class="line">            $table-&gt;timestamp(<span class="string">'email_verified_at'</span>)-&gt;nullable();</span><br><span class="line">            $table-&gt;string(<span class="string">'password'</span>);</span><br><span class="line">            $table-&gt;rememberToken();</span><br><span class="line">            $table-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::dropIfExists(<span class="string">'users'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码说明：</p>
+<ul>
+<li>up： 负责创建一个 <code>users</code> 表；</li>
+<li>down： 为了避免重复新建，负责删除 <code>users</code> 表，<strong>但这也说明每次执行都会清空该表的数据</strong>；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan migrate</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/20/laravel-migration/2.png" alt="successfully！！！"></p>
+<p><img src="/2019/01/20/laravel-migration/3.png" alt="Navicat for MySql"></p>
+<hr>
+
+<h1 id="三、创建-migration-文件"><a href="#三、创建-migration-文件" class="headerlink" title="三、创建 migration 文件"></a>三、创建 migration 文件</h1><p>刚刚我们使用了 Laravel 示例的 migration 文件，现在我们新建一个自己的文章表 <code>articles</code>，依然可以通过 <code>artisan</code> 命令来创建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan make:migration create-articles_table --create=articles</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/20/laravel-migration/4.png" alt="Created Migration successfully"></p>
+<p><img src="/2019/01/20/laravel-migration/5.png" alt="2019_01_20_042528_create-articles_table"></p>
+<p>自动生成文件 <code>\database\migrations\2019_01_20_042528_create-articles_table.php</code>，代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateArticlesTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;increments(<span class="string">'id'</span>);</span><br><span class="line">            $table-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::dropIfExists(<span class="string">'articles'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>$table-&gt;timestamps();</code> 建议保留，Laravel 会自动创建并维护 <code>created_at</code> 和 <code>updated_at</code> 字段。</p>
+<p>我们试着添加一些基本字段，代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateArticlesTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;increments(<span class="string">'id'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'title'</span>);</span><br><span class="line">            $table-&gt;text(<span class="string">'content'</span>);</span><br><span class="line">            $table-&gt;timestamp(<span class="string">'published_at'</span>);</span><br><span class="line">            $table-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::dropIfExists(<span class="string">'articles'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再次执行 migrate 命令 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/20/laravel-migration/6.png" alt="New DataTable articles"></p>
+<hr>
+
+<h1 id="四、添加字段"><a href="#四、添加字段" class="headerlink" title="四、添加字段"></a>四、添加字段</h1><p>假设我们现在需要为 <code>articles</code> 表添加一个简介字段 <code>intro</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan make:migration add_intro_column_to_articles --table=articles</span><br></pre></td></tr></table></figure>
+<p><code>\database\migrations\2019_01_20_060259_add_intro_column_to_articles.php</code> 默认代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddIntroColumnToArticles</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::table(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::table(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddIntroColumnToArticles</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::table(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;string(<span class="string">'introl'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::table(<span class="string">'articles'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;dropColumn(<span class="string">'introl'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>又又又执行命令： <code>$ php artisan migrate</code></p>
+<p>刷新数据表 <code>articles</code> ，成功添加了 <code>introl</code> 字段：</p>
+<p><img src="/2019/01/20/laravel-migration/7.png" alt="Add Column introl"></p>
+<p>事实上，如果真的要执行 <code>$table-&gt;dropColumn</code> 需要依赖一个第三方包，这里安装一下吧：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ composer require doctrine/dbal</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/20/laravel-migration/" data-id="cjrms7hls0016fovw5y6vi34c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-laravel-demo3" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/20/laravel-demo3/" class="article-date">
@@ -123,7 +587,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-demo3/" data-id="cjrfrnatc000g6cvw42d2ngep" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/20/laravel-demo3/" data-id="cjrms7hlp0010fovwenahfdjv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -195,7 +659,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/19/laravel-demo2/" data-id="cjrfrnatk000q6cvw1eiv2sig" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/19/laravel-demo2/" data-id="cjrms7hlq0014fovwqekeu5ye" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -245,154 +709,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/19/laravel-demo1/" data-id="cjrfrnatl000s6cvwnz34t4oy" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/19/laravel-demo1/" data-id="cjrms7hll000sfovw9evgf6p5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-laravel安装与启动" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/19/laravel安装与启动/" class="article-date">
-  <time datetime="2019-01-19T12:51:42.000Z" itemprop="datePublished">2019-01-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/php/">php</a>►<a class="article-category-link" href="/categories/php/laravel/">laravel</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/19/laravel安装与启动/">laravel 安装与启动</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1、使用-composer-安装-laravel"><a href="#1、使用-composer-安装-laravel" class="headerlink" title="1、使用 composer 安装 laravel"></a>1、使用 composer 安装 laravel</h2><p><a href="https://packagist.org/packages/laravel/laravel" target="_blank" rel="noopener">https://packagist.org/packages/laravel/laravel</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ composer create-project laravel/laravel laravel5</span><br></pre></td></tr></table></figure>
-<p>&#8195;&#8195;</p>
-<h2 id="2、启动-laravel"><a href="#2、启动-laravel" class="headerlink" title="2、启动 laravel"></a>2、启动 laravel</h2><h5 id="方式一：php-内置服务器"><a href="#方式一：php-内置服务器" class="headerlink" title="方式一：php 内置服务器"></a>方式一：php 内置服务器</h5><p>指定 public 文件夹即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php -S localhost:8000 -t public</span><br></pre></td></tr></table></figure>
-<h5 id="方式二：使用laravel提供的命令行工具artisan"><a href="#方式二：使用laravel提供的命令行工具artisan" class="headerlink" title="方式二：使用laravel提供的命令行工具artisan"></a>方式二：使用laravel提供的命令行工具artisan</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php artisan serve</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/19/laravel安装与启动/laravel-start/2.png" alt=""></p>
-<p>预览 <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a> ，效果如下：</p>
-<p><img src="/2019/01/19/laravel安装与启动/laravel-start/1.png" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/19/laravel安装与启动/" data-id="cjrfrnati000m6cvwiw84q9p4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo插入本地图片" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/19/hexo插入本地图片/" class="article-date">
-  <time datetime="2019-01-19T12:06:45.000Z" itemprop="datePublished">2019-01-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/hexo/">hexo</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/19/hexo插入本地图片/">hexo插入本地图片</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>安装 <a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">hexo-asset-image</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-<p><strong>_config.yml</strong> 开启 <strong>post_asset_folder: true</strong></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。</p>
-<p><img src="/2019/01/19/hexo插入本地图片/3.png" alt=""></p>
-<p>只需要使用该语句即可插入图片</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](test-img/1.png)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/19/hexo插入本地图片/" data-id="cjrfrnat600096cvwk0pacsy3" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-composer疑难杂症" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/19/composer疑难杂症/" class="article-date">
-  <time datetime="2019-01-19T11:27:19.000Z" itemprop="datePublished">2019-01-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/cpmposer/">cpmposer</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/19/composer疑难杂症/">composer疑难杂症</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="The-openssl-extension-is-required-for-SSL-TLS-protection"><a href="#The-openssl-extension-is-required-for-SSL-TLS-protection" class="headerlink" title="The openssl extension is required for SSL/TLS protection"></a>The openssl extension is required for SSL/TLS protection</h2><p><img src="/2019/01/19/composer疑难杂症/1.png" alt=""></p>
-<p>解决方法：在php.ini文件中打开php_openssl扩展 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extension=php_openssl.dll</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/19/composer疑难杂症/" data-id="cjrfrnat300056cvw3mzjqssz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
 
     </footer>
   </div>
@@ -405,7 +725,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -416,7 +736,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -426,7 +746,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
     </div>
   </div>
 
@@ -437,6 +757,34 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟3/">《Docker每天五分钟》三：hello-world、初识dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟2/">《Docker每天五分钟》二：切换 DaoCloud 镜像源</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
+          </li>
         
           <li>
             <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
@@ -490,18 +838,6 @@
             <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
           </li>
         
-          <li>
-            <a href="/2019/01/19/laravel安装与启动/">laravel 安装与启动</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/19/hexo插入本地图片/">hexo插入本地图片</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/19/composer疑难杂症/">composer疑难杂症</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -511,7 +847,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 10px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+      <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12.5px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
     </div>
   </div>
 
@@ -520,7 +856,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget widget-archives">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
@@ -563,7 +899,7 @@
 
 <script src="/js/script.js"></script>
 <script src="/js/Lee.js"></script>
-<script src="/js/fireworks.js"></script>
+
 
 
   </div>

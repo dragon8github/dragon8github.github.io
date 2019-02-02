@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>《Docker每天五分钟》五：docker commit 制作镜像 | cy&#39;lee 贝尔塔猫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="docker commit 命令是创建新镜像最直接的方法，其过程包含三个步骤：  运行容器 修改容器 将容器保存为新镜像  （1）运行容器1234567891011[root@10-255-0-217 dc2-user]# docker run -it centosUnable to find image &apos;centos:latest&apos; locallylatest: Pulling from">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Docker每天五分钟》五：docker commit 制作镜像">
+<meta property="og:url" content="http://cylee.top/2019/02/02/Docker每天五分钟5/index.html">
+<meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:description" content="docker commit 命令是创建新镜像最直接的方法，其过程包含三个步骤：  运行容器 修改容器 将容器保存为新镜像  （1）运行容器1234567891011[root@10-255-0-217 dc2-user]# docker run -it centosUnable to find image &apos;centos:latest&apos; locallylatest: Pulling from">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://cylee.top/2019/02/02/Docker每天五分钟5/1.png">
+<meta property="og:image" content="http://cylee.top/2019/02/02/Docker每天五分钟5/2.png">
+<meta property="og:updated_time" content="2019-02-02T02:32:33.690Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Docker每天五分钟》五：docker commit 制作镜像">
+<meta name="twitter:description" content="docker commit 命令是创建新镜像最直接的方法，其过程包含三个步骤：  运行容器 修改容器 将容器保存为新镜像  （1）运行容器1234567891011[root@10-255-0-217 dc2-user]# docker run -it centosUnable to find image &apos;centos:latest&apos; locallylatest: Pulling from">
+<meta name="twitter:image" content="http://cylee.top/2019/02/02/Docker每天五分钟5/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cy&#39;lee 贝尔塔猫</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">前端哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Docker每天五分钟5" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/02/Docker每天五分钟5/" class="article-date">
+  <time datetime="2019-02-02T01:05:18.000Z" itemprop="datePublished">2019-02-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      《Docker每天五分钟》五：docker commit 制作镜像
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>docker commit 命令是创建新镜像最直接的方法，其过程包含三个步骤：</p>
+<ul>
+<li>运行容器</li>
+<li>修改容器</li>
+<li>将容器保存为新镜像</li>
+</ul>
+<h6 id="（1）运行容器"><a href="#（1）运行容器" class="headerlink" title="（1）运行容器"></a>（1）运行容器</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker run -it centos</span></span><br><span class="line"></span><br><span class="line">Unable to find image <span class="string">'centos:latest'</span> locally</span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pulling fs layer </span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pull complete </span><br><span class="line">Digest: sha256:184e5f35598e333bfa7de10d8fb1cebb5ee4df5bc0f970bf2b1e7c7345136426</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> centos:latest</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>自动下载了最新版本的 Centos 镜像，并且运行和进入了容器（ea9b3dcd88ad）。</p>
+<h6 id="2-修改容器"><a href="#2-修改容器" class="headerlink" title="(2) 修改容器"></a>(2) 修改容器</h6><p>这里示例安装 vim </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># vim</span></span><br><span class="line">bash: vim: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># yum install -y vim</span></span><br><span class="line">...</span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
+<h6 id="3-保存为新镜像"><a href="#3-保存为新镜像" class="headerlink" title="(3) 保存为新镜像"></a>(3) 保存为新镜像</h6><p>让容器继续运行着，然后 <code>新建窗口</code> 来查看当前运行的镜像。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker ps</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/2019/02/02/Docker每天五分钟5/1.png" alt="silly_aryabhata"></p>
+<p><code>silly_aryabhata</code> 是 Docker 为我们的容器随机分配的名字。</p>
+<p>执行 <code>docker commit</code> 命令将容器保存为镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker commit silly_aryabhata centos-with-vi</span></span><br><span class="line"></span><br><span class="line">sha256:3badf3a0b2d0a59bd3cd106e70d088c32da2e59676746e7613a30f7eb5d3e2b0</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/02/02/Docker每天五分钟5/2.png" alt="centos-with-vi"></p>
+<p>对比两个镜像，从 <code>SIZE</code> 上看到镜像因为安装了 <code>vim</code> 软件而变大了。</p>
+<hr>
+
+<p>以上演示了如何用 <code>docker commit</code> 创建新镜像。</p>
+<blockquote>
+<p>然而，Docker 并不建议用户通过 <code>docker commit</code> 这种方式构建镜像。</p>
+</blockquote>
+<h3 id="原因如下："><a href="#原因如下：" class="headerlink" title="原因如下："></a>原因如下：</h3><ol>
+<li>这是一种手工创建镜像的方式，容易出错，效率低且重复性弱。比如要在ubuntu镜像中也加入vim，还得重复前面所有步骤。</li>
+<li>使用者并不知道镜像是如何创建出来的，里面提供什么服务，包含什么程序，里面是否有恶意程序？也就是说无法对镜像进行审计，存在安全隐患。</li>
+</ol>
+<p>既然 <code>docker commit</code> 不是推荐的方法，我们为什么还要花时间学习呢？</p>
+<blockquote>
+<p>即便是用 dockerfile（推荐方法）构建镜像，底层也是 <code>docker commit</code> 一层一层构建镜像的。学习 <code>docker commit</code> 能够帮助我们更加深入的理解构建过程和镜像的分层结构。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjrms7hlg000lfovwjzm5ztlv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/02/Docker每天五分钟6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          《Docker每天五分钟》六：第一个 Dockerfile
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/01/碎片化知识广场/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">碎片化知识广场</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget widget-category">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget widget-tag">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget widget-posts">
+      <ul>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟3/">《Docker每天五分钟》三：hello-world、初识dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟2/">《Docker每天五分钟》二：切换 DaoCloud 镜像源</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/hexo的认知/">hexo的认知</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Docker安装/">Centos 7 Docker 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-migration/">Laravel Mysql 数据库配置 与 Migration 基础</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/laravel-demo3/">Laravel 入门示例（三）：常用的blade语法</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget widget-tagcloud">
+      <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12.5px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget widget-archives">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <canvas class="fireworks" style="position: fixed; left: 0px; top: 0px; z-index: 1; pointer-events: none;" width="2880" height="832"></canvas>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 贝尔塔猫<br>
+      Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
+
+      <div class="fr">按下 [Home] 键返回顶部</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/Lee.js"></script>
+
+
+
+  </div>
+</body>
+</html>
