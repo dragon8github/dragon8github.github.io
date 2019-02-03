@@ -28,6 +28,15 @@ input {
 .fr {
   float: right;
 }
+.js-go-top {
+  cursor: pointer;
+}
+.js-go-top:hover {
+  opacity: 0.8;
+}
+.article-entry td {
+  text-align: left !important;
+}
 #header {
   height: 200px !important;
 }
@@ -66,8 +75,10 @@ input {
 }
 .article-entry blockquote p {
   margin: auto !important;
-  font-weight: bold;
-  color: #ffc60b;
+  color: #ff9b00;
+}
+.article-entry blockquote code {
+  color: #8a2be2;
 }
 article.is-index {
   position: relative;

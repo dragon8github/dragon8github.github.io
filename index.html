@@ -64,6 +64,86 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Docker每天五分钟7" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/03/Docker每天五分钟7/" class="article-date">
+  <time datetime="2019-02-03T11:35:05.000Z" itemprop="datePublished">2019-02-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>总结一下 <code>dockerfile</code> 的构建镜像的过程：</p>
+<ol>
+<li>从 base 镜像运行一个容器。</li>
+<li>执行一条指令，对容器做修改。</li>
+<li>执行类似 <code>docker commit</code> 的操作，生成一个新的镜像层。</li>
+<li>Docker 再基于刚刚提交的镜像运行一个新容器。</li>
+<li>重复 2 ~ 4 步，直到 <code>dockerfile</code> 中所有的指令执行完毕。</li>
+</ol>
+<p>从这个过程可以看出，<strong>如果 <code>dockerfile</code> 由于某种原因执行到某个指令失败了，我们也能够得到前一个指令成功执行构建出的镜像。</strong></p>
+<p>这样当我们修复完bug再次执行构建的时候，也能依靠docker的缓存特性跳过已完成的镜像。这对开发和调试 <code>dockerfile</code> 是非常友好且有帮助的。我们可以通过控制台的打印和测试，快速定位错误和分析原因。</p>
+<hr>
+
+<p>我们来看一个调试示例，以 buysbox 为 base 镜像：</p>
+<blockquote>
+<p>BusyBox 是一个集成了三百多个最常用Linux命令和工具的软件。BusyBox 包含了一些简单的工具，例如ls、cat和echo等等，还包含了一些更大、更复杂的工具，例grep、find、mount以及telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。</p>
+</blockquote>
+<p>新建一个 <code>Dockerfile</code> 和一个测试文件 <code>testfile</code>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># echo test &gt; testfile</span></span><br><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># vim Dockerfile</span></span><br></pre></td></tr></table></figure></p>
+<p>Dockerfile 内容如下：</p>
+<blockquote>
+<p>FROM busybox<br>RUN touch tmpfile<br>RUN /bin/bash -c echo “continue to build…”<br>COPY testfile /</p>
+</blockquote>
+<p>开始构建调试<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker build -t image-debug .</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/2019/02/03/Docker每天五分钟7/1.png" alt="/bin/sh: /bin/bash: not found"></p>
+<p>我们可以轻松发现在执行第三句指令： <code>RUN /bin/bash -c echo &quot;continue to build...&quot;</code> 的时候发生了异常，</p>
+<p>错误信息是: <code>/bin/sh: /bin/bash: not found</code></p>
+<p>很显然我们得知了 buysbox 系统中不包含 /bin/bash 程序。然后再进一步的修正。</p>
+<hr>
+
+<p>上述这种错误是比较简单且显而易见的，大部分的bug都是难以肉眼观察，我们希望进一步的调试。</p>
+<p>根据 <code>Dockerfile</code> 构建镜像的特性，尽管由于某种原因执行到某个指令失败了，我们也能够得到前一个指令成功执行构建出的镜像。</p>
+<p>在此例子中，就是由 <code>RUN touch tmpfile</code> 指令构成的镜像 <code>6fa9f3938b8b</code>：</p>
+<p><img src="/2019/02/03/Docker每天五分钟7/2.png" alt="RUN touch tmpfile"></p>
+<p>我们也可以从 <code>docker images</code> 中查看最后成功的镜像：</p>
+<p><img src="/2019/02/03/Docker每天五分钟7/3.png" alt="docker images"></p>
+<p>然后我们进入镜像之中进一步的操作体验和调试：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker run -it 6fa9f3938b8b</span></span><br><span class="line">/ <span class="comment"># /bin/bash -c echo "continue to build..."</span></span><br><span class="line">sh: /bin/bash: not found</span><br><span class="line">/ <span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<p>依然能得出 <code>/bin/bash: not found</code> 的错误定位结果。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjrp2xmyd000kzgvw5kzgxpyc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Docker每天五分钟6" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/02/Docker每天五分钟6/" class="article-date">
@@ -98,17 +178,22 @@
 <blockquote>
 <p>FROM centos<br>RUN yum install -y vim</p>
 </blockquote>
-<p>开始构建，请注意最后一个<code>.</code> 它指明在当前路径寻找 Dockerfile<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t centos-with-vim .</span><br></pre></td></tr></table></figure></p>
+<p>开始构建</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t centos-with-vim .</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-t：指明镜像的名字，该示例为 <code>centos-with-vim</code>；</li>
+<li>请注意最后一个<code>.</code> 它指明在当前路径寻找 Dockerfile；</li>
+</ul>
 <p>经过漫长的安装之后。我们查看一下镜像列表 <code>$ docker images</code>:</p>
 <p><img src="/2019/02/02/Docker每天五分钟6/1.png" alt="docker images"></p>
-<p>可以看到 Docker 分为了两个镜像： <code>centos</code> 和 <code>centos-with-vim</code>。</p>
+<h3 id="docker-的缓存特性："><a href="#docker-的缓存特性：" class="headerlink" title="docker 的缓存特性："></a>docker 的<code>缓存</code>特性：</h3><p>可以看到 Docker 分为了两个镜像： <code>centos</code> 和 <code>centos-with-vim</code>。</p>
 <p>其中 <code>centos</code> 镜像我们称为base镜像。而 <code>centos-with-vim</code> 就是基于base镜像构建的。</p>
-<p>如果在构建之前你的本地镜像已经存在base镜像。那么会跳过下载直接继承该镜像。这也是 docker 的重要特性。</p>
+<p>如果在构建之前你的本地镜像已经存在base镜像。那么会直接使用，无须重新下载和构建。这也是 docker 的重要<code>缓存</code>特性。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjrmusyup0049fovwyugd5oci" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjrp2xmy8000czgvwj1aiwu7n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -183,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjrms7hlg000lfovwjzm5ztlv" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjrp2xmyb000hzgvwi8mww935" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -225,7 +310,7 @@
 
 <h6 id="1-如何调试-node-modules-中的代码？"><a href="#1-如何调试-node-modules-中的代码？" class="headerlink" title="(1) 如何调试 node_modules 中的代码？"></a>(1) 如何调试 node_modules 中的代码？</h6><p>如果你尝试直接修改 <code>node_modules</code> 中的源码，如加上断点 <code>debugger;</code> 或者 打印 <code>console.log</code> 是没有效果的。</p>
 <p>这是为什么？</p>
-<p>这是因为你引用的是它编译好的内容。（通常在目录下 <code>package.json</code> 中 <code>main</code> 字段指向）。而你修改的是它的源码，并没有实时编译。当然你可以修改源码后重新编译他们，但没什么必要。这样很容易玩崩……</p>
+<p>这是因为你引用的是它编译好的内容。（通常在目录下 <code>package.json</code> 中 <code>main</code> 字段指向）。而你修改的是它的源码，并没有实时编译。当然你可以修改源码后重新编译他们，但没什么必要。这样很容易玩崩……<em>(:3」∠)</em></p>
 <blockquote>
 <p>（仔细想想本来就不可能实时编译 <code>node_modules</code> 中所有的依赖。平时开发 <code>webpack</code> 热编译的 <code>src</code> 下的文件都需要耗费几秒钟了。更不可能去兼顾编译 <code>node_modules</code> 中的内容）</p>
 </blockquote>
@@ -235,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjrms7hlv001cfovwjkzscacp" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjrp2xmyv001pzgvwkzkcr2ku" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li></ul>
@@ -318,7 +403,11 @@
 </tr>
 <tr>
 <td>$ docker build -t &lt;新建容器名&gt; .</td>
-<td style="text-align:center">通过 Dockerfile 构建镜像，请注意最后一个<code>.</code> 指明在当前路径寻找 Dockerfile</td>
+<td style="text-align:center">通过 Dockerfile 构建镜像，<br>请注意最后一个<code>.</code> 指明在当前路径寻找 Dockerfile</td>
+</tr>
+<tr>
+<td>$ docker history &lt;镜像&gt;</td>
+<td style="text-align:center">查看镜像的构建层级</td>
 </tr>
 </tbody>
 </table>
@@ -326,7 +415,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjrms7hl60006fovwogaounk8" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjrp2xmy50006zgvwdei5pc3o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -381,7 +470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjrms7hl80009fovwtwicdugh" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjrp2xmy20004zgvweeghj8u8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -431,7 +520,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjrms7hl50005fovw9tclh5ih" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjrp2xmy6000azgvwyffa1d13" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -483,7 +572,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjrms7hl30004fovw6owawbid" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjrp2xmxv0000zgvwrux907wb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -566,7 +655,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjrms7hlc000gfovw7ke3z1mg" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjrp2xmyf000pzgvw83lgwexy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -646,63 +735,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjrms7hlh000mfovwqowffl2r" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjrp2xmyn0017zgvwpfdpkvkl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-网页无法播放MP4的解决方案" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/25/网页无法播放MP4的解决方案/" class="article-date">
-  <time datetime="2019-01-25T06:51:40.000Z" itemprop="datePublished">2019-01-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/HTML/">HTML</a>►<a class="article-category-link" href="/categories/HTML/video/">video</a>►<a class="article-category-link" href="/categories/HTML/video/MP4/">MP4</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-<h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
-<li>下载 <code>格式工厂</code></li>
-<li>选择 MP4 导入你需要转换的视频</li>
-<li>右键列表中的视频选择 <code>输出配置</code>，选择 <code>视频编辑：AVC（H264）</code></li>
-<li>点击开始</li>
-</ol>
-<p><img src="/2019/01/25/网页无法播放MP4的解决方案/1.png" alt="网页无法播放MP4的解决方案"></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    #myVideo &#123;</span></span><br><span class="line"><span class="undefined">        position: fixed;</span></span><br><span class="line"><span class="undefined">        left: 0;</span></span><br><span class="line"><span class="undefined">        right: 0;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        z-index: 199307100337;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">video</span> <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span> <span class="attr">id</span>=<span class="string">"myVideo"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"./saber.mp4"</span> <span class="attr">type</span>=<span class="string">"video/mp4"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/25/网页无法播放MP4的解决方案/2.png" alt="saber.mp4"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjrms7hmx003rfovwu6mxxtoj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MP4/">MP4</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/video/">video</a></li></ul>
 
     </footer>
   </div>
@@ -747,6 +783,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
+          </li>
         
           <li>
             <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
@@ -824,10 +864,6 @@
             <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
           </li>
         
-          <li>
-            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -837,7 +873,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12.5px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+      <a href="/tags/Docker/" style="font-size: 18px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 14px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
     </div>
   </div>
 
@@ -864,7 +900,7 @@
       &copy; 2019 贝尔塔猫<br>
       Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
 
-      <div class="fr">按下 [Home] 键返回顶部</div>
+      <div class="fr js-go-top">按下 [Home] 键返回顶部</div>
     </div>
   </div>
 </footer>

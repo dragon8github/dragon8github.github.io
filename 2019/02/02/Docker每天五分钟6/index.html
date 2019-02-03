@@ -7,19 +7,19 @@
   
   <title>《Docker每天五分钟》六：第一个 Dockerfile | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Dockerfile 是一个文本文件，记录了镜像构建的所有步骤。 1$ vim Dockerfile Dockerfile 内容如下：  FROM centosRUN yum install -y vim  开始构建，请注意最后一个. 它指明在当前路径寻找 Dockerfile1$ docker build -t centos-with-vim . 经过漫长的安装之后。我们查看一下镜像列表 $">
+  <meta name="description" content="Dockerfile 是一个文本文件，记录了镜像构建的所有步骤。 1$ vim Dockerfile Dockerfile 内容如下：  FROM centosRUN yum install -y vim  开始构建 1$ docker build -t centos-with-vim .  -t：指明镜像的名字，该示例为 centos-with-vim； 请注意最后一个. 它指明在当前路径寻">
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Docker每天五分钟》六：第一个 Dockerfile">
 <meta property="og:url" content="http://cylee.top/2019/02/02/Docker每天五分钟6/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="Dockerfile 是一个文本文件，记录了镜像构建的所有步骤。 1$ vim Dockerfile Dockerfile 内容如下：  FROM centosRUN yum install -y vim  开始构建，请注意最后一个. 它指明在当前路径寻找 Dockerfile1$ docker build -t centos-with-vim . 经过漫长的安装之后。我们查看一下镜像列表 $">
+<meta property="og:description" content="Dockerfile 是一个文本文件，记录了镜像构建的所有步骤。 1$ vim Dockerfile Dockerfile 内容如下：  FROM centosRUN yum install -y vim  开始构建 1$ docker build -t centos-with-vim .  -t：指明镜像的名字，该示例为 centos-with-vim； 请注意最后一个. 它指明在当前路径寻">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://cylee.top/2019/02/02/Docker每天五分钟6/1.png">
-<meta property="og:updated_time" content="2019-02-02T03:31:16.892Z">
+<meta property="og:updated_time" content="2019-02-03T11:25:23.867Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Docker每天五分钟》六：第一个 Dockerfile">
-<meta name="twitter:description" content="Dockerfile 是一个文本文件，记录了镜像构建的所有步骤。 1$ vim Dockerfile Dockerfile 内容如下：  FROM centosRUN yum install -y vim  开始构建，请注意最后一个. 它指明在当前路径寻找 Dockerfile1$ docker build -t centos-with-vim . 经过漫长的安装之后。我们查看一下镜像列表 $">
+<meta name="twitter:description" content="Dockerfile 是一个文本文件，记录了镜像构建的所有步骤。 1$ vim Dockerfile Dockerfile 内容如下：  FROM centosRUN yum install -y vim  开始构建 1$ docker build -t centos-with-vim .  -t：指明镜像的名字，该示例为 centos-with-vim； 请注意最后一个. 它指明在当前路径寻">
 <meta name="twitter:image" content="http://cylee.top/2019/02/02/Docker每天五分钟6/1.png">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
@@ -99,17 +99,22 @@
 <blockquote>
 <p>FROM centos<br>RUN yum install -y vim</p>
 </blockquote>
-<p>开始构建，请注意最后一个<code>.</code> 它指明在当前路径寻找 Dockerfile<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t centos-with-vim .</span><br></pre></td></tr></table></figure></p>
+<p>开始构建</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t centos-with-vim .</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-t：指明镜像的名字，该示例为 <code>centos-with-vim</code>；</li>
+<li>请注意最后一个<code>.</code> 它指明在当前路径寻找 Dockerfile；</li>
+</ul>
 <p>经过漫长的安装之后。我们查看一下镜像列表 <code>$ docker images</code>:</p>
 <p><img src="/2019/02/02/Docker每天五分钟6/1.png" alt="docker images"></p>
-<p>可以看到 Docker 分为了两个镜像： <code>centos</code> 和 <code>centos-with-vim</code>。</p>
+<h3 id="docker-的缓存特性："><a href="#docker-的缓存特性：" class="headerlink" title="docker 的缓存特性："></a>docker 的<code>缓存</code>特性：</h3><p>可以看到 Docker 分为了两个镜像： <code>centos</code> 和 <code>centos-with-vim</code>。</p>
 <p>其中 <code>centos</code> 镜像我们称为base镜像。而 <code>centos-with-vim</code> 就是基于base镜像构建的。</p>
-<p>如果在构建之前你的本地镜像已经存在base镜像。那么会跳过下载直接继承该镜像。这也是 docker 的重要特性。</p>
+<p>如果在构建之前你的本地镜像已经存在base镜像。那么会直接使用，无须重新下载和构建。这也是 docker 的重要<code>缓存</code>特性。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjrmusyup0049fovwyugd5oci" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjrp2xmy8000czgvwj1aiwu7n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -119,6 +124,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/02/03/Docker每天五分钟7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          《Docker每天五分钟》七：调试 dockerfile
+        
+      </div>
+    </a>
   
   
     <a href="/2019/02/02/Docker每天五分钟5/" id="article-nav-older" class="article-nav-link-wrap">
@@ -160,6 +174,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
+          </li>
         
           <li>
             <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
@@ -237,10 +255,6 @@
             <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
           </li>
         
-          <li>
-            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -250,7 +264,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12.5px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+      <a href="/tags/Docker/" style="font-size: 18px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 14px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
     </div>
   </div>
 
@@ -277,7 +291,7 @@
       &copy; 2019 贝尔塔猫<br>
       Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
 
-      <div class="fr">按下 [Home] 键返回顶部</div>
+      <div class="fr js-go-top">按下 [Home] 键返回顶部</div>
     </div>
   </div>
 </footer>

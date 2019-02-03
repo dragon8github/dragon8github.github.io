@@ -6,7 +6,7 @@ $(function() {
     // uuid 生成器
     var MdUuid =function () {
         return Math.random().toString(36).slice(4)  
-    } 
+    }
 
     // 参数标记缓存器
     var memoized = function (fn) {
@@ -95,7 +95,7 @@ $(function() {
 
     var render = function (data) {
         // 生成list
-        var listHTML = getCacheListHtmlByfilter('', data, whileTrue);
+        var listHTML = getCacheListHtmlByfilter('', data, whileTrue)
 
         // 最终的dom
         var $myPanel = $('<div class="myPanel" id="' + PANEL_ID + '"">\
@@ -116,6 +116,12 @@ $(function() {
 
         // 聚焦文本框，绑定keyup搜索
         $('.myPanel__header--input').focus().on('input', search)
+
+        // hover
+        $('.myPanel__body--li').mouseover(function () {
+            $('.myPanel__body--li').removeClass('is-active')
+            $('.myPanel__header--input').focus()
+        })
 
         // 美化滚动条
         $('.myPanel__body').niceScroll(niceScrollConfig())
@@ -233,5 +239,25 @@ $(function() {
     $('article .article-inner').niceScroll(niceScrollConfig())
 
     // 页面滚动条美化
-    $('body').niceScroll(niceScrollConfig({ autohidemode: false }))
+    // $('body').niceScroll(niceScrollConfig({ autohidemode: false }))
+
+    //////////////////////////////////////////////
+    // 回到头部
+    //////////////////////////////////////////////
+    var __GO_TOP_TIMER__ = null;
+    var goTop = function() {
+        cancelAnimationFrame(__GO_TOP_TIMER__);
+        __GO_TOP_TIMER__ = requestAnimationFrame(function fn() {
+            var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+            if (oTop > 0) {
+                document.body.scrollTop = document.documentElement.scrollTop = oTop - 500;
+                __GO_TOP_TIMER__ = requestAnimationFrame(fn);
+            } else {
+                cancelAnimationFrame(__GO_TOP_TIMER__);
+            }
+        });
+    }
+    $('.js-go-top').click(function (e) {
+        goTop()
+    });
 })

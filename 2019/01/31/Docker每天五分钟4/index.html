@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
 <meta property="og:description" content="命令 功能     $ docker images 查看所有镜像   $ docker ps -a 查看所有容器   $ docker run -it &amp;lt;镜像&amp;gt; 运行本地镜像，如果镜像不存在则下载最新版本   $ docker exec -it &amp;lt;已启动容器&amp;gt; /bin/bash 以交互的方式进入已启动的容器内部   $ docker stop &amp;lt;容器&amp;g">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-02T03:00:01.476Z">
+<meta property="og:updated_time" content="2019-02-03T11:11:57.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Docker每天五分钟》四：常用api">
 <meta name="twitter:description" content="命令 功能     $ docker images 查看所有镜像   $ docker ps -a 查看所有容器   $ docker run -it &amp;lt;镜像&amp;gt; 运行本地镜像，如果镜像不存在则下载最新版本   $ docker exec -it &amp;lt;已启动容器&amp;gt; /bin/bash 以交互的方式进入已启动的容器内部   $ docker stop &amp;lt;容器&amp;g">
@@ -134,7 +134,11 @@
 </tr>
 <tr>
 <td>$ docker build -t &lt;新建容器名&gt; .</td>
-<td style="text-align:center">通过 Dockerfile 构建镜像，请注意最后一个<code>.</code> 指明在当前路径寻找 Dockerfile</td>
+<td style="text-align:center">通过 Dockerfile 构建镜像，<br>请注意最后一个<code>.</code> 指明在当前路径寻找 Dockerfile</td>
+</tr>
+<tr>
+<td>$ docker history &lt;镜像&gt;</td>
+<td style="text-align:center">查看镜像的构建层级</td>
 </tr>
 </tbody>
 </table>
@@ -142,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjrms7hl60006fovwogaounk8" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjrp2xmy50006zgvwdei5pc3o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -202,6 +206,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
+          </li>
         
           <li>
             <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
@@ -279,10 +287,6 @@
             <a href="/2019/01/19/laravel-demo2/">Laravel 入门示例（二）：初识控制器与视图</a>
           </li>
         
-          <li>
-            <a href="/2019/01/19/laravel-demo1/">Laravel 入门示例（一）：初识控制器与路由</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -292,7 +296,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 15px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12.5px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12.5px;">hexo</a> <a href="/tags/laravel/" style="font-size: 17.5px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12.5px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
+      <a href="/tags/Docker/" style="font-size: 18px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/centos/" style="font-size: 14px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 12px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16px;">laravel</a> <a href="/tags/nginx/" style="font-size: 12px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a>
     </div>
   </div>
 
@@ -319,7 +323,7 @@
       &copy; 2019 贝尔塔猫<br>
       Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
 
-      <div class="fr">按下 [Home] 键返回顶部</div>
+      <div class="fr js-go-top">按下 [Home] 键返回顶部</div>
     </div>
   </div>
 </footer>
