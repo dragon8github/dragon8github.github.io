@@ -26,6 +26,10 @@ input {
 .article-entry td {
   text-align: left !important;
 }
+.article-entry td:first-child {
+  padding-right: 30px !important;
+  white-space: nowrap;
+}
 #header {
   height: 200px !important;
 }
@@ -126,6 +130,9 @@ article.is-index .article-inner {
   height: 350px;
   box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
   overflow: hidden;
+}
+.widget:hover {
+  background: none;
 }
 .myPanel {
   position: fixed;

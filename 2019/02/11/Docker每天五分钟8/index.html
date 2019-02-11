@@ -5,19 +5,20 @@
   
 
   
-  <title>Category: HTML | cy&#39;lee 贝尔塔猫</title>
+  <title>《Docker每天五分钟》八：Dockerfile 中的命令三兄贵 | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="贝尔塔猫,前端,web,Vue,React">
-<meta name="keywords" content="贝尔塔猫,前端,web,Vue,React">
-<meta property="og:type" content="website">
-<meta property="og:title" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:url" content="http://cylee.top/categories/HTML/index.html">
+  <meta name="description" content="RUN vs CMD vs ENTRYPOINT简单地说：（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 $ docker run 后面跟的命令行参数替换。比如 $ docker run -it [image] /bash/bin， 那么 CMD 指令会被忽略掉。（3）ENTRYPOINT：配置容器启动">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Docker每天五分钟》八：Dockerfile 中的命令三兄贵">
+<meta property="og:url" content="http://cylee.top/2019/02/11/Docker每天五分钟8/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="贝尔塔猫,前端,web,Vue,React">
+<meta property="og:description" content="RUN vs CMD vs ENTRYPOINT简单地说：（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 $ docker run 后面跟的命令行参数替换。比如 $ docker run -it [image] /bash/bin， 那么 CMD 指令会被忽略掉。（3）ENTRYPOINT：配置容器启动">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-02-11T15:02:46.720Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cy&#39;lee 贝尔塔猫">
-<meta name="twitter:description" content="贝尔塔猫,前端,web,Vue,React">
+<meta name="twitter:title" content="《Docker每天五分钟》八：Dockerfile 中的命令三兄贵">
+<meta name="twitter:description" content="RUN vs CMD vs ENTRYPOINT简单地说：（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 $ docker run 后面跟的命令行参数替换。比如 $ docker run -it [image] /bash/bin， 那么 CMD 指令会被忽略掉。（3）ENTRYPOINT：配置容器启动">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
   
@@ -62,40 +63,98 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/25/网页无法播放MP4的解决方案/" class="archive-article-date">
-  <time datetime="2019-01-25T06:51:40.000Z" itemprop="datePublished">Jan 25</time>
+        <section id="main"><article id="post-Docker每天五分钟8" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/11/Docker每天五分钟8/" class="article-date">
+  <time datetime="2019-02-11T12:29:04.000Z" itemprop="datePublished">2019-02-11</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
+    <h1 class="article-title" itemprop="name">
+      《Docker每天五分钟》八：Dockerfile 中的命令三兄贵
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
 
+<h1 id="RUN-vs-CMD-vs-ENTRYPOINT"><a href="#RUN-vs-CMD-vs-ENTRYPOINT" class="headerlink" title="RUN vs CMD vs ENTRYPOINT"></a>RUN vs CMD vs ENTRYPOINT</h1><p>简单地说：<br>（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。<br>（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 <code>$ docker run</code> 后面跟的命令行参数替换。比如 <code>$ docker run -it [image] /bash/bin</code>， 那么 CMD 指令会被忽略掉。<br>（3）ENTRYPOINT：配置容器启动时运行的命令。</p>
+<h1 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h1><p>RUN 指令会创建新的镜像层。 通常用于安装应用和软件包。 Dockerfile 中常常包含多个 RUN 指令。</p>
+<p>RUN 有两种格式：<br>（1） <strong>Shell 格式（推荐）： <code>RUN yum update &amp;&amp; yum install gcc-c++\vim\git -y</code></strong><br>（2） Exec 格式： <code>RUN [&quot;yum&quot;, &quot;install&quot;, &quot;gcc-c++&quot;, &quot;vim&quot;, &quot;git&quot;, &quot;-y&quot;]</code></p>
+<blockquote>
+<p>注意，我们反复提到 RUN 指令会创建新的镜像层。镜像层的概念就类似缓存。会在各个地方的dockerfile被反复使用。<br>这里 yum update 放在和安装同一个指令中。能保证每次安装都是最新的包。如果 yum update 单独的RUN。则会创建一个 yum update 的镜像层。当其他地方的d ockerfile 使用 yum update 的时候，就会直接使用该镜像层，而这一层很可能是很久以前缓存的了。</p>
+</blockquote>
+<h1 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h1><p>此命令会在容器启动后运行。 前提是 <code>$ docker run</code> 没有指定其他命令。</p>
+<ul>
+<li>如果 docker run 指定了其他命令， CMD 指定了默认命令将被忽略。</li>
+<li>如果 Docker file 中有多个 CMD 指令，只有最后一个 CMD 有效。</li>
+</ul>
+<p>CMD 有三种格式：<br>（1） <strong>Exec 格式（推荐）： CMD [“/bin/echo”, “Hello World”]</strong><br>（2） 嫁衣格式： CMD [“param1”, “params2”]<br>（3） Shell格式： CMD echo “Hello World”</p>
+<blockquote>
+<p>（2）嫁衣格式是为 ENTRYPOINT 提供参数，此时 ENTRYPOINT 必须使用 Exec 格式。</p>
+</blockquote>
+<p>举例说明 CMD 和 <code>$ docker run</code> 的关系，Dockerfile 片段如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMD</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"Hello world"</span></span></span><br></pre></td></tr></table></figure>
+<p>运行容器 <code>$ docker run -it [image]</code> 将输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world</span><br></pre></td></tr></table></figure></p>
+<p>但如果加上命令： <code>$ docker run -it [image] /bin/bash</code>， CMD 会被忽略掉。也就没有输出 <code>Hello world</code> 了</p>
+<h1 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h1><p>ENTRYPOINT 指令可以让容器以应用程序或者服务的形式运行。</p>
+<p>ENTRYPOINT 与 CMD 很相似，它们都可以指定执行的命令和参数。不同的地方在于 ENTRYPOINT 不会被 <code>$ docker run</code> 时指定的命令忽略。</p>
+<p>ENTRYPOINT 有两种格式：<br>（1） <strong>Exec 格式（推荐）： ENTRYPOINT [“executable”, “param1”, “param2”]</strong><br>（2）Shell 格式：ENTRYPOINT command param1 param2</p>
+<blockquote>
+<p>ENTRYPOINT 不同的格式效果差别巨大。 选择使用时必须小心。<br>ENTRYPOINT 的 Exec 格式可以接受 CMD 或 <code>$ docker run</code> 提供的参数。<br>ENTRYPOINT 的 Shell 格式会忽略任何 CMD 或 <code>$ docker run</code> 提供的参数。</p>
+</blockquote>
+<h3 id="ENTRYPOINT-的-Exec-格式"><a href="#ENTRYPOINT-的-Exec-格式" class="headerlink" title="ENTRYPOINT 的 Exec 格式"></a>ENTRYPOINT 的 Exec 格式</h3><p>ENTRYPOINT 的 Exec 格式可以接受 CMD 或 <code>$ docker run</code> 提供的参数。 比如下面的 Dockerfile 片段：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/echo"</span>, <span class="string">"Hello"</span>] CMD [<span class="string">"world"</span>]</span></span><br></pre></td></tr></table></figure></p>
+<p>当容器通过 <code>$ docker run -it [image]</code> （无命令）启动时，输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world</span><br></pre></td></tr></table></figure></p>
+<p>而如果通过 <code>$ docker run -it [image] CloudMan</code> 启动时，则输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello CloudMan</span><br></pre></td></tr></table></figure></p>
+<h1 id="Exec-格式-与-变量-shell-解析"><a href="#Exec-格式-与-变量-shell-解析" class="headerlink" title="Exec 格式 与 变量 shell 解析"></a>Exec 格式 与 变量 shell 解析</h1><blockquote>
+<p>请注意，当需要解析变量时，应该使用 Shell 解析，如/bin/sh（bash） </p>
+</blockquote>
+<p>例如下面的 Dockerfile 片段，我们用 ENV 指令设置了环境变量 $name 并不会被解析：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> name Cloud Man <span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/echo"</span>, <span class="string">"Hello, <span class="variable">$name</span>"</span>]</span></span><br></pre></td></tr></table></figure>
+<p>运行容器将输出：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, $name</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：环境变量 $name 没有被替换。必须使用 shell 解析。</p>
+</blockquote>
+<p>如果希望使用环境变量，如下修改 Dockerfile：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> name Cloud Man <span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/sh"</span>, <span class="string">"-c"</span>, <span class="string">"echo Hello, <span class="variable">$name</span>"</span>]</span></span><br></pre></td></tr></table></figure></p>
+<p>运行容器将输出：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, Cloud Man</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjs0gwf2h000oa8vw80zih3aj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/04/碎片化经验广场/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">碎片化经验广场</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
