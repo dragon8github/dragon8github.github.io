@@ -64,6 +64,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-aliyun" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/19/aliyun/" class="article-date">
+  <time datetime="2019-02-19T08:26:24.000Z" itemprop="datePublished">2019-02-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/19/aliyun/">阿里云 香港服务器 3分钟搭建vpn</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+
+<p>教程传送门：<br><a href="https://blog.csdn.net/ztx114/article/details/80423705" target="_blank" rel="noopener">阿里云主机搭建VPN服务</a><br><a href="https://my.oschina.net/imcf/blog/659230" target="_blank" rel="noopener">在免费EC2上搭建自己的VPN</a></p>
+<h4 id="1、安装python-和-Pip"><a href="#1、安装python-和-Pip" class="headerlink" title="1、安装python 和 Pip"></a>1、安装python 和 Pip</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install python-setuptools &amp;&amp; easy_install pip -y</span><br></pre></td></tr></table></figure>
+<h4 id="2、安装-shadowsocks"><a href="#2、安装-shadowsocks" class="headerlink" title="2、安装 shadowsocks"></a>2、安装 shadowsocks</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install shadowsocks</span><br></pre></td></tr></table></figure>
+<h4 id="3、添加-shadowsocks-的配置文件"><a href="#3、添加-shadowsocks-的配置文件" class="headerlink" title="3、添加 shadowsocks 的配置文件"></a>3、添加 shadowsocks 的配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/shadowsocks.json</span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;server_port&quot;: 443,</span><br><span class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;: 1080,</span><br><span class="line">    &quot;password&quot;: &quot;daweiyixiangshihao&quot;,</span><br><span class="line">    &quot;timeout&quot;: 300,</span><br><span class="line">    &quot;method&quot;: &quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;: false,</span><br><span class="line">    &quot;workers&quot;: 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>server_port：是开放端口，阿里云默认开放了443;</li>
+<li>password：是连接密码;</li>
+<li>server：就是本机，保持0.0.0.0 即可;</li>
+<li>method：是传输方式，保持”aes-256-cfb” 即可;</li>
+</ul>
+<h4 id="4、启动-shadowsocks-服务"><a href="#4、启动-shadowsocks-服务" class="headerlink" title="4、启动 shadowsocks 服务"></a>4、启动 shadowsocks 服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
+<h4 id="5、本机下载-shadowsocks-exe"><a href="#5、本机下载-shadowsocks-exe" class="headerlink" title="5、本机下载  shadowsocks.exe"></a>5、本机下载  shadowsocks.exe</h4><p>链接：<a href="https://pan.baidu.com/s/17y-v40jPGIHcftuE7gGiEA" target="_blank" rel="noopener">https://pan.baidu.com/s/17y-v40jPGIHcftuE7gGiEA</a><br>提取码：5gzb </p>
+<h4 id="6、配置-shadowsocks-exe"><a href="#6、配置-shadowsocks-exe" class="headerlink" title="6、配置 shadowsocks.exe"></a>6、配置 shadowsocks.exe</h4><p><img src="/2019/02/19/aliyun/1.png" alt=""></p>
+<h4 id="7、访问google-com-测试"><a href="#7、访问google-com-测试" class="headerlink" title="7、访问google.com 测试"></a>7、访问google.com 测试</h4><p><img src="/2019/02/19/aliyun/2.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjsbicc5e000mqsvwxrm7vs4j" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Docker每天五分钟8" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/11/Docker每天五分钟8/" class="article-date">
@@ -135,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjs0gwf2h000oa8vw80zih3aj" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjsbicc5d000lqsvwvlz2wk2x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -184,7 +237,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjs0gwf32001wa8vw8xyfbla1" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjsbicc65001zqsvwnsf9rl78" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li></ul>
@@ -264,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjs0gwf2f000la8vw1p9g1cox" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjsbicc5i000tqsvwkud7z2tq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -325,7 +378,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjs0gwf260006a8vw3144bf4k" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjsbicc58000eqsvwevhh5t2m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -400,7 +453,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjs0gwf29000aa8vwprxy867o" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjsbicc540009qsvwlyglwp7k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -452,7 +505,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjs0gwf330020a8vwfd3dz53s" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjsbicc64001xqsvwxaar303m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li></ul>
@@ -611,7 +664,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjs0gwf2c000ea8vw8625925d" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjsbicc55000aqsvw03av8ie6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -666,7 +719,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjs0gwf230004a8vwv8jic7rq" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjsbicc520006qsvwx651151a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -716,59 +769,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjs0gwf250005a8vw07xz5gpe" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Docker每天五分钟1" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/31/Docker每天五分钟1/" class="article-date">
-  <time datetime="2019-01-31T07:25:33.000Z" itemprop="datePublished">2019-01-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Docker/">Docker</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -d -p 8080:80 httpd</span><br></pre></td></tr></table></figure>
-<p>1）从 Docker Hub 下载 httpd 镜像。镜像中已经安装好了 Apache HTTP Server.<br>2）启动容器，并将容器的80端口映射到宿主机的8080端口。</p>
-<p>这样当我们访问宿主机的8080端口时，就能看到HTTP服务页面了。</p>
-<blockquote>
-<p>如果外网ip访问不了。请确保你服务器的安全组，以及本机的防火墙配置。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl localhost:8080</span><br><span class="line"></span><br><span class="line">&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/31/Docker每天五分钟1/2.png" alt="It works!"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjs0gwf200001a8vwbk4hk4x0" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjsbicc4y0004qsvwrjm3vw2m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -816,6 +817,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/02/19/aliyun/">阿里云 香港服务器 3分钟搭建vpn</a>
+          </li>
         
           <li>
             <a href="/2019/02/11/Docker每天五分钟8/">《Docker每天五分钟》八：Dockerfile 中的命令三兄贵</a>
@@ -891,10 +896,6 @@
         
           <li>
             <a href="/2019/01/20/laravel-Eloquent/">Laravel Eloquent 入门</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/20/laravel-migration/">Laravel Mysql 数据库配置 与 Migration 基础</a>
           </li>
         
       </ul>
