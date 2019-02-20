@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>在 Windows 上搭建 Flutter 开发环境 | cy&#39;lee 贝尔塔猫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、获取Flutter SDK：https://flutter.io/sdk-archive/#windows 2、解压 flutter_windows_v1.0.0-stable.zip，并将 flutter/bin 加入到环境变量 3、安装Android Studio ：https://developer.android.google.cn 4、在 Android Studio 的 Brows">
+<meta name="keywords" content="flutter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Windows 上搭建 Flutter 开发环境">
+<meta property="og:url" content="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/index.html">
+<meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:description" content="1、获取Flutter SDK：https://flutter.io/sdk-archive/#windows 2、解压 flutter_windows_v1.0.0-stable.zip，并将 flutter/bin 加入到环境变量 3、安装Android Studio ：https://developer.android.google.cn 4、在 Android Studio 的 Brows">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy57wy3qj30mr0ng3zw.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5amfb5j30ru0nttac.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5d3o4xj30so0o20v9.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyaijpcwj30mu0i3q3y.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyie6pehj30ru0nn3zo.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyigbo29j30ru0nn75k.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyij36rtj30ru0nnjsk.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyqjwvnkj313n0q7wka.jpg">
+<meta property="og:updated_time" content="2019-02-20T09:51:53.534Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在 Windows 上搭建 Flutter 开发环境">
+<meta name="twitter:description" content="1、获取Flutter SDK：https://flutter.io/sdk-archive/#windows 2、解压 flutter_windows_v1.0.0-stable.zip，并将 flutter/bin 加入到环境变量 3、安装Android Studio ：https://developer.android.google.cn 4、在 Android Studio 的 Brows">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy57wy3qj30mr0ng3zw.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cy&#39;lee 贝尔塔猫</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">前端哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-在Windows上搭建Flutter开发环境" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/20/在Windows上搭建Flutter开发环境/" class="article-date">
+  <time datetime="2019-02-20T08:08:58.000Z" itemprop="datePublished">2019-02-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/flutter/">flutter</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在 Windows 上搭建 Flutter 开发环境
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><hr><br>1、获取Flutter SDK：<a href="https://flutter.io/sdk-archive/#windows" target="_blank" rel="noopener">https://flutter.io/sdk-archive/#windows</a></p>
+<p>2、解压 <strong>flutter_windows_v1.0.0-stable.zip</strong>，并将 flutter/bin 加入到环境变量</p>
+<p>3、安装Android Studio ：<a href="https://developer.android.google.cn" target="_blank" rel="noopener">https://developer.android.google.cn</a></p>
+<p>4、在 Android Studio 的 <strong>Browse repositories</strong> 安装 <strong>Flutter</strong> 和 <strong>Dart</strong> 插件</p>
+<ul>
+<li>Flutter插件： 支持Flutter开发工作流 (运行、调试、热重载等)。</li>
+<li>Dart插件： 提供代码分析 (输入代码时进行验证、代码补全等)。</li>
+</ul>
+<p>欢迎页 -&gt; configure -&gt; Plugins -&gt; Browse repositories… -&gt; Search</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy57wy3qj30mr0ng3zw.jpg" alt="configure"></p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5amfb5j30ru0nttac.jpg" alt="Plugins"></p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5d3o4xj30so0o20v9.jpg" alt="Browse repositories..."></p>
+<p>5、安装完 flutter 插件后，重启一下Android Studio，然后我们就可以新建 flutter 模板了。</p>
+<p>欢迎页 -&gt; Start a new Flutter project -&gt; Flutter application -&gt; 输入项目名称和选择flutter的sdk目录 -&gt; finish</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyaijpcwj30mu0i3q3y.jpg" alt="Start a new Flutter project"></p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyie6pehj30ru0nn3zo.jpg" alt="Flutter application"></p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyigbo29j30ru0nn75k.jpg" alt="flutter sdk "></p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyij36rtj30ru0nnjsk.jpg" alt="finish"></p>
+<p>6、运行应用程序</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyqjwvnkj313n0q7wka.jpg" alt="Flutter Demo Home Page"></p>
+<hr>
+<p>可能遇到的问题：</p>
+<h5 id="0-任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn-fq。"><a href="#0-任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn-fq。" class="headerlink" title="0. 任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn fq。"></a>0. 任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn fq。</h5><ul>
+<li><p><a href="https://www.cnblogs.com/CyLee/p/10401766.html" target="_blank" rel="noopener">阿里云 香港服务器 Centos7 3分钟搞定vpn</a></p>
+</li>
+<li><p><a href="https://dc.36fy.com/" target="_blank" rel="noopener">加速度</a></p>
+</li>
+</ul>
+<h5 id="1-启动Android-Studio时，出现“Unable-to-access-Android-SDK-add-on-list”"><a href="#1-启动Android-Studio时，出现“Unable-to-access-Android-SDK-add-on-list”" class="headerlink" title="1. 启动Android Studio时，出现“Unable to access Android SDK add-on list”"></a>1. 启动Android Studio时，出现“Unable to access Android SDK add-on list”</h5><p>点击 <strong>“Cancel”</strong>， 稍后再根据指引，自动安装即可。</p>
+<h5 id="2-其他常见配置问题"><a href="#2-其他常见配置问题" class="headerlink" title="2. 其他常见配置问题"></a>2. 其他常见配置问题</h5><p><a href="https://book.flutterchina.club/chapter1/configuration.html" target="_blank" rel="noopener">https://book.flutterchina.club/chapter1/configuration.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjsd12znp001wp4vw2n0mdpzk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flutter/">flutter</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/20/DartWeb/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Dart for the web  一小时入门
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/19/aliyun/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">阿里云 香港服务器 Centos7 3分钟搞定vpn</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget widget-category">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget widget-tag">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget widget-posts">
+      <ul>
+        
+          <li>
+            <a href="/2019/02/20/DartWeb/">Dart for the web  一小时入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/20/在Windows上搭建Flutter开发环境/">在 Windows 上搭建 Flutter 开发环境</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/19/aliyun/">阿里云 香港服务器 Centos7 3分钟搞定vpn</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/11/Docker每天五分钟8/">《Docker每天五分钟》八：Dockerfile 中的命令三兄贵</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/04/碎片化经验广场/">碎片化经验广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟3/">《Docker每天五分钟》三：hello-world、初识dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟2/">《Docker每天五分钟》二：切换 DaoCloud 镜像源</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/hexo的认知/">hexo的认知</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget widget-tagcloud">
+      <a href="/tags/Dart/" style="font-size: 10px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget widget-archives">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <canvas class="fireworks" style="position: fixed; left: 0px; top: 0px; z-index: 1; pointer-events: none;" width="2880" height="832"></canvas>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 贝尔塔猫<br>
+      Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
+
+      <div class="fr js-go-top">按下 [Home] 键返回顶部</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/Lee.js"></script>
+
+
+
+  </div>
+</body>
+</html>
