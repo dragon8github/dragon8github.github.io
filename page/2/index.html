@@ -64,6 +64,165 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Docker每天五分钟4" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/31/Docker每天五分钟4/" class="article-date">
+  <time datetime="2019-01-31T09:09:30.000Z" itemprop="datePublished">2019-01-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th style="text-align:center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ docker images</td>
+<td style="text-align:center">查看所有镜像</td>
+</tr>
+<tr>
+<td>$ docker ps -a</td>
+<td style="text-align:center">查看所有容器</td>
+</tr>
+<tr>
+<td>$ docker run -it &lt;镜像&gt;</td>
+<td style="text-align:center">运行本地镜像，如果镜像不存在则下载最新版本</td>
+</tr>
+<tr>
+<td>$ docker exec -it &lt;已启动容器&gt; /bin/bash</td>
+<td style="text-align:center">以交互的方式进入已启动的容器内部</td>
+</tr>
+<tr>
+<td>$ docker stop &lt;容器&gt;</td>
+<td style="text-align:center">停止容器</td>
+</tr>
+<tr>
+<td>$ docker start &lt;容器&gt;</td>
+<td style="text-align:center">启动容器</td>
+</tr>
+<tr>
+<td>$ docker rm &lt;容器&gt;</td>
+<td style="text-align:center">删除容器，必须先停止容器</td>
+</tr>
+<tr>
+<td>$ docker rmi &lt;镜像&gt;</td>
+<td style="text-align:center">删除镜像，必须先删除所有依赖该镜像的容器</td>
+</tr>
+<tr>
+<td>$ docker build -t &lt;新建容器名&gt; .</td>
+<td style="text-align:center">通过 Dockerfile 构建镜像，<br>请注意最后一个<code>.</code> 指明在当前路径寻找 Dockerfile</td>
+</tr>
+<tr>
+<td>$ docker history &lt;镜像&gt;</td>
+<td style="text-align:center">查看镜像的构建层级</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Dockerfile 支持以 ‘#’ 开头注释</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th style="text-align:center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FORM</td>
+<td style="text-align:center">指定 base 镜像</td>
+</tr>
+<tr>
+<td>MAINTAINER</td>
+<td style="text-align:center">设置镜像的作者，可以是任意字符串</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td style="text-align:center">（命令三兄弟之一）在容器中运行指定命令。</td>
+</tr>
+<tr>
+<td>CMD</td>
+<td style="text-align:center">（命令三兄弟之一）在容器启动时运行指定的命令。</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td style="text-align:center">（命令三兄弟之一）设置容器启动时运行的命令。</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td style="text-align:center">将文件复制到镜像，<code>COPY src desc</code> 与 <code>COPY [&quot;src&quot;, &quot;desc&quot;]</code></td>
+</tr>
+<tr>
+<td>ADD</td>
+<td style="text-align:center">与COPY类似，将文件复制到镜像。不同的是如果src是归档文件（zip、taz、xz等），文件会被自动解压</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td style="text-align:center">设置环境变量，环境变量可被后面的指令使用如： <br> <code>ENV MY_VERSION 1.9.1 RUN yum install -y mypackage=$MY_VERSION</code></td>
+</tr>
+<tr>
+<td>WORKDIR</td>
+<td style="text-align:center">设置镜像中当前工作目录（服务于COPY、ADD、CMD、RUN、ENTRYPOINT等指令）。</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td style="text-align:center">指定容器中的进程会监听某个端口， Docker 可以将该端口暴漏出来。</td>
+</tr>
+<tr>
+<td>VOLUME</td>
+<td style="text-align:center">将文件或目录声明为 volume。</td>
+</tr>
+</tbody>
+</table>
+<p>注意点：</p>
+<ul>
+<li>Dockerfile 中可以有多个 CMD 指令，但只有最后一个生效。</li>
+<li>Dockerfile 中可以有多个 ENTRYPOINT 指令，但只有最后一个生效。</li>
+<li>CMD 指令会被 <code>$ docker run [image] ...</code> 之后的参数替换掉。 如  <code>$ docker run [image] /bash/bin</code></li>
+<li>CMD 或 docker run 之后的参数会被当做参数传递给ENTRYPOINT。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjsedg87g000ebsvwl2ur1hdz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Docker每天五分钟3" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/31/Docker每天五分钟3/" class="article-date">
@@ -107,7 +266,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjsd12zmp0009p4vw8s5kl46d" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjsedg87c000absvwd7artw9t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -157,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjsd12zmm0005p4vws316jkut" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjsedg8790006bsvw2r9vsmr0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -209,7 +368,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjsd12zmo0006p4vwd6rg1skk" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjsedg87b0009bsvw934f5uug" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -292,7 +451,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjsd12zmz000lp4vwtuleei5g" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjsedg87n000pbsvwa6uf3uka" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -372,7 +531,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjsd12zna0017p4vwd4xdqdnm" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjsedg87v0016bsvw0p3ow72w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -425,7 +584,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjsd12znu0026p4vwcc212p03" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjsedg88f0027bsvwkuxvkfnc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MP4/">MP4</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/video/">video</a></li></ul>
@@ -489,7 +648,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjsd12znl001rp4vw3cdy3b2a" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjsedg887001tbsvw4hg59c19" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -534,7 +693,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjsd12zmk0004p4vwuop9wu6t" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjsedg86x0000bsvw01m9f6pj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum/">yum</a></li></ul>
@@ -589,79 +748,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjsd12zn2000rp4vw34hrynpb" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjsedg87p000tbsvw1a3olvfr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-nginx安装" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/24/nginx安装/" class="article-date">
-  <time datetime="2019-01-24T08:45:03.000Z" itemprop="datePublished">2019-01-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/centos/">centos</a>►<a class="article-category-link" href="/categories/centos/nginx/">nginx</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-<h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
-<li>安装依赖</li>
-<li>下载nginx ： <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a></li>
-<li>解压</li>
-<li>检查配置是否健康</li>
-<li>开始安装</li>
-<li>检查是否安装成功，默认安装目录是在/usr/local/nginx</li>
-<li>启动nginx服务</li>
-<li>查看服务是否开启</li>
-<li>使用 <code>$ curl localhost</code> 查看 nginx 欢迎页 </li>
-</ol>
-<p>//////////////////////////////////////////////</p>
-<h5 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum -y install gcc-c++ zlib-devel pcre-devel</span><br></pre></td></tr></table></figure>
-<h5 id="2、下载nginx-：-http-nginx-org-en-download-html"><a href="#2、下载nginx-：-http-nginx-org-en-download-html" class="headerlink" title="2、下载nginx ： http://nginx.org/en/download.html"></a>2、下载nginx ： <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://nginx.org/download/nginx-1.15.8.tar.gz</span><br></pre></td></tr></table></figure>
-<h5 id="3、解压"><a href="#3、解压" class="headerlink" title="3、解压"></a>3、解压</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf nginx-1.15.8.tar.gz</span><br></pre></td></tr></table></figure>
-<p>//////////////////////////////////////////////</p>
-<h5 id="4、检查配置是否健康"><a href="#4、检查配置是否健康" class="headerlink" title="4、检查配置是否健康"></a>4、检查配置是否健康</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure</span><br></pre></td></tr></table></figure>
-<h5 id="5、开始安装"><a href="#5、开始安装" class="headerlink" title="5、开始安装"></a>5、开始安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p>//////////////////////////////////////////////</p>
-<h5 id="6、检查是否安装成功，默认安装目录是在-usr-local-nginx"><a href="#6、检查是否安装成功，默认安装目录是在-usr-local-nginx" class="headerlink" title="6、检查是否安装成功，默认安装目录是在/usr/local/nginx"></a>6、检查是否安装成功，默认安装目录是在/usr/local/nginx</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/<span class="built_in">local</span>/nginx/sbin/nginx -t</span><br><span class="line"></span><br><span class="line">nginx: the configuration file /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf <span class="built_in">test</span> is successful</span><br></pre></td></tr></table></figure>
-<h5 id="7、启动nginx服务"><a href="#7、启动nginx服务" class="headerlink" title="7、启动nginx服务"></a>7、启动nginx服务</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/<span class="built_in">local</span>/nginx/sbin/nginx -c /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
-<p>//////////////////////////////////////////////</p>
-<h5 id="8、查看服务是否开启"><a href="#8、查看服务是否开启" class="headerlink" title="8、查看服务是否开启"></a>8、查看服务是否开启</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps -ef | grep nginx</span><br></pre></td></tr></table></figure>
-<h5 id="9、使用-curl-localhost-查看-nginx-欢迎页"><a href="#9、使用-curl-localhost-查看-nginx-欢迎页" class="headerlink" title="9、使用 $ curl localhost 查看 nginx 欢迎页"></a>9、使用 <code>$ curl localhost</code> 查看 nginx 欢迎页</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome to nginx!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body &#123;</span></span><br><span class="line"><span class="undefined">        width: 35em;</span></span><br><span class="line"><span class="undefined">        margin: 0 auto;</span></span><br><span class="line"><span class="undefined">        font-family: Tahoma, Verdana, Arial, sans-serif;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome to nginx!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>If you see this page, the nginx web server is successfully installed and</span><br><span class="line">working. Further configuration is required.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>For online documentation and support please refer to</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://nginx.org/"</span>&gt;</span>nginx.org<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">Commercial support is available at</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://nginx.com/"</span>&gt;</span>nginx.com<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">em</span>&gt;</span>Thank you for using nginx.<span class="tag">&lt;/<span class="name">em</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/24/nginx安装/1.png" alt="Welcome to nginx!"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjsd12znk001pp4vwqz3p8po7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
 
     </footer>
   </div>
@@ -685,7 +775,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -695,7 +785,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
     </div>
   </div>
 
@@ -706,6 +796,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/02/21/Dartpub/">Dart（Flutter） pub 包管理</a>
+          </li>
         
           <li>
             <a href="/2019/02/20/DartWeb/">Dart for the web  一小时入门</a>
@@ -783,10 +877,6 @@
             <a href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
           </li>
         
-          <li>
-            <a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -796,7 +886,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Dart/" style="font-size: 10px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
     </div>
   </div>
 

@@ -238,6 +238,9 @@ $(function() {
 	// 文章滚动条美化
     $('article .article-inner').niceScroll(niceScrollConfig())
 
+    // 美化卡片滚动条
+    // $('.widget').niceScroll(niceScrollConfig())
+
     // 页面滚动条美化
     // $('body').niceScroll(niceScrollConfig({ autohidemode: false }))
 

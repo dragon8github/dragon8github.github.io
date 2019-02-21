@@ -64,6 +64,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Dartpub" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/21/Dartpub/" class="article-date">
+  <time datetime="2019-02-21T03:22:43.000Z" itemprop="datePublished">2019-02-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Dart/">Dart</a>►<a class="article-category-link" href="/categories/Dart/Flutter/">Flutter</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/21/Dartpub/">Dart（Flutter） pub 包管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>Pub（<a href="https://pub.dartlang.org/" target="_blank" rel="noopener">https://pub.dartlang.org/</a> ）是Google官方的Dart Packages仓库，类似于node中的npm仓库，android中的jcenter，我们可以在上面查找我们需要的包和插件，也可以向pub发布我们的包和插件。我们将在后面的章节中介绍如何向pub发布我们的包和插件。</p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>接下来，我们实现一个显示随机字符串的widget。有一个名为“english_words”的开源软件包，其中包含数千个常用的英文单词以及一些实用功能。我们首先在pub上找到english_words这个包，确定其最新的版本号和是否支持Flutter。</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0duqg9p60j30y105e0ta.jpg" alt="english_words"></p>
+<p>我们看到“english_words”包最新的版本是3.1.3，并且支持flutter，接下来：</p>
+<p>将english_words（3.1.3版本）添加到依赖项列表，如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dependencies:</span></span><br><span class="line"><span class="attr">  flutter:</span></span><br><span class="line"><span class="attr">    sdk:</span> <span class="string">flutter</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  cupertino_icons:</span> <span class="string">^0.1.0</span></span><br><span class="line">  <span class="comment"># 新添加的依赖</span></span><br><span class="line"><span class="attr">  english_words:</span> <span class="string">^3.1.3</span></span><br></pre></td></tr></table></figure>
+<h3 id="下载包"><a href="#下载包" class="headerlink" title="下载包"></a>下载包</h3><p>在Android Studio的编辑器视图中查看pubspec.yaml时，单击右上角的 Packages get 。<br><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0dur11rqtj30dp0a8ab5.jpg" alt="Packages get"></p>
+<p>这会将依赖包安装到您的项目。您可以在控制台中看到以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flutter packages get</span><br><span class="line">Running &quot;flutter packages get&quot; in flutter_in_action...</span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>1、引入english_words包<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:english_words/english_words.dart'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>在输入时，导入后该行代码将会显示为灰色，请放心，这并不一定是安装失败导致的。它表示导入的库尚未使用。</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0dvh5ytdej30hd030t8r.jpg" alt="import &#39;package:english_words/english_words.dart&#39;;"></p>
+<p>2、使用english_words包来生成随机字符串。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomWordsWidget</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="comment">// 生成随机字符串</span></span><br><span class="line">    <span class="keyword">final</span> wordPair = <span class="keyword">new</span> WordPair.random();</span><br><span class="line">    <span class="keyword">return</span> Padding(</span><br><span class="line">      padding: <span class="keyword">const</span> EdgeInsets.all(<span class="number">8.0</span>),</span><br><span class="line">      child: <span class="keyword">new</span> Text(wordPair.toString()),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3、我们将 RandomWordsWidget 添加到”计数器”示例的首页MyHomePage 的Column的子widget中。</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0dvh87tibj30oy0oktay.jpg" alt="RandomWordsWidget"></p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0dvhap38oj30cr0mstai.jpg" alt="RandomWordsWidget"></p>
+<h2 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h2><p>如果应用程序正在运行，请使用热重载按钮【⚡】更新正在运行的应用程序。每次单击热重载或保存项目时，都会在正在运行的应用程序中随机选择不同的单词对。 这是因为单词对是在 build 方法内部生成的。每次热更新时，build方法都会被执行。</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0dvhib782j30nx02bq2x.jpg" alt="⚡"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/02/21/Dartpub/" data-id="cjsedg8710001bsvwk3gyc1rt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pub/">pub</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-DartWeb" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/20/DartWeb/" class="article-date">
@@ -104,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjsd12zmg0001p4vwe8rhc5d0" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjsedg8780005bsvwob33kwz0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li></ul>
@@ -176,7 +237,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjsd12znp001wp4vw2n0mdpzk" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjsedg88b001zbsvw1l7gdhv1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flutter/">flutter</a></li></ul>
@@ -235,7 +296,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjsd12zn5000wp4vwmtkwnq0n" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjsedg87s0010bsvwp4hejnt0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vpn/">vpn</a></li></ul>
@@ -318,7 +379,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjsd12zn4000sp4vwhhnhpnle" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjsedg87k000kbsvw8n8hf03s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -367,7 +428,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjsd12zns0022p4vweslakkpi" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjsedg88e0025bsvwi7wuu9lx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li></ul>
@@ -447,7 +508,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjsd12zn0000np4vwk34x5t1n" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjsedg87o000qbsvw8no30x99" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -508,7 +569,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjsd12zmv000gp4vwdhba4us5" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjsedg87h000gbsvwkb3hk6z3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -583,7 +644,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjsd12zmu000ep4vwq3zbx0ss" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjsedg87l000lbsvwmj3s78zq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -635,169 +696,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjsd12znr0021p4vw27gci8me" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjsedg88c0021bsvw6uj5j2x6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Docker每天五分钟4" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/31/Docker每天五分钟4/" class="article-date">
-  <time datetime="2019-01-31T09:09:30.000Z" itemprop="datePublished">2019-01-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Docker/">Docker</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th style="text-align:center">功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$ docker images</td>
-<td style="text-align:center">查看所有镜像</td>
-</tr>
-<tr>
-<td>$ docker ps -a</td>
-<td style="text-align:center">查看所有容器</td>
-</tr>
-<tr>
-<td>$ docker run -it &lt;镜像&gt;</td>
-<td style="text-align:center">运行本地镜像，如果镜像不存在则下载最新版本</td>
-</tr>
-<tr>
-<td>$ docker exec -it &lt;已启动容器&gt; /bin/bash</td>
-<td style="text-align:center">以交互的方式进入已启动的容器内部</td>
-</tr>
-<tr>
-<td>$ docker stop &lt;容器&gt;</td>
-<td style="text-align:center">停止容器</td>
-</tr>
-<tr>
-<td>$ docker start &lt;容器&gt;</td>
-<td style="text-align:center">启动容器</td>
-</tr>
-<tr>
-<td>$ docker rm &lt;容器&gt;</td>
-<td style="text-align:center">删除容器，必须先停止容器</td>
-</tr>
-<tr>
-<td>$ docker rmi &lt;镜像&gt;</td>
-<td style="text-align:center">删除镜像，必须先删除所有依赖该镜像的容器</td>
-</tr>
-<tr>
-<td>$ docker build -t &lt;新建容器名&gt; .</td>
-<td style="text-align:center">通过 Dockerfile 构建镜像，<br>请注意最后一个<code>.</code> 指明在当前路径寻找 Dockerfile</td>
-</tr>
-<tr>
-<td>$ docker history &lt;镜像&gt;</td>
-<td style="text-align:center">查看镜像的构建层级</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>Dockerfile 支持以 ‘#’ 开头注释</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th style="text-align:center">功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FORM</td>
-<td style="text-align:center">指定 base 镜像</td>
-</tr>
-<tr>
-<td>MAINTAINER</td>
-<td style="text-align:center">设置镜像的作者，可以是任意字符串</td>
-</tr>
-<tr>
-<td>RUN</td>
-<td style="text-align:center">（命令三兄弟之一）在容器中运行指定命令。</td>
-</tr>
-<tr>
-<td>CMD</td>
-<td style="text-align:center">（命令三兄弟之一）在容器启动时运行指定的命令。</td>
-</tr>
-<tr>
-<td>ENTRYPOINT</td>
-<td style="text-align:center">（命令三兄弟之一）设置容器启动时运行的命令。</td>
-</tr>
-<tr>
-<td>COPY</td>
-<td style="text-align:center">将文件复制到镜像，<code>COPY src desc</code> 与 <code>COPY [&quot;src&quot;, &quot;desc&quot;]</code></td>
-</tr>
-<tr>
-<td>ADD</td>
-<td style="text-align:center">与COPY类似，将文件复制到镜像。不同的是如果src是归档文件（zip、taz、xz等），文件会被自动解压</td>
-</tr>
-<tr>
-<td>ENV</td>
-<td style="text-align:center">设置环境变量，环境变量可被后面的指令使用如： <br> <code>ENV MY_VERSION 1.9.1 RUN yum install -y mypackage=$MY_VERSION</code></td>
-</tr>
-<tr>
-<td>WORKDIR</td>
-<td style="text-align:center">设置镜像中当前工作目录（服务于COPY、ADD、CMD、RUN、ENTRYPOINT等指令）。</td>
-</tr>
-<tr>
-<td>EXPOSE</td>
-<td style="text-align:center">指定容器中的进程会监听某个端口， Docker 可以将该端口暴漏出来。</td>
-</tr>
-<tr>
-<td>VOLUME</td>
-<td style="text-align:center">将文件或目录声明为 volume。</td>
-</tr>
-</tbody>
-</table>
-<p>注意点：</p>
-<ul>
-<li>Dockerfile 中可以有多个 CMD 指令，但只有最后一个生效。</li>
-<li>Dockerfile 中可以有多个 ENTRYPOINT 指令，但只有最后一个生效。</li>
-<li>CMD 指令会被 <code>$ docker run [image] ...</code> 之后的参数替换掉。 如  <code>$ docker run [image] /bash/bin</code></li>
-<li>CMD 或 docker run 之后的参数会被当做参数传递给ENTRYPOINT。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjsd12zmr000ap4vwusptp58e" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
 
     </footer>
   </div>
@@ -821,7 +723,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -831,7 +733,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
     </div>
   </div>
 
@@ -842,6 +744,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/02/21/Dartpub/">Dart（Flutter） pub 包管理</a>
+          </li>
         
           <li>
             <a href="/2019/02/20/DartWeb/">Dart for the web  一小时入门</a>
@@ -919,10 +825,6 @@
             <a href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
           </li>
         
-          <li>
-            <a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -932,7 +834,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Dart/" style="font-size: 10px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
     </div>
   </div>
 

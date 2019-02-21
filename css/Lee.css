@@ -91,48 +91,110 @@ article.is-index .article-inner {
   overflow-y: scroll;
 }
 .widget.widget-category {
+  position: relative;
+  border: 0;
+  height: 350px;
+  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  overflow: hidden;
+}
+.widget.widget-category::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: url("./images/qlz.jpg");
   background-size: cover;
-  border: 0;
-  height: 350px;
-  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
-  overflow: hidden;
 }
 .widget.widget-tag {
-  background: url("./images/hy.jpg");
-  background-size: cover;
+  position: relative;
   border: 0;
   height: 350px;
   box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
   overflow: hidden;
 }
-.widget.widget-posts {
-  background: url("./images/hzw.jpg");
+.widget.widget-tag::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url("./images/hy.jpg");
   background-size: cover;
+}
+.widget.widget-posts {
+  position: relative;
   border: 0;
   height: 350px;
   box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
   overflow: hidden;
   height: 425px;
 }
+.widget.widget-posts::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url("./images/hzw.jpg");
+  background-size: cover;
+}
 .widget.widget-tagcloud {
+  position: relative;
+  border: 0;
+  height: 350px;
+  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
+  overflow: hidden;
+}
+.widget.widget-tagcloud::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: url("./images/jjdjr2.jpg");
   background-size: cover;
-  border: 0;
-  height: 350px;
-  box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
-  overflow: hidden;
 }
 .widget.widget-archives {
-  background: url("./images/jjdjr.jpg");
-  background-size: cover;
+  position: relative;
   border: 0;
   height: 350px;
   box-shadow: 4px 6px 0 rgba(125,115,115,0.2);
   overflow: hidden;
 }
-.widget:hover {
-  background: none;
+.widget.widget-archives::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url("./images/jjdjr.jpg");
+  background-size: cover;
+}
+.widget > ul {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 15px;
+}
+.widget a {
+  position: relative;
+  z-index: 1;
+}
+.widget:hover::after {
+  filter: blur(7px);
+}
+.widget:hover li,
+.widget:hover a {
+  color: #fff;
 }
 .myPanel {
   position: fixed;
