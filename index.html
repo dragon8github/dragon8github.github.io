@@ -64,6 +64,80 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-norepeatxhr" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/05/norepeatxhr/" class="article-date">
+  <time datetime="2019-03-05T02:59:17.000Z" itemprop="datePublished">2019-03-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/xhr/">xhr</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/05/norepeatxhr/">更优雅的防止请求(XHR)重复 —— 请求队列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><hr><br>问题：重复请求的问题在开发中很常见，浪费网络资源倒是其次，最怕的是前一次的点击逻辑，把后面的逻辑覆盖了。</p>
+<blockquote>
+<p>譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。</p>
+<p><strong>用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……</strong></p>
+</blockquote>
+<p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g0rnnuad9uj30dl06xgmp.jpg" alt=""></p>
+<p>常见的防止重复请求的解决方案，就是展示一个蒙版或者Loading层，拦截用户进一步操作。直到逻辑全部跑通为止。</p>
+<p>但在大数据屏幕中，如果拦截用户操作，并且赫然出现一个菊花图，是很Fu*k的体验。作为一个开发我自己看到菊花都烦：</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0isbtuj2kg300w00wq2p.gif" alt=""></p>
+<p>不过，这种不好的体验并不是源于菊花图，而是拦截了用户操作。让用户放不开。所以需求是：</p>
+<blockquote>
+<p>你随便瞎几把乱点，重复请求了算我输。</p>
+</blockquote>
+<h3 id="请求队列"><a href="#请求队列" class="headerlink" title="请求队列"></a>请求队列</h3><ol>
+<li>把所有请求都塞入一个队列；</li>
+<li>每当一个请求进入队列之前，先清空并取消（Cancel）队列中<strong>相同的请求</strong>；</li>
+<li>当一个请求完成，要将自己从队列中移除；</li>
+</ol>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0ro3c0myvj30dw09udgm.jpg" alt=""></p>
+<p>重点在于如何 <strong>取消（Cancel）</strong> 已经发送的请求。实际上还真有，原生的 XHR 就有提供 abort() 可以中断请求。jQuery 的 Ajax 也提供了：<a href="https://github.com/jquery/jquery/blob/master/src/ajax/xhr.js#L82" target="_blank" rel="noopener">https://github.com/jquery/jquery/blob/master/src/ajax/xhr.js#L82</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const xhr = ajax(&#123; ... &#125;)</span><br><span class="line">xhr.abort()</span><br></pre></td></tr></table></figure>
+<p>axios 也提供了类似的API，不过用起来比上面的麻烦一点，详情使用在后续的demo中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new axios.CancelToken(_ =&gt; &#123; ... &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>虽然大部分项目已经是采用 axios、fetch等现代XHR请求技术了。但还是用传统的jQuery Ajax更容易说明，反正原理是一样的：</p>
+<p>singeAjax.html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>SingleAjax<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- jquery --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">// 获取纯Url，不包含?后面的参数</span></span><br><span class="line"><span class="undefined">var getPureUrl = url =&gt; &#123;</span></span><br><span class="line"><span class="undefined">	const index = url.indexOf('?')</span></span><br><span class="line"><span class="undefined">	return url.substr(0, ~index ? index : url.length)</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">//（核心）以url相同作为重复条件，你可以根据自己的情况编写自己的重复条件</span></span><br><span class="line"><span class="undefined">var SingleAjax = function () &#123;</span></span><br><span class="line"><span class="undefined">    // 缓存的队列</span></span><br><span class="line"><span class="undefined">    var pending = [];</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 返回单例模式ajax</span></span><br><span class="line"><span class="undefined">    return function (opts) &#123;</span></span><br><span class="line"><span class="undefined">    	// 获取纯Url（不包含?后面的参数）</span></span><br><span class="line"><span class="undefined">    	const pureUrl = getPureUrl(opts.url)</span></span><br><span class="line"><span class="undefined">        // 中止队列中所有相同请求地址的xhr</span></span><br><span class="line"><span class="undefined">        pending.forEach(_ =&gt; _.url === pureUrl &amp;&amp; _.xhr.abort());</span></span><br><span class="line"><span class="undefined">        // 获取 success 回调函数</span></span><br><span class="line"><span class="undefined">        const _success = opts.success</span></span><br><span class="line"><span class="undefined">        // 装饰成功回调函数</span></span><br><span class="line"><span class="undefined">        opts.success = function (...rest) &#123;</span></span><br><span class="line"><span class="undefined">        	// 从队列过滤掉已经成功的请求</span></span><br><span class="line"><span class="undefined">        	pending = pending.filter(_ =&gt; _.url != pureUrl)</span></span><br><span class="line"><span class="undefined">        	// 继续执行它的成功</span></span><br><span class="line"><span class="undefined">        	_success &amp;&amp; _success(...rest)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        // 移除所有中止的请求，并且将新的请求推入缓存</span></span><br><span class="line"><span class="undefined">        pending = [...pending.filter(_ =&gt; _.url != pureUrl), &#123; url: pureUrl, xhr: $.ajax(opts) &#125;]</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">// 生成单例ajax</span></span><br><span class="line"><span class="undefined">var singleAjax = new SingleAjax()</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">for (var i = 0; i &lt; 10; i++) &#123;</span></span><br><span class="line"><span class="undefined">    singleAjax(&#123;</span></span><br><span class="line"><span class="undefined">        url: "https://api.github.com/users/dragon8github",</span></span><br><span class="line"><span class="undefined">        success: function (data) &#123;</span></span><br><span class="line"><span class="undefined">            // 其实在成功之后，可以考虑扩展把成功的xhr从队列中移除，但其实也不影响。已经成功的xhr就算再次被执行abort也不会怎么样，更不会从200变成cannel状态，更不会触发error。</span></span><br><span class="line"><span class="undefined">            console.log('请求成功', data);</span></span><br><span class="line"><span class="undefined">        &#125;,</span></span><br><span class="line"><span class="undefined">        error: function(e, m)&#123;</span></span><br><span class="line"><span class="undefined">           console.log('数据接口请求异常（请放心这是正常现象，由于请求被中止Cancel，所以会回调error。只需要判断一下m === "abort" 即可，你还可以在 abort() 时在 _.xhr 中加入任意属性来判断深入判断）', e, m, m === "abort");</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>代码中我们模拟了十次重复的请求，发现前9次都被abort了。只留下最后一条。</p>
+<p><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g0rqu574qbj314m0htmz1.jpg" alt=""></p>
+<p>下面是axios的示例 singeAxios:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 请求队列</span><br><span class="line">let pending = []</span><br><span class="line"></span><br><span class="line">// 获取纯Url，不包含?后面的参数</span><br><span class="line">var getPureUrl = url =&gt; &#123;</span><br><span class="line">	const index = url.indexOf(&apos;?&apos;)</span><br><span class="line">	return url.substr(0, ~index ? index : url.length)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 请求拦截器</span><br><span class="line">axios.interceptors.request.use(config =&gt; &#123;</span><br><span class="line">    // 获取纯Url（不包含?后面的参数）</span><br><span class="line">    const pureUrl = getPureUrl(config.url)</span><br><span class="line">    // 中止队列中所有相同请求地址的xhr</span><br><span class="line">    pending.forEach(_ =&gt; _.url === pureUrl &amp;&amp; _.cancel(&apos;repeat abort&apos;));</span><br><span class="line">    // 配置取消令牌</span><br><span class="line">    config.cancelToken = new axios.CancelToken(cancel =&gt; &#123;</span><br><span class="line">       // 移除所有中止的请求，并且将新的请求推入缓存</span><br><span class="line">       pending = [...pending.filter(_ =&gt; _.url != pureUrl), &#123; url: pureUrl, cancel &#125;]</span><br><span class="line">    &#125;)</span><br><span class="line">    return config</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">    return Promise.reject(error)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 响应拦截器</span><br><span class="line">axios.interceptors.response.use(res =&gt; &#123;</span><br><span class="line">  // 成功响应之后清空队列中所有相同Url的请求</span><br><span class="line">  pending = pending.filter(_ =&gt; _.url != getPureUrl(res.config.url))</span><br><span class="line">  // 返回 response</span><br><span class="line">  return res</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">   return Promise.reject(error)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">    axios(&#123;url: &apos;https://api.github.com/users/dragon8github&apos;&#125;).then(console.log).catch(_ =&gt; &#123;</span><br><span class="line">        if (_.message === &apos;repeat abort&apos;) return console.info(_.message)</span><br><span class="line">        // other error handler...</span><br><span class="line">        // something code...</span><br><span class="line">        throw new Error(_.message)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>axios 也是一样道理，只是做法不一样。前9个请求都被abort了。</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0rr60x3knj30y30huwfa.jpg" alt=""></p>
+<p>不过奇怪的是，并没有cancel的过程。就像从来没有发起请求过一样。</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0rr5yplkjj30y30hudgw.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/03/05/norepeatxhr/" data-id="cjsv6qu04001pzcvwi6dy1l1e" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios/">axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xhr/">xhr</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Dartpub" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/21/Dartpub/" class="article-date">
@@ -113,7 +187,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/21/Dartpub/" data-id="cjse29qux005n94vwytafm6a5" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/21/Dartpub/" data-id="cjsv6qtyz0005zcvw9rowss5y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pub/">pub</a></li></ul>
@@ -165,7 +239,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjsd0cl00005294vw91t217h4" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjsv6qtyt0001zcvwm9om2a41" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li></ul>
@@ -237,7 +311,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjscxle3q001s94vwls2oae03" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjsv6qu0i002bzcvw0elwzouc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flutter/">flutter</a></li></ul>
@@ -300,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjscxle3a000y94vwc3rbr58q" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjsv6qtzm000vzcvwerx4jjob" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vpn/">vpn</a></li></ul>
@@ -383,7 +457,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjscxle32000l94vwdbyfvbjh" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjsv6qtzi000rzcvwhj1nyjqi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -432,7 +506,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjscxle3x002394vwlmuyvkxh" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjsv6qu0b0020zcvwh7z284gh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li></ul>
@@ -512,7 +586,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjscxle2x000g94vw4y6kzgho" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjsv6qtzg000nzcvwdofs8z2x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -573,7 +647,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjscxle2v000e94vwc46u4a3c" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjsv6qtzc000gzcvw09n5h5kq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -648,62 +722,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjscxle2t000a94vw5s3k0sli" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjsv6qtz9000ezcvwynnxbcxn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-碎片化知识广场" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/01/碎片化知识广场/" class="article-date">
-  <time datetime="2019-02-01T07:58:35.000Z" itemprop="datePublished">2019-02-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/cpmposer/">cpmposer</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-<h6 id="1-如何调试-node-modules-中的代码？"><a href="#1-如何调试-node-modules-中的代码？" class="headerlink" title="(1) 如何调试 node_modules 中的代码？"></a>(1) 如何调试 node_modules 中的代码？</h6><p>如果你尝试直接修改 <code>node_modules</code> 中的源码，如加上断点 <code>debugger;</code> 或者 打印 <code>console.log</code> 是没有效果的。</p>
-<p>这是为什么？</p>
-<p>这是因为你引用的是它编译好的内容。（通常在目录下 <code>package.json</code> 中 <code>main</code> 字段指向）。而你修改的是它的源码，并没有实时编译。当然你可以修改源码后重新编译他们，但没什么必要。这样很容易玩崩……<em>(:3」∠)</em></p>
-<blockquote>
-<p>（仔细想想本来就不可能实时编译 <code>node_modules</code> 中所有的依赖。平时开发 <code>webpack</code> 热编译的 <code>src</code> 下的文件都需要耗费几秒钟了。更不可能去兼顾编译 <code>node_modules</code> 中的内容）</p>
-</blockquote>
-<p>正确的做法是：将<strong>入口文件</strong>迁移到项目目录，而入口文件中的其他依赖直接指向 <code>node_modules</code> 中的源码目录即可。 </p>
-<p>原理是什么? 就像上文说的，<code>webpack</code> 热编译的只有 <code>src</code> 下的项目，如果你将要调试的文件迁移到你的项目 <code>src</code> 中，<code>webpack</code> 就能编译了，而入口的依赖文件哪怕指向 <code>node_modules</code> 也没关系，<code>webpack</code> 也会自动收集并且编译。这样我们就能愉快的在 <code>node_modules</code> 中修改源码了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjscxle3t001w94vw341lzxj9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li></ul>
 
     </footer>
   </div>
@@ -716,7 +738,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -727,7 +749,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -737,7 +759,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
     </div>
   </div>
 
@@ -748,6 +770,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/03/05/norepeatxhr/">更优雅的防止请求(XHR)重复 —— 请求队列</a>
+          </li>
         
           <li>
             <a href="/2019/02/21/Dartpub/">Dart（Flutter） pub 包管理</a>
@@ -825,10 +851,6 @@
             <a href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
           </li>
         
-          <li>
-            <a href="/2019/01/24/Nodejs安装/">Centos7 Nodejs 安装</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -838,7 +860,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 10px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
     </div>
   </div>
 
@@ -847,7 +869,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget widget-archives">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
     </div>
   </div>
 
