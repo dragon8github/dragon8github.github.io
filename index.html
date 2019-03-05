@@ -64,6 +64,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-bibaoIIFE" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/05/bibaoIIFE/" class="article-date">
+  <time datetime="2019-03-05T14:27:09.000Z" itemprop="datePublished">2019-03-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/05/bibaoIIFE/">善用 JavaScript 特性：闭包与IIFE</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<pre><code>一、使用 `IIFE` 优雅的解决 `setInterval` 首次不执行的尴尬。
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 你的函数</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="function"><span class="params">()</span> =&gt;</span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 立即执行并且轮询</span></span><br><span class="line"><span class="keyword">const</span> timer = (<span class="function"><span class="keyword">function</span>(<span class="params">fn, t</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 为了解决 setInterval 首次不执行的尴尬</span></span><br><span class="line">    fn &amp;&amp; fn()</span><br><span class="line">    <span class="comment">// 返回计时器timer</span></span><br><span class="line">    <span class="keyword">return</span> setInterval(fn, t)</span><br><span class="line">&#125;)(f, <span class="number">1500</span>)</span><br></pre></td></tr></table></figure>
+
+
+二、善用闭包，就可以轻松实现缓存模式、单例模式。
+
+下面几个例子来体验闭包在实战中的作用。
+
+&gt; 这种也被称为 `“模块模式”` —— 现代模块化实现的基石
+
+##### 1. 轻量级极简的蒙版层mask，十分方便扩展：
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Mask = <span class="function"><span class="keyword">function</span> (<span class="params">cb</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>)</span><br><span class="line">	div.style = <span class="string">'background-color: rgba(255, 255, 255, 0.7);position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 199307100337; display:none;'</span></span><br><span class="line">	div.addEventListener(<span class="string">'click'</span>, cb)</span><br><span class="line">	<span class="built_in">document</span>.body.append(div)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> img = <span class="keyword">new</span> Image()</span><br><span class="line">	img.src = <span class="string">"http://wx3.sinaimg.cn/small/006ar8zggy1g0isbtuj2kg300w00wq2p.gif"</span></span><br><span class="line">	img.style = <span class="string">'position: absolute; top: 50%; left: 50%;'</span></span><br><span class="line">	div.append(img)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> show = <span class="function"><span class="keyword">function</span> (<span class="params">showcb</span>) </span>&#123;</span><br><span class="line">		div.style.display = <span class="string">'block'</span></span><br><span class="line">		showcb &amp;&amp; showcb()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> close = <span class="function"><span class="keyword">function</span> (<span class="params">showcb</span>) </span>&#123;</span><br><span class="line">		div.style.display = <span class="string">'none'</span></span><br><span class="line">		showcb &amp;&amp; showcb()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> &#123; show, close &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个蒙版</span></span><br><span class="line"><span class="keyword">const</span> mask = <span class="keyword">new</span> Mask()</span><br><span class="line"><span class="comment">// 打开蒙版</span></span><br><span class="line">mask.show()</span><br><span class="line"><span class="comment">// 三秒后关闭</span></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	mask.close()</span><br><span class="line">&#125;, <span class="number">3500</span>);</span><br></pre></td></tr></table></figure>
+
+
+##### 2. 巧妙使用闭包实现去重复
+
+我有一个这样的需求：需要从指定区间（比如-7 ~ 7）随机取 5 个数，虽然说是随机，但却不想重复。用闭包缓存已经取过的数，每次取的时候递归过滤一下即可。
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 缓存函数</span></span><br><span class="line"><span class="keyword">var</span> singeFn = <span class="function"><span class="keyword">function</span> (<span class="params">fn, maxPollTime = <span class="number">20</span></span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 缓存</span></span><br><span class="line">	<span class="keyword">var</span> cache = []</span><br><span class="line">	<span class="comment">// 轮询次数</span></span><br><span class="line">	<span class="keyword">var</span> pollTime = <span class="number">0</span></span><br><span class="line">	<span class="comment">// 返回随机数生成器</span></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">_</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="comment">// 获取随机数</span></span><br><span class="line">		<span class="keyword">var</span> data = fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">		<span class="comment">// 如果存在则递归</span></span><br><span class="line">		<span class="keyword">if</span> (~cache.indexOf(data)) &#123;</span><br><span class="line">			<span class="comment">// 递归调用（如果递归次数大于阈值，那么直接返回False）</span></span><br><span class="line">			<span class="keyword">return</span> ++pollTime &gt; maxPollTime ? <span class="literal">false</span> : _.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">// 重置轮询次数</span></span><br><span class="line">			pollTime = <span class="number">0</span></span><br><span class="line">			<span class="comment">// 添加缓存并且返回data</span></span><br><span class="line">			<span class="keyword">return</span> cache.push(data), data</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 我的随机函数</span></span><br><span class="line"><span class="keyword">var</span> random = <span class="function"><span class="keyword">function</span>(<span class="params">min, max</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (max == <span class="literal">null</span>) &#123;</span><br><span class="line">      max = min;</span><br><span class="line">      min = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min + <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (max - min + <span class="number">1</span>));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从-7，7取随机数</span></span><br><span class="line"><span class="keyword">var</span> rangeRadom = random.bind(<span class="literal">null</span>, <span class="number">-7</span>, <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回一个新的函数</span></span><br><span class="line"><span class="keyword">var</span> singeRangeRadom = singeFn(rangeRadom);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取返回值（每次都不一样）</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> randnum = singeRangeRadom()</span><br><span class="line">    <span class="built_in">console</span>.log(randnum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+##### 3. 用闭包可以实现缓存模式，减少不必要的重复计算消耗。
+譬如比较实用的 `memoized`，我称之为 `参数标记缓存器`，源码和使用示例如下：
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const memoized = fn =&gt; &#123;</span><br><span class="line">	const lookupTable = &#123;&#125;;</span><br><span class="line">	// 可以通过解释这个来观察缓存的变化</span><br><span class="line">	// setInterval( () =&gt; console.log(lookupTable) , 1000); </span><br><span class="line">	return arg =&gt; lookupTable[arg] || (lookupTable[arg] = fn(arg));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 阶乘的demo</span><br><span class="line">let fastFactorial = memoized(n =&gt; &#123;</span><br><span class="line">	if (n === 0) &#123;</span><br><span class="line">		return 1;</span><br><span class="line">	&#125;</span><br><span class="line">	// 这是一个递归，并且每一次递归都具有缓存过程</span><br><span class="line">	return n * fastFactorial(n -1);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">fastFactorial(5)</span><br></pre></td></tr></table></figure>
+
+
+我的博客中`站内静态搜索功能`，就是使用了 `memoized`  的特性来优化性能，减少重复的搜索。
+
+![](http://wx2.sinaimg.cn/large/006ar8zggy1g0s9womogeg30ku0cwqhw.gif)
+
+如图，当我输入 “centos” 的时候，实际上是分别对 
+&gt; &quot;c&quot;, &quot;ce&quot;, &quot;cen&quot;, &quot;cent&quot;, &quot;cento&quot;, &quot;centos&quot; 
+
+关键字分别进行了:
+
+&gt; 搜索 -&gt; 过滤 -&gt; 模板引擎 -&gt; 渲染UI
+
+那么问题来了，如果按下六次“BackSpace”。也就是变成了 
+
+&gt; &quot;cento&quot;, &quot;cent&quot;, &quot;cen&quot;, &quot;ce&quot;, &quot;c&quot;, &quot;&quot;
+
+是否又得重复进行上述的运算操作呢？
+
+显然是不必的，因为每一次输入关键词，我都会搜索一下缓存是否存在相关的内容，如果不存在则会缓存起来。如果存在则拿来即用。这样就减少了大量的计算消耗。直接跳到最后一步“渲染UI”了。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/03/05/bibaoIIFE/" data-id="cjsvvaz0g00163gvwlbsi3ipp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-norepeatxhr" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/05/norepeatxhr/" class="article-date">
@@ -126,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/05/norepeatxhr/" data-id="cjsv8meh90022twvwl3a6zwhv" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/05/norepeatxhr/" data-id="cjsvvaz0y001w3gvwezfifwhx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios/">axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xhr/">xhr</a></li></ul>
@@ -187,7 +275,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/21/Dartpub/" data-id="cjsv8mef70001twvw34vqvsq3" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/21/Dartpub/" data-id="cjsvvayzi00053gvwu25ch3b7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pub/">pub</a></li></ul>
@@ -239,7 +327,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjsv8mefc0004twvwrvi2p5b5" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjsvvayz900003gvwabzvlasg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li></ul>
@@ -311,7 +399,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjsv8mehd0028twvwdplcpzks" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjsvvaz1600283gvwr8vzk66u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flutter/">flutter</a></li></ul>
@@ -374,7 +462,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjsv8meg1000xtwvw1t1awfee" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjsvvaz0b000z3gvwk7gfjp9d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vpn/">vpn</a></li></ul>
@@ -457,7 +545,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjsv8mefw000ptwvwe1xxfek7" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjsvvaz04000r3gvw2t59xmlb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -506,7 +594,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjsv8mehe002atwvwe5256u2l" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjsvvaz1d002c3gvw7w4q8yzz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li></ul>
@@ -586,7 +674,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjsv8mefr000ktwvwvpc5srcv" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjsvvaz01000m3gvwph3cmq9x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -647,82 +735,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjsv8mefm000etwvw935u58yg" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Docker每天五分钟5" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/02/Docker每天五分钟5/" class="article-date">
-  <time datetime="2019-02-02T01:05:18.000Z" itemprop="datePublished">2019-02-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Docker/">Docker</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-<p>docker commit 命令是创建新镜像最直接的方法，其过程包含三个步骤：</p>
-<ul>
-<li>运行容器</li>
-<li>修改容器</li>
-<li>将容器保存为新镜像</li>
-</ul>
-<h6 id="（1）运行容器"><a href="#（1）运行容器" class="headerlink" title="（1）运行容器"></a>（1）运行容器</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker run -it centos</span></span><br><span class="line"></span><br><span class="line">Unable to find image <span class="string">'centos:latest'</span> locally</span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pulling fs layer </span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pull complete </span><br><span class="line">Digest: sha256:184e5f35598e333bfa7de10d8fb1cebb5ee4df5bc0f970bf2b1e7c7345136426</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> centos:latest</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<p>自动下载了最新版本的 Centos 镜像，并且运行和进入了容器（ea9b3dcd88ad）。</p>
-<h6 id="2-修改容器"><a href="#2-修改容器" class="headerlink" title="(2) 修改容器"></a>(2) 修改容器</h6><p>这里示例安装 vim </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># vim</span></span><br><span class="line">bash: vim: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># yum install -y vim</span></span><br><span class="line">...</span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
-<h6 id="3-保存为新镜像"><a href="#3-保存为新镜像" class="headerlink" title="(3) 保存为新镜像"></a>(3) 保存为新镜像</h6><p>让容器继续运行着，然后 <code>新建窗口</code> 来查看当前运行的镜像。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker ps</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019/02/02/Docker每天五分钟5/1.png" alt="silly_aryabhata"></p>
-<p><code>silly_aryabhata</code> 是 Docker 为我们的容器随机分配的名字。</p>
-<p>执行 <code>docker commit</code> 命令将容器保存为镜像。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker commit silly_aryabhata centos-with-vi</span></span><br><span class="line"></span><br><span class="line">sha256:3badf3a0b2d0a59bd3cd106e70d088c32da2e59676746e7613a30f7eb5d3e2b0</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/02/02/Docker每天五分钟5/2.png" alt="centos-with-vi"></p>
-<p>对比两个镜像，从 <code>SIZE</code> 上看到镜像因为安装了 <code>vim</code> 软件而变大了。</p>
-<hr>
-
-<p>以上演示了如何用 <code>docker commit</code> 创建新镜像。</p>
-<blockquote>
-<p>然而，Docker 并不建议用户通过 <code>docker commit</code> 这种方式构建镜像。</p>
-</blockquote>
-<h3 id="原因如下："><a href="#原因如下：" class="headerlink" title="原因如下："></a>原因如下：</h3><ol>
-<li>这是一种手工创建镜像的方式，容易出错，效率低且重复性弱。比如要在ubuntu镜像中也加入vim，还得重复前面所有步骤。</li>
-<li>使用者并不知道镜像是如何创建出来的，里面提供什么服务，包含什么程序，里面是否有恶意程序？也就是说无法对镜像进行审计，存在安全隐患。</li>
-</ol>
-<p>既然 <code>docker commit</code> 不是推荐的方法，我们为什么还要花时间学习呢？</p>
-<blockquote>
-<p>即便是用 dockerfile（推荐方法）构建镜像，底层也是 <code>docker commit</code> 一层一层构建镜像的。学习 <code>docker commit</code> 能够帮助我们更加深入的理解构建过程和镜像的分层结构。</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjsv8mefo000gtwvw5ziq9fyd" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjsvvayzz000k3gvwxpehw8yz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -749,7 +762,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -759,7 +772,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
     </div>
   </div>
 
@@ -770,6 +783,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/03/05/bibaoIIFE/">善用 JavaScript 特性：闭包与IIFE</a>
+          </li>
         
           <li>
             <a href="/2019/03/05/norepeatxhr/">更优雅的防止请求(XHR)重复 —— 请求队列</a>
@@ -847,10 +864,6 @@
             <a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
           </li>
         
-          <li>
-            <a href="/2019/01/24/Centos7依赖全家桶/">Centos7 依赖全家桶</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -860,7 +873,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 10px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 10px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
     </div>
   </div>
 
