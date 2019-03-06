@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>请求缓存策略 | cy&#39;lee 贝尔塔猫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="该代码摘抄自  ant-design-pro  https://github.com/ant-design/ant-design-pro/blob/master/src/utils/request.js#L66 只要不是实时数据的接口，基本上都可以充分利用请求缓存的特性，节约客户端网络资源的浪费，也减少服务器的请求压力。 特别是我的项目中的数据，最短的迭代周期也是“每日一更”。所以缓存特性可以">
+<meta name="keywords" content="JavaScript,axios">
+<meta property="og:type" content="article">
+<meta property="og:title" content="请求缓存策略">
+<meta property="og:url" content="http://cylee.top/2019/03/06/requestjs/index.html">
+<meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:description" content="该代码摘抄自  ant-design-pro  https://github.com/ant-design/ant-design-pro/blob/master/src/utils/request.js#L66 只要不是实时数据的接口，基本上都可以充分利用请求缓存的特性，节约客户端网络资源的浪费，也减少服务器的请求压力。 特别是我的项目中的数据，最短的迭代周期也是“每日一更”。所以缓存特性可以">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g0sufs054qg30lq0ny4go.gif">
+<meta property="og:updated_time" content="2019-03-06T02:56:00.493Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="请求缓存策略">
+<meta name="twitter:description" content="该代码摘抄自  ant-design-pro  https://github.com/ant-design/ant-design-pro/blob/master/src/utils/request.js#L66 只要不是实时数据的接口，基本上都可以充分利用请求缓存的特性，节约客户端网络资源的浪费，也减少服务器的请求压力。 特别是我的项目中的数据，最短的迭代周期也是“每日一更”。所以缓存特性可以">
+<meta name="twitter:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g0sufs054qg30lq0ny4go.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cy&#39;lee 贝尔塔猫</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">前端哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-requestjs" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/06/requestjs/" class="article-date">
+  <time datetime="2019-03-06T02:54:53.000Z" itemprop="datePublished">2019-03-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      请求缓存策略
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>该代码摘抄自  <a href="https://github.com/ant-design/ant-design-pro/blob/master/src/utils/request.js#L66" target="_blank" rel="noopener">ant-design-pro</a> </p>
+<p><a href="https://github.com/ant-design/ant-design-pro/blob/master/src/utils/request.js#L66" target="_blank" rel="noopener">https://github.com/ant-design/ant-design-pro/blob/master/src/utils/request.js#L66</a></p>
+<p>只要不是实时数据的接口，基本上都可以充分利用请求缓存的特性，节约客户端网络资源的浪费，也减少服务器的请求压力。</p>
+<p>特别是我的项目中的数据，最短的迭代周期也是“每日一更”。所以缓存特性可以放心大胆使用。但为了保险，缓存生命周期还是设置短一点。比如1分钟。</p>
+<p>原理大致是这样的：</p>
+<ol>
+<li>每次请求都先判断是否存在缓存，如果没有则存起来，如果有则需要判断缓存是否过期，如果过期则还是要请求，否则才返回缓存；</li>
+<li>每次存之前，判断缓存是否满了？（sessionStoreage的容量大概5M），如果满了则需要清空再存入。值得注意的是，如果数据体积超过5M（几十万数据），那你清空存入还是会报错。所以我们存入之前要判断数据体积是否大于5M，如果是则不加入缓存；</li>
+</ol>
+<h4 id="问题一：如何判断你浏览器的缓存容量，可以手动执行以下代码。不出意外肯定是5120kb。"><a href="#问题一：如何判断你浏览器的缓存容量，可以手动执行以下代码。不出意外肯定是5120kb。" class="headerlink" title="问题一：如何判断你浏览器的缓存容量，可以手动执行以下代码。不出意外肯定是5120kb。"></a>问题一：如何判断你浏览器的缓存容量，可以手动执行以下代码。不出意外肯定是5120kb。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取localStorage最大容量</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(!<span class="built_in">window</span>.sessionStorage) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'当前浏览器不支持sessionStorage!'</span>)</span><br><span class="line">   &#125;    </span><br><span class="line">   <span class="keyword">var</span> test = <span class="string">'0123456789'</span>;</span><br><span class="line">   <span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">     num += num;</span><br><span class="line">     <span class="keyword">if</span>(num.length == <span class="number">10240</span>) &#123;</span><br><span class="line">       test = num;</span><br><span class="line">       <span class="keyword">return</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     add(num);</span><br><span class="line">   &#125;</span><br><span class="line">   add(test);</span><br><span class="line">   <span class="keyword">var</span> sum = test;</span><br><span class="line">   <span class="keyword">var</span> show = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      sum += test;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">       <span class="built_in">window</span>.sessionStorage.removeItem(<span class="string">'test'</span>);</span><br><span class="line">       <span class="built_in">window</span>.sessionStorage.setItem(<span class="string">'test'</span>, sum);</span><br><span class="line">       <span class="built_in">console</span>.log(sum.length / <span class="number">1024</span> + <span class="string">'KB'</span>);</span><br><span class="line">      &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">       <span class="built_in">console</span>.log(sum.length / <span class="number">1024</span> + <span class="string">'KB超出最大限制'</span>);</span><br><span class="line">       clearInterval(show);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;, <span class="number">0.1</span>)</span><br><span class="line"> &#125;)()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取sessionStorage的剩余容量</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">window</span>.sessionStorage) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'浏览器不支持sessionStorage'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(item <span class="keyword">in</span> <span class="built_in">window</span>.sessionStorage) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">window</span>.sessionStorage.hasOwnProperty(item)) &#123;</span><br><span class="line">            size += <span class="built_in">window</span>.sessionStorage.getItem(item).length;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'当前sessionStorage剩余容量为'</span> + (size / <span class="number">1024</span>).toFixed(<span class="number">2</span>) + <span class="string">'KB'</span>);</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g0sufs054qg30lq0ny4go.gif" alt=""></p>
+<h4 id="问题二：以什么作为缓存键（sessionStorage-keys）？"><a href="#问题二：以什么作为缓存键（sessionStorage-keys）？" class="headerlink" title="问题二：以什么作为缓存键（sessionStorage keys）？"></a>问题二：以什么作为缓存键（sessionStorage keys）？</h4><ol>
+<li>Url：请求地址，含 “?” 后面的 GET 参数;</li>
+<li>Options：包含 headers 和 params、body 等;</li>
+<li>Other：譬如有一些公共参数通常是在 <code>interceptors request</code> 请求拦截器中才添加的。如果没有则不计入。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import hash from &apos;hash.js&apos;</span><br><span class="line"></span><br><span class="line">// 缓存键（指纹） = 请求url + 请求配置 + 其他特殊参数</span><br><span class="line">const fingerprint = Url + Options + Other;</span><br><span class="line">// 加密混淆</span><br><span class="line">const hashcode = hash( fingerprint )</span><br></pre></td></tr></table></figure>
+<h4 id="问题三：sessionStorage-是没有过期和生命周期的概念的，需要怎么实现？"><a href="#问题三：sessionStorage-是没有过期和生命周期的概念的，需要怎么实现？" class="headerlink" title="问题三：sessionStorage 是没有过期和生命周期的概念的，需要怎么实现？"></a>问题三：sessionStorage 是没有过期和生命周期的概念的，需要怎么实现？</h4><p>需要新建一个特殊的键来记录该缓存录入的时间，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置缓存</span></span><br><span class="line">sessionStorage.setItem(hashcode, <span class="built_in">JSON</span>.stringify(content))</span><br><span class="line"><span class="comment">// 同时，设置该缓存的录入时间</span></span><br><span class="line">sessionStorage.setItem(<span class="string">`<span class="subst">$&#123;hashcode&#125;</span>:timestamp`</span>, <span class="built_in">Date</span>.now())</span><br></pre></td></tr></table></figure>
+<p>判断缓存是否过期（这里省略了判断缓存是否存在的代码）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我们约定缓存的过期时间是60秒</span></span><br><span class="line"><span class="keyword">const</span> expirys = <span class="number">60</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取该缓存的录入时间</span></span><br><span class="line"><span class="keyword">const</span> whenCached =  sessionStorage.getItem(<span class="string">`<span class="subst">$&#123;hashcode&#125;</span>:timestamp`</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断缓存过去了多久时间了</span></span><br><span class="line"><span class="keyword">const</span> age = (<span class="built_in">Date</span>.now() - whenCached) / <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...如果缓存没有过期</span></span><br><span class="line"><span class="keyword">if</span> (age &lt; expirys) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'use cache'</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'no cache'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="问题四：如何捕捉-sessionStorage-超出"><a href="#问题四：如何捕捉-sessionStorage-超出" class="headerlink" title="问题四：如何捕捉 sessionStorage 超出?"></a>问题四：如何捕捉 sessionStorage 超出?</h4><p>错误名为 <code>&quot;QuotaExceededError&quot;</code></p>
+<blockquote>
+<p>值得注意的是，尽管你清空缓存再重新存入，内容体积如果是大于5M依然会再度报错。所以最好限制缓存的大小。如果大于某个体积（譬如2M），则不存入缓存。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * say something ...</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @hashcode  &#123;String&#125;   缓存键</span></span><br><span class="line"><span class="comment"> * @content   &#123;String&#125;   缓存值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> cachedSave = <span class="function">(<span class="params">hashcode, content</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 返回code500是后端固定的报错反馈 &amp;&amp; 不能为空对象 &amp;&amp; 数据的小于2M</span></span><br><span class="line">    <span class="keyword">if</span> (content.code != <span class="number">500</span> &amp;&amp; !isEmptyObject(content) &amp;&amp; (<span class="built_in">JSON</span>.stringify(content).length / <span class="number">1024</span>).toFixed(<span class="number">2</span>) &lt; <span class="number">2048</span>) &#123;</span><br><span class="line">      <span class="comment">// 设置缓存</span></span><br><span class="line">      sessionStorage.setItem(hashcode, <span class="built_in">JSON</span>.stringify(content))</span><br><span class="line">      <span class="comment">// 设置缓存时间</span></span><br><span class="line">      sessionStorage.setItem(<span class="string">`<span class="subst">$&#123;hashcode&#125;</span>:timestamp`</span>, <span class="built_in">Date</span>.now())</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 超出缓存大小</span></span><br><span class="line">      <span class="keyword">if</span> (err.name === <span class="string">'QuotaExceededError'</span>) &#123;</span><br><span class="line">        <span class="comment">// 清空所有缓存</span></span><br><span class="line">        sessionStorage.clear()</span><br><span class="line">        <span class="comment">// 重新设置缓存</span></span><br><span class="line">        sessionStorage.setItem(hashcode, <span class="built_in">JSON</span>.stringify(content))</span><br><span class="line">        <span class="comment">// 重新设置缓存时间</span></span><br><span class="line">        sessionStorage.setItem(<span class="string">`<span class="subst">$&#123;hashcode&#125;</span>:timestamp`</span>, <span class="built_in">Date</span>.now())</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回Promise</span></span><br><span class="line">  <span class="keyword">return</span> content</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="问题五：如何加密指纹（sessionStorage-keys）？"><a href="#问题五：如何加密指纹（sessionStorage-keys）？" class="headerlink" title="问题五：如何加密指纹（sessionStorage keys）？"></a>问题五：如何加密指纹（sessionStorage keys）？</h4><p>可以使用开源的第三方库： <code>hash.js</code><br><a href="https://github.com/indutny/hash.js" target="_blank" rel="noopener">https://github.com/indutny/hash.js</a></p>
+<p>使用示例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hash = <span class="built_in">require</span>(<span class="string">'hash.js'</span>)</span><br><span class="line">hash.sha256().update(<span class="string">'你需要加密的数据'</span>).digest(<span class="string">'hex'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="最终代码"><a href="#最终代码" class="headerlink" title="最终代码"></a>最终代码</h2><p>request.js:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"><span class="keyword">import</span> hash <span class="keyword">from</span> <span class="string">'hash.js'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断是否为一个空对象：&#123;&#125;</span></span><br><span class="line"><span class="keyword">const</span> isEmptyObject = <span class="function"><span class="params">obj</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Object</span>.getOwnPropertyNames) &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">Object</span>.getOwnPropertyNames(obj).length === <span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> k;</span><br><span class="line">        <span class="keyword">for</span> (k <span class="keyword">in</span> obj) &#123;</span><br><span class="line">            <span class="keyword">if</span> (obj.hasOwnProperty(k)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查状态码</span></span><br><span class="line"><span class="keyword">const</span> checkStatus = <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 判断请求状态</span></span><br><span class="line">    <span class="keyword">if</span> (response.status &gt;= <span class="number">200</span> &amp;&amp; response.status &lt; <span class="number">300</span>) &#123;</span><br><span class="line">        <span class="comment">// 返回Promise</span></span><br><span class="line">        <span class="keyword">return</span> response.data</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 服务器响应异常</span></span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(response.statusText)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 缓存到sessionStorage</span></span><br><span class="line"><span class="keyword">const</span> cachedSave = <span class="function">(<span class="params">hashcode, content</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 返回code500是后端固定的报错反馈 &amp;&amp; 不能为空对象 &amp;&amp; 数据的小于2M</span></span><br><span class="line">    <span class="keyword">if</span> (content.code != <span class="number">500</span> &amp;&amp; !isEmptyObject(content) &amp;&amp; (<span class="built_in">JSON</span>.stringify(content).length / <span class="number">1024</span>).toFixed(<span class="number">2</span>) &lt; <span class="number">2048</span>) &#123;</span><br><span class="line">      <span class="comment">// 设置缓存</span></span><br><span class="line">      sessionStorage.setItem(hashcode, <span class="built_in">JSON</span>.stringify(content))</span><br><span class="line">      <span class="comment">// 设置缓存时间</span></span><br><span class="line">      sessionStorage.setItem(<span class="string">`<span class="subst">$&#123;hashcode&#125;</span>:timestamp`</span>, <span class="built_in">Date</span>.now())</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 超出缓存大小</span></span><br><span class="line">      <span class="keyword">if</span> (err.name === <span class="string">'QuotaExceededError'</span>) &#123;</span><br><span class="line">        <span class="comment">// 清空所有缓存</span></span><br><span class="line">        sessionStorage.clear()</span><br><span class="line">        <span class="comment">// 重新设置缓存</span></span><br><span class="line">        sessionStorage.setItem(hashcode, <span class="built_in">JSON</span>.stringify(content))</span><br><span class="line">        <span class="comment">// 重新设置缓存时间</span></span><br><span class="line">        sessionStorage.setItem(<span class="string">`<span class="subst">$&#123;hashcode&#125;</span>:timestamp`</span>, <span class="built_in">Date</span>.now())</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回Promise</span></span><br><span class="line">  <span class="keyword">return</span> content</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 公共请求</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> request = <span class="function">(<span class="params">url, options = &#123;&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 指纹</span></span><br><span class="line">    <span class="keyword">const</span> fingerprint = url + <span class="built_in">JSON</span>.stringify(options)</span><br><span class="line">    <span class="comment">// 加密指纹</span></span><br><span class="line">    <span class="keyword">const</span> hashcode = hash.sha256().update(fingerprint).digest(<span class="string">'hex'</span>)</span><br><span class="line">    <span class="comment">// 预设值指纹</span></span><br><span class="line">    <span class="keyword">const</span> _cachedSave = cachedSave.bind(<span class="literal">null</span>, hashcode)</span><br><span class="line">    <span class="comment">// 过期设置</span></span><br><span class="line">    <span class="keyword">const</span> expirys = options &amp;&amp; options.expirys || <span class="number">60</span></span><br><span class="line">    <span class="comment">// 本请求是否禁止缓存？</span></span><br><span class="line">    <span class="keyword">if</span> (expirys !== <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="comment">// 获取缓存</span></span><br><span class="line">        <span class="keyword">const</span> cached = sessionStorage.getItem(hashcode)</span><br><span class="line">        <span class="comment">// 获取该缓存的时间</span></span><br><span class="line">        <span class="keyword">const</span> whenCached = sessionStorage.getItem($&#123;hashcode&#125;:timestamp)</span><br><span class="line">        <span class="comment">// 如果缓存都存在</span></span><br><span class="line">        <span class="keyword">if</span> (cached !== <span class="literal">null</span> &amp;&amp; whenCached !== <span class="literal">null</span>) &#123;</span><br><span class="line">          <span class="comment">// 判断缓存是否过期</span></span><br><span class="line">          <span class="keyword">const</span> age = (<span class="built_in">Date</span>.now() - whenCached) / <span class="number">1000</span></span><br><span class="line">          <span class="comment">// 如果不过期的话直接返回该内容</span></span><br><span class="line">          <span class="keyword">if</span> (age &lt; expirys) &#123;</span><br><span class="line">              <span class="comment">// 新建一个response</span></span><br><span class="line">              <span class="keyword">const</span> response = <span class="keyword">new</span> Response(<span class="keyword">new</span> Blob([cached]))</span><br><span class="line">              <span class="comment">// 返回promise式的缓存</span></span><br><span class="line">              <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> resolve(response.json()))</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">// 删除缓存内容</span></span><br><span class="line">          sessionStorage.removeItem(hashcode)</span><br><span class="line">          <span class="comment">// 删除缓存时间</span></span><br><span class="line">          sessionStorage.removeItem($&#123;hashcode&#125;:timestamp)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> axios(url, options).then(checkStatus).then(_cachedSave)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="如何使用-request-js？"><a href="#如何使用-request-js？" class="headerlink" title="如何使用 request.js？"></a>如何使用 request.js？</h3><p>Login.js 示例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; request &#125; <span class="keyword">from</span> <span class="string">'@/utils/request.js'</span></span><br><span class="line"><span class="keyword">import</span> qs <span class="keyword">from</span> <span class="string">'qs'</span></span><br><span class="line"></span><br><span class="line">request(<span class="string">'/admin/user/sysUser/login'</span>, &#123;</span><br><span class="line">  method: <span class="string">'POST'</span>,</span><br><span class="line">  headers: &#123;<span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded;charset=utf-8'</span>&#125;,</span><br><span class="line">  data: qs.stringify(&#123; userAccount, userPwd, <span class="attr">type</span>: <span class="string">'account'</span> &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/03/06/requestjs/" data-id="cjswm1ohs0020iwvw9jpx1qh5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios/">axios</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/05/bibaoIIFE/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">善用 JavaScript 特性：闭包与IIFE</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget widget-category">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget widget-tag">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget widget-posts">
+      <ul>
+        
+          <li>
+            <a href="/2019/03/06/requestjs/">请求缓存策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/05/bibaoIIFE/">善用 JavaScript 特性：闭包与IIFE</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/05/norepeatxhr/">更优雅的防止请求(XHR)重复 —— 请求队列</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/21/Dartpub/">Dart（Flutter） pub 包管理</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/20/DartWeb/">Dart for the web  一小时入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/20/在Windows上搭建Flutter开发环境/">在 Windows 上搭建 Flutter 开发环境</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/19/aliyun/">阿里云 香港服务器 Centos7 3分钟搞定vpn</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/11/Docker每天五分钟8/">《Docker每天五分钟》八：Dockerfile 中的命令三兄贵</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/04/碎片化经验广场/">碎片化经验广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟3/">《Docker每天五分钟》三：hello-world、初识dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟2/">《Docker每天五分钟》二：切换 DaoCloud 镜像源</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/hexo的认知/">hexo的认知</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget widget-tagcloud">
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 13.33px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget widget-archives">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <canvas class="fireworks" style="position: fixed; left: 0px; top: 0px; z-index: 1; pointer-events: none;" width="2880" height="832"></canvas>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 贝尔塔猫<br>
+      Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
+
+      <div class="fr js-go-top">按下 [Home] 键返回顶部</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/Lee.js"></script>
+
+
+
+  </div>
+</body>
+</html>

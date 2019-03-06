@@ -64,6 +64,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Docker每天五分钟6" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/02/Docker每天五分钟6/" class="article-date">
+  <time datetime="2019-02-02T02:24:56.000Z" itemprop="datePublished">2019-02-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<p>Dockerfile 是一个文本文件，记录了镜像构建的所有步骤。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim Dockerfile</span><br></pre></td></tr></table></figure>
+<p>Dockerfile 内容如下：</p>
+<blockquote>
+<p>FROM centos<br>RUN yum install -y vim</p>
+</blockquote>
+<p>开始构建</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t centos-with-vim .</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-t：指明镜像的名字，该示例为 <code>centos-with-vim</code>；</li>
+<li>请注意最后一个<code>.</code> 它指明在当前路径寻找 Dockerfile；</li>
+</ul>
+<p>经过漫长的安装之后。我们查看一下镜像列表 <code>$ docker images</code>:</p>
+<p><img src="/2019/02/02/Docker每天五分钟6/1.png" alt="docker images"></p>
+<h3 id="docker-的缓存特性："><a href="#docker-的缓存特性：" class="headerlink" title="docker 的缓存特性："></a>docker 的<code>缓存</code>特性：</h3><p>可以看到 Docker 分为了两个镜像： <code>centos</code> 和 <code>centos-with-vim</code>。</p>
+<p>其中 <code>centos</code> 镜像我们称为base镜像。而 <code>centos-with-vim</code> 就是基于base镜像构建的。</p>
+<p>如果在构建之前你的本地镜像已经存在base镜像。那么会直接使用，无须重新下载和构建。这也是 docker 的重要<code>缓存</code>特性。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjswm1ogz000liwvwrpisp7r8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Docker每天五分钟5" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/02/Docker每天五分钟5/" class="article-date">
@@ -127,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjswhj84f000gs8vwsu3q44dn" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjswm1oh0000niwvwot396wh7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -179,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjswhj86b004bs8vw9v4yjzs7" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjswm1ohy002ciwvwp94dg1bu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li></ul>
@@ -338,7 +399,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjswhj84e000fs8vw3vwujy3c" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjswm1ogw000eiwvwftznuze8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -393,7 +454,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjswhj84b000bs8vwgnf3i9cj" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjswm1ogr0009iwvw604o2zlg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -443,7 +504,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjswhj8460006s8vw97qftw1d" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjswm1ogs000aiwvw6lc1119y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -495,7 +556,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjswhj84a000as8vwwtb9avch" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjswm1ogp0006iwvw5osbc9ks" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -578,7 +639,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjswhj84k000rs8vwjdubfgy7" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjswm1oh4000viwvw7i0z0442" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -658,7 +719,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjswhj84v001ds8vwjtg25q5i" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjswm1ohb0013iwvw1zi9zh5v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -711,74 +772,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjswhj86d004gs8vw797dfims" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjswm1oi1002iiwvw0ysqugvn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MP4/">MP4</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/video/">video</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-php安装" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/25/php安装/" class="article-date">
-  <time datetime="2019-01-25T01:13:58.000Z" itemprop="datePublished">2019-01-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/centos/">centos</a>►<a class="article-category-link" href="/categories/centos/PHP/">PHP</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-<p>参考官方 UNIX 编译教程： <a href="http://php.net/manual/zh/install.unix.php" target="_blank" rel="noopener">http://php.net/manual/zh/install.unix.php</a></p>
-<h6 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install libxml2 libxml2-devel</span><br></pre></td></tr></table></figure>
-<h6 id="2、下载php（China）-http-php-net-get-php-7-3-1-tar-gz-from-a-mirror"><a href="#2、下载php（China）-http-php-net-get-php-7-3-1-tar-gz-from-a-mirror" class="headerlink" title="2、下载php（China）: http://php.net/get/php-7.3.1.tar.gz/from/a/mirror"></a>2、下载php（China）: <a href="http://php.net/get/php-7.3.1.tar.gz/from/a/mirror" target="_blank" rel="noopener">http://php.net/get/php-7.3.1.tar.gz/from/a/mirror</a></h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget -O php-7.3.1.tar.gz http://cn2.php.net/get/php-7.3.1.tar.gz/from/this/mirror</span><br></pre></td></tr></table></figure>
-<h6 id="3、编译三兄贵"><a href="#3、编译三兄贵" class="headerlink" title="3、编译三兄贵"></a>3、编译三兄贵</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --<span class="built_in">disable</span>-fileinfo --<span class="built_in">enable</span>-fpm</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p>加入–disable-fileinfo是为了避免make时出现如下错误：</p>
-<blockquote>
-<p>virtual memory exhausted: Cannot allocate memory<br>make: *** [ext/fileinfo/libmagic/apprentice.lo] Error 1</p>
-</blockquote>
-<p>其中 <code>--enable-fpm</code> 是支持fpm扩展</p>
-<p>安装完成之后，会出现如下提示语：</p>
-<blockquote>
-<p>Wrote PEAR system config file at: /usr/local/etc/pear.conf<br>You may want to add: /usr/local/lib/php to your php.ini include_path<br>/home/dc2-user/php-7.3.1/build/shtool install -c ext/phar/phar.phar /usr/local/bin<br>ln -s -f phar.phar /usr/local/bin/phar<br>Installing PDO headers:           /usr/local/include/php/ext/pdo/</p>
-</blockquote>
-<p>请放心这是正常的，实际上此时你的php已经安装成功了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ php -v</span><br><span class="line"></span><br><span class="line">PHP 7.3.1 (cli) (built: Jan 24 2019 21:37:18) ( NTS )</span><br><span class="line">Copyright (c) 1997-2018 The PHP Group</span><br><span class="line">Zend Engine v3.3.1, Copyright (c) 1998-2018 Zend Technologies</span><br></pre></td></tr></table></figure></p>
-<h6 id="4、创建配置文件，并将其复制到正确的位置。"><a href="#4、创建配置文件，并将其复制到正确的位置。" class="headerlink" title="4、创建配置文件，并将其复制到正确的位置。"></a>4、创建配置文件，并将其复制到正确的位置。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp php.ini-development /usr/<span class="built_in">local</span>/php/php.ini</span><br><span class="line">$ sudo cp /usr/<span class="built_in">local</span>/etc/php-fpm.conf.default /usr/<span class="built_in">local</span>/etc/php-fpm.conf</span><br><span class="line">$ sudo cp sapi/fpm/php-fpm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
-<p>接下来你可能想要了解：</p>
-<ul>
-<li><a href="/2019/01/25/Nginx与php结合/">nginx 与 php 结合使用</a></li>
-<li>nginx 与 apache 结合使用</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjswhj862003ps8vwjb6twyj7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
 
     </footer>
   </div>
@@ -823,6 +820,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget widget-posts">
       <ul>
+        
+          <li>
+            <a href="/2019/03/06/requestjs/">请求缓存策略</a>
+          </li>
         
           <li>
             <a href="/2019/03/05/bibaoIIFE/">善用 JavaScript 特性：闭包与IIFE</a>
@@ -900,10 +901,6 @@
             <a href="/2019/01/25/网页无法播放MP4的解决方案/">网页无法播放MP4的解决方案</a>
           </li>
         
-          <li>
-            <a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -913,7 +910,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 10px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 13.33px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
     </div>
   </div>
 
