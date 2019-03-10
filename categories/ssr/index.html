@@ -5,20 +5,19 @@
   
 
   
-  <title>《Docker每天五分钟》四：常用api | cy&#39;lee 贝尔塔猫</title>
+  <title>Category: ssr | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="命令 功能     $ docker images 查看所有镜像   $ docker ps -a 查看所有容器   $ docker run -it &amp;lt;镜像&amp;gt; 运行本地镜像，如果镜像不存在则下载最新版本   $ docker exec -it &amp;lt;已启动容器&amp;gt; /bin/bash 以交互的方式进入已启动的容器内部   $ docker stop &amp;lt;容器&amp;g">
-<meta name="keywords" content="Docker">
-<meta property="og:type" content="article">
-<meta property="og:title" content="《Docker每天五分钟》四：常用api">
-<meta property="og:url" content="http://cylee.top/2019/01/31/Docker每天五分钟4/index.html">
+  <meta name="description" content="贝尔塔猫,前端,web,Vue,React">
+<meta name="keywords" content="贝尔塔猫,前端,web,Vue,React">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:url" content="http://cylee.top/categories/ssr/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="命令 功能     $ docker images 查看所有镜像   $ docker ps -a 查看所有容器   $ docker run -it &amp;lt;镜像&amp;gt; 运行本地镜像，如果镜像不存在则下载最新版本   $ docker exec -it &amp;lt;已启动容器&amp;gt; /bin/bash 以交互的方式进入已启动的容器内部   $ docker stop &amp;lt;容器&amp;g">
+<meta property="og:description" content="贝尔塔猫,前端,web,Vue,React">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-11T13:24:47.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Docker每天五分钟》四：常用api">
-<meta name="twitter:description" content="命令 功能     $ docker images 查看所有镜像   $ docker ps -a 查看所有容器   $ docker run -it &amp;lt;镜像&amp;gt; 运行本地镜像，如果镜像不存在则下载最新版本   $ docker exec -it &amp;lt;已启动容器&amp;gt; /bin/bash 以交互的方式进入已启动的容器内部   $ docker stop &amp;lt;容器&amp;g">
+<meta name="twitter:title" content="cy&#39;lee 贝尔塔猫">
+<meta name="twitter:description" content="贝尔塔猫,前端,web,Vue,React">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
   
@@ -63,183 +62,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Docker每天五分钟4" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/31/Docker每天五分钟4/" class="article-date">
-  <time datetime="2019-01-31T09:09:30.000Z" itemprop="datePublished">2019-01-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Docker/">Docker</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      《Docker每天五分钟》四：常用api
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2019/03/10/androidssr/" class="archive-article-date">
+  <time datetime="2019-03-10T05:22:26.000Z" itemprop="datePublished">Mar 10</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/03/10/androidssr/">androidssr</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th style="text-align:center">功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$ docker images</td>
-<td style="text-align:center">查看所有镜像</td>
-</tr>
-<tr>
-<td>$ docker ps -a</td>
-<td style="text-align:center">查看所有容器</td>
-</tr>
-<tr>
-<td>$ docker run -it &lt;镜像&gt;</td>
-<td style="text-align:center">运行本地镜像，如果镜像不存在则下载最新版本</td>
-</tr>
-<tr>
-<td>$ docker exec -it &lt;已启动容器&gt; /bin/bash</td>
-<td style="text-align:center">以交互的方式进入已启动的容器内部</td>
-</tr>
-<tr>
-<td>$ docker stop &lt;容器&gt;</td>
-<td style="text-align:center">停止容器</td>
-</tr>
-<tr>
-<td>$ docker start &lt;容器&gt;</td>
-<td style="text-align:center">启动容器</td>
-</tr>
-<tr>
-<td>$ docker rm &lt;容器&gt;</td>
-<td style="text-align:center">删除容器，必须先停止容器</td>
-</tr>
-<tr>
-<td>$ docker rmi &lt;镜像&gt;</td>
-<td style="text-align:center">删除镜像，必须先删除所有依赖该镜像的容器</td>
-</tr>
-<tr>
-<td>$ docker build -t &lt;新建容器名&gt; .</td>
-<td style="text-align:center">通过 Dockerfile 构建镜像，<br>请注意最后一个<code>.</code> 指明在当前路径寻找 Dockerfile</td>
-</tr>
-<tr>
-<td>$ docker history &lt;镜像&gt;</td>
-<td style="text-align:center">查看镜像的构建层级</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>Dockerfile 支持以 ‘#’ 开头注释</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th style="text-align:center">功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FORM</td>
-<td style="text-align:center">指定 base 镜像</td>
-</tr>
-<tr>
-<td>MAINTAINER</td>
-<td style="text-align:center">设置镜像的作者，可以是任意字符串</td>
-</tr>
-<tr>
-<td>RUN</td>
-<td style="text-align:center">（命令三兄弟之一）在容器中运行指定命令。</td>
-</tr>
-<tr>
-<td>CMD</td>
-<td style="text-align:center">（命令三兄弟之一）在容器启动时运行指定的命令。</td>
-</tr>
-<tr>
-<td>ENTRYPOINT</td>
-<td style="text-align:center">（命令三兄弟之一）设置容器启动时运行的命令。</td>
-</tr>
-<tr>
-<td>COPY</td>
-<td style="text-align:center">将文件复制到镜像，<code>COPY src desc</code> 与 <code>COPY [&quot;src&quot;, &quot;desc&quot;]</code></td>
-</tr>
-<tr>
-<td>ADD</td>
-<td style="text-align:center">与COPY类似，将文件复制到镜像。不同的是如果src是归档文件（zip、taz、xz等），文件会被自动解压</td>
-</tr>
-<tr>
-<td>ENV</td>
-<td style="text-align:center">设置环境变量，环境变量可被后面的指令使用如： <br> <code>ENV MY_VERSION 1.9.1 RUN yum install -y mypackage=$MY_VERSION</code></td>
-</tr>
-<tr>
-<td>WORKDIR</td>
-<td style="text-align:center">设置镜像中当前工作目录（服务于COPY、ADD、CMD、RUN、ENTRYPOINT等指令）。</td>
-</tr>
-<tr>
-<td>EXPOSE</td>
-<td style="text-align:center">指定容器中的进程会监听某个端口， Docker 可以将该端口暴漏出来。</td>
-</tr>
-<tr>
-<td>VOLUME</td>
-<td style="text-align:center">将文件或目录声明为 volume。</td>
-</tr>
-</tbody>
-</table>
-<p>注意点：</p>
-<ul>
-<li>Dockerfile 中可以有多个 CMD 指令，但只有最后一个生效。</li>
-<li>Dockerfile 中可以有多个 ENTRYPOINT 指令，但只有最后一个生效。</li>
-<li>CMD 指令会被 <code>$ docker run [image] ...</code> 之后的参数替换掉。 如  <code>$ docker run [image] /bash/bin</code></li>
-<li>CMD 或 docker run 之后的参数会被当做参数传递给ENTRYPOINT。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjt2h2ijj000ed4vwuaz1edyz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/02/01/碎片化知识广场/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          碎片化知识广场
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/01/31/Docker每天五分钟3/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">《Docker每天五分钟》三：hello-world、初识dockerfile</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         
