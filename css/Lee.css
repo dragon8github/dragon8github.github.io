@@ -104,7 +104,7 @@ article.is-index .article-inner {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url("http://wx1.sinaimg.cn/small/006ar8zggy1g0xn6gl74pj30i20ntjuk.jpg");
+  background: url("./images/qlz.jpg");
   background-size: cover;
 }
 .widget.widget-tag {
@@ -121,7 +121,7 @@ article.is-index .article-inner {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url("http://wx3.sinaimg.cn/small/006ar8zggy1g0xn7m2risj30e80lcwh6.jpg");
+  background: url("./images/hy.jpg");
   background-size: cover;
 }
 .widget.widget-posts {
@@ -139,7 +139,7 @@ article.is-index .article-inner {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url("http://wx4.sinaimg.cn/small/006ar8zggy1g0xn6o86hoj30fa0kxju9.jpg");
+  background: url("./images/hzw.jpg");
   background-size: cover;
 }
 .widget.widget-tagcloud {
@@ -156,7 +156,7 @@ article.is-index .article-inner {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url("http://wx3.sinaimg.cn/small/006ar8zggy1g0xn6j9dmoj30hs0o4wh3.jpg");
+  background: url("./images/jjdjr2.jpg");
   background-size: cover;
 }
 .widget.widget-archives {
@@ -173,7 +173,7 @@ article.is-index .article-inner {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url("http://wx3.sinaimg.cn/small/006ar8zggy1g0xn6lh7qdj30hs0nhtai.jpg");
+  background: url("./images/jjdjr.jpg");
   background-size: cover;
 }
 .widget > ul {
@@ -206,7 +206,7 @@ article.is-index .article-inner {
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 0 0 1px rgba(255,255,255,0.3) inset, 0 0.5em 1em rgba(0,0,0,0.3);
-  background: url("http://wx3.sinaimg.cn/small/006ar8zggy1g0xn7p0lnfj30zk05k44l.jpg") 0/cover fixed;
+  background: url("./images/banner.jpg") 0/cover fixed;
 }
 .myPanel .myPanel__container {
   position: relative;
@@ -221,7 +221,7 @@ article.is-index .article-inner {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url("http://wx3.sinaimg.cn/small/006ar8zggy1g0xn7p0lnfj30zk05k44l.jpg") 0/cover fixed;
+  background: url("./images/banner.jpg") 0/cover fixed;
   filter: blur(20px);
   margin: -30px;
   z-index: -1;
