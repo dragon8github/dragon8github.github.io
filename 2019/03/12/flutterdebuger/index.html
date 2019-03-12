@@ -5,29 +5,25 @@
   
 
   
-  <title>在 Windows 上搭建 Flutter 开发环境 | cy&#39;lee 贝尔塔猫</title>
+  <title>flutterdebuger | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、获取Flutter SDK：https://flutter.io/sdk-archive/#windows 2、解压 flutter_windows_v1.0.0-stable.zip，并将 flutter/bin 加入到环境变量 3、安装Android Studio ：https://developer.android.google.cn 4、在 Android Studio 的 Brows">
+  <meta name="description" content="操作预览：  准备一条数据线，并连接电脑和手； 使用 flutter devices 查看设备能否找到； 在 Android studio 中选择你的真机，然后点击 [debug]； 真机自动安装App。一、准备一条数据线，并连接电脑和手机   注意：切记不是充电线  如果正常连接成功，你的手机和电脑都有提示。注意手机会提示你选择【USB 传输方式】，必须选择【传输文件】（或者MTP（多媒体传">
 <meta name="keywords" content="flutter">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 Windows 上搭建 Flutter 开发环境">
-<meta property="og:url" content="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/index.html">
+<meta property="og:title" content="flutterdebuger">
+<meta property="og:url" content="http://cylee.top/2019/03/12/flutterdebuger/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="1、获取Flutter SDK：https://flutter.io/sdk-archive/#windows 2、解压 flutter_windows_v1.0.0-stable.zip，并将 flutter/bin 加入到环境变量 3、安装Android Studio ：https://developer.android.google.cn 4、在 Android Studio 的 Brows">
+<meta property="og:description" content="操作预览：  准备一条数据线，并连接电脑和手； 使用 flutter devices 查看设备能否找到； 在 Android studio 中选择你的真机，然后点击 [debug]； 真机自动安装App。一、准备一条数据线，并连接电脑和手机   注意：切记不是充电线  如果正常连接成功，你的手机和电脑都有提示。注意手机会提示你选择【USB 传输方式】，必须选择【传输文件】（或者MTP（多媒体传">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy57wy3qj30mr0ng3zw.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5amfb5j30ru0nttac.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5d3o4xj30so0o20v9.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyaijpcwj30mu0i3q3y.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyie6pehj30ru0nn3zo.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyigbo29j30ru0nn75k.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyij36rtj30ru0nnjsk.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyqjwvnkj313n0q7wka.jpg">
-<meta property="og:updated_time" content="2019-02-20T09:51:53.534Z">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0zromxjlqj30br0nmgxw.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/006ar8zggy1g0zrnf86g8j30hf02t749.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/006ar8zggy1g0zrrlvwesj30kt036wei.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g0zruf9snrj30u01o0jwf.jpg">
+<meta property="og:updated_time" content="2019-03-12T01:52:35.457Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Windows 上搭建 Flutter 开发环境">
-<meta name="twitter:description" content="1、获取Flutter SDK：https://flutter.io/sdk-archive/#windows 2、解压 flutter_windows_v1.0.0-stable.zip，并将 flutter/bin 加入到环境变量 3、安装Android Studio ：https://developer.android.google.cn 4、在 Android Studio 的 Brows">
-<meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy57wy3qj30mr0ng3zw.jpg">
+<meta name="twitter:title" content="flutterdebuger">
+<meta name="twitter:description" content="操作预览：  准备一条数据线，并连接电脑和手； 使用 flutter devices 查看设备能否找到； 在 Android studio 中选择你的真机，然后点击 [debug]； 真机自动安装App。一、准备一条数据线，并连接电脑和手机   注意：切记不是充电线  如果正常连接成功，你的手机和电脑都有提示。注意手机会提示你选择【USB 传输方式】，必须选择【传输文件】（或者MTP（多媒体传">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0zromxjlqj30br0nmgxw.jpg">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
   
@@ -72,10 +68,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-在Windows上搭建Flutter开发环境" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+        <section id="main"><article id="post-flutterdebuger" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/02/20/在Windows上搭建Flutter开发环境/" class="article-date">
-  <time datetime="2019-02-20T08:08:58.000Z" itemprop="datePublished">2019-02-20</time>
+    <a href="/2019/03/12/flutterdebuger/" class="article-date">
+  <time datetime="2019-03-12T01:52:17.000Z" itemprop="datePublished">2019-03-12</time>
 </a>
     
   <div class="article-category">
@@ -90,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      在 Windows 上搭建 Flutter 开发环境
+      flutterdebuger
     </h1>
   
 
@@ -98,41 +94,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><hr><br>1、获取Flutter SDK：<a href="https://flutter.io/sdk-archive/#windows" target="_blank" rel="noopener">https://flutter.io/sdk-archive/#windows</a></p>
-<p>2、解压 <strong>flutter_windows_v1.0.0-stable.zip</strong>，并将 flutter/bin 加入到环境变量</p>
-<p>3、安装Android Studio ：<a href="https://developer.android.google.cn" target="_blank" rel="noopener">https://developer.android.google.cn</a></p>
-<p>4、在 Android Studio 的 <strong>Browse repositories</strong> 安装 <strong>Flutter</strong> 和 <strong>Dart</strong> 插件</p>
-<ul>
-<li>Flutter插件： 支持Flutter开发工作流 (运行、调试、热重载等)。</li>
-<li>Dart插件： 提供代码分析 (输入代码时进行验证、代码补全等)。</li>
-</ul>
-<p>欢迎页 -&gt; configure -&gt; Plugins -&gt; Browse repositories… -&gt; Search</p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy57wy3qj30mr0ng3zw.jpg" alt="configure"></p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5amfb5j30ru0nttac.jpg" alt="Plugins"></p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cy5d3o4xj30so0o20v9.jpg" alt="Browse repositories..."></p>
-<p>5、安装完 flutter 插件后，重启一下Android Studio，然后我们就可以新建 flutter 模板了。</p>
-<p>欢迎页 -&gt; Start a new Flutter project -&gt; Flutter application -&gt; 输入项目名称和选择flutter的sdk目录 -&gt; finish</p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyaijpcwj30mu0i3q3y.jpg" alt="Start a new Flutter project"></p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyie6pehj30ru0nn3zo.jpg" alt="Flutter application"></p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyigbo29j30ru0nn75k.jpg" alt="flutter sdk "></p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyij36rtj30ru0nnjsk.jpg" alt="finish"></p>
-<p>6、运行应用程序</p>
-<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0cyqjwvnkj313n0q7wka.jpg" alt="Flutter Demo Home Page"></p>
-<hr>
-<p>可能遇到的问题：</p>
-<h5 id="0-任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn-fq。"><a href="#0-任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn-fq。" class="headerlink" title="0. 任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn fq。"></a>0. 任何访问不了网站，自动安装失败、下载失败等网络问题，自己想办法搞vpn fq。</h5><ul>
-<li><p><a href="https://www.cnblogs.com/CyLee/p/10401766.html" target="_blank" rel="noopener">阿里云 香港服务器 Centos7 3分钟搞定vpn</a></p>
-</li>
-<li><p><a href="https://dc.36fy.com/" target="_blank" rel="noopener">加速度</a></p>
-</li>
-</ul>
-<h5 id="1-启动Android-Studio时，出现“Unable-to-access-Android-SDK-add-on-list”"><a href="#1-启动Android-Studio时，出现“Unable-to-access-Android-SDK-add-on-list”" class="headerlink" title="1. 启动Android Studio时，出现“Unable to access Android SDK add-on list”"></a>1. 启动Android Studio时，出现“Unable to access Android SDK add-on list”</h5><p>点击 <strong>“Cancel”</strong>， 稍后再根据指引，自动安装即可。</p>
-<h5 id="2-其他常见配置问题"><a href="#2-其他常见配置问题" class="headerlink" title="2. 其他常见配置问题"></a>2. 其他常见配置问题</h5><p><a href="https://book.flutterchina.club/chapter1/configuration.html" target="_blank" rel="noopener">https://book.flutterchina.club/chapter1/configuration.html</a></p>
+        <hr>
+
+<p>操作预览：</p>
+<ol>
+<li>准备一条数据线，并连接电脑和手；</li>
+<li>使用 <code>flutter devices</code> 查看设备能否找到；</li>
+<li>在 <code>Android studio</code> 中选择你的真机，然后点击 <code>[debug]</code>；</li>
+<li>真机自动安装App。<h4 id="一、准备一条数据线，并连接电脑和手机"><a href="#一、准备一条数据线，并连接电脑和手机" class="headerlink" title="一、准备一条数据线，并连接电脑和手机"></a>一、准备一条数据线，并连接电脑和手机</h4></li>
+</ol>
+<blockquote>
+<p>注意：切记不是充电线</p>
+</blockquote>
+<p>如果正常连接成功，你的手机和电脑都有提示。注意手机会提示你选择【USB 传输方式】，必须选择【传输文件】（或者MTP（多媒体传输））</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zggy1g0zromxjlqj30br0nmgxw.jpg" alt=""></p>
+<h4 id="二、使用-flutter-devices-查看设备能否找到"><a href="#二、使用-flutter-devices-查看设备能否找到" class="headerlink" title="二、使用 flutter devices 查看设备能否找到"></a>二、使用 <code>flutter devices</code> 查看设备能否找到</h4><p><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g0zrnf86g8j30hf02t749.jpg" alt=""></p>
+<h4 id="三、在-Android-studio-中选择你的真机，然后点击-debug"><a href="#三、在-Android-studio-中选择你的真机，然后点击-debug" class="headerlink" title="三、在 Android studio 中选择你的真机，然后点击 [debug]"></a>三、在 <code>Android studio</code> 中选择你的真机，然后点击 <code>[debug]</code></h4><p><img src="http://wx1.sinaimg.cn/large/006ar8zggy1g0zrrlvwesj30kt036wei.jpg" alt=""></p>
+<h4 id="四、真机自动安装App（略）。"><a href="#四、真机自动安装App（略）。" class="headerlink" title="四、真机自动安装App（略）。"></a>四、真机自动安装App（略）。</h4><p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g0zruf9snrj30u01o0jwf.jpg" alt=""></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjt54fbfs005iokvw9imw1bs9" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/12/flutterdebuger/" data-id="cjt54fbax0017okvwq6lf84d3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flutter/">flutter</a></li></ul>
@@ -143,19 +126,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/02/20/DartWeb/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Dart for the web  一小时入门
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/02/19/aliyun/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/03/10/androidssr/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">阿里云 香港服务器 Centos7 3分钟搞定vpn</div>
+      <div class="article-nav-title">androidssr</div>
     </a>
   
 </nav>
