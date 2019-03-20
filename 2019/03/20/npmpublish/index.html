@@ -7,13 +7,13 @@
   
   <title>npm 发布包和删除包（2019最新攻略） | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复1、直接上 npmjs.com 官网">
+  <meta name="description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复有两种方案： （推荐）1、直接上 np">
 <meta name="keywords" content="npm,nodejs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="npm 发布包和删除包（2019最新攻略）">
 <meta property="og:url" content="http://cylee.top/2019/03/20/npmpublish/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复1、直接上 npmjs.com 官网">
+<meta property="og:description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复有两种方案： （推荐）1、直接上 np">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/006ar8zggy1g18zx67djmj30ry075756.jpg">
 <meta property="og:image" content="https://github.com/sindresorhus/npm-name-cli/raw/master/screenshot.gif">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g191xx4oacj30gt0nidh6.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/006ar8zggy1g192bkruiyj30cd09ydh9.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g192dhbrgyj30c106sq3w.jpg">
-<meta property="og:updated_time" content="2019-03-20T02:48:47.366Z">
+<meta property="og:updated_time" content="2019-03-20T02:52:56.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="npm 发布包和删除包（2019最新攻略）">
-<meta name="twitter:description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复1、直接上 npmjs.com 官网">
+<meta name="twitter:description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复有两种方案： （推荐）1、直接上 np">
 <meta name="twitter:image" content="http://wx1.sinaimg.cn/large/006ar8zggy1g18zx67djmj30ry075756.jpg">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
@@ -98,8 +98,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-
+        <p><hr></p>
 <blockquote>
 <p>📖 阅读本文大概需要 6 分钟。</p>
 </blockquote>
@@ -113,7 +112,8 @@
 <li>什么是 2FA？什么是 Authenticator App？什么是 One-time Password？</li>
 <li>（后记）补充说明</li>
 </ol>
-<h4 id="一、验证你的包名是否重复"><a href="#一、验证你的包名是否重复" class="headerlink" title="一、验证你的包名是否重复"></a>一、验证你的包名是否重复</h4><p>1、直接上 <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npmjs.com</a> 官网搜索</p>
+<h4 id="一、验证你的包名是否重复"><a href="#一、验证你的包名是否重复" class="headerlink" title="一、验证你的包名是否重复"></a>一、验证你的包名是否重复</h4><p>有两种方案：</p>
+<p>（推荐）1、直接上 <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npmjs.com</a> 官网搜索</p>
 <p><img src="http://wx1.sinaimg.cn/large/006ar8zggy1g18zx67djmj30ry075756.jpg" alt=""></p>
 <p>2、也可以用一些工具库查找，虽然有点画蛇添足，但某些场景还是适用的。比如动态发布包。</p>
 <ul>
@@ -171,7 +171,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/20/npmpublish/" data-id="cjtglyf4j004kzwvwqy9gie5i" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/20/npmpublish/" data-id="cjtgm3m9j002el4vwbxx4qics" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
