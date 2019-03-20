@@ -64,6 +64,89 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Nginx与php结合" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/25/Nginx与php结合/" class="article-date">
+  <time datetime="2019-01-25T13:09:07.000Z" itemprop="datePublished">2019-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/nginx/">nginx</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<h3 id="传送门："><a href="#传送门：" class="headerlink" title="传送门："></a>传送门：</h3><ul>
+<li><a href="/2019/01/25/php安装/">Centos7 PHP-lastest 安装</a></li>
+<li><a href="/2019/01/24/nginx安装/">centos7 nginx 安装</a></li>
+</ul>
+<h3 id="操作预览："><a href="#操作预览：" class="headerlink" title="操作预览："></a>操作预览：</h3><ol>
+<li>将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0</li>
+<li>修改 <code>php-fpm.conf</code> 路径引用错误的bug</li>
+<li>添加并且修改 <code>www.conf</code></li>
+<li>启动 php-fpm</li>
+<li>配置 Nginx 使其支持 PHP 应用</li>
+<li>配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</li>
+<li>重启 Nginx。</li>
+<li>创建测试文件</li>
+</ol>
+<hr>
+
+<blockquote>
+<p>补充：搭建环境最怕的就是路径不同，建议配合 <code>$ find / -name &quot;你要搜索的文件名&quot;</code> 来辅助。<br>建议结合<a href="http://php.net/manual/zh/install.unix.php" target="_blank" rel="noopener">官网教程](http://php.net/manual/zh/install.unix.php</a>使用。<br>但实际上官网的内容部分也是过时的无效的。所以要结合第三方文章来排坑。</p>
+</blockquote>
+<h6 id="1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0"><a href="#1-将-php-ini-文件中的配置项-cgi-fix-pathinfo-设置为-0" class="headerlink" title="1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0"></a>1. 将 php.ini 文件中的配置项 cgi.fix_pathinfo 设置为 0</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/php/php.ini</span><br></pre></td></tr></table></figure>
+<p>定位到 <code>cgi.fix_pathinfo</code> 并将其修改为如下所示：</p>
+<blockquote>
+<p>cgi.fix_pathinfo=0</p>
+</blockquote>
+<h6 id="2-修改-php-fpm-conf-路径引用错误的bug"><a href="#2-修改-php-fpm-conf-路径引用错误的bug" class="headerlink" title="2. 修改 php-fpm.conf 路径引用错误的bug"></a>2. 修改 <code>php-fpm.conf</code> 路径引用错误的bug</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/etc/php-fpm.conf</span><br></pre></td></tr></table></figure>
+<p>找到最后一行 <code>include=NONE/etc/php-fpm.d/*.conf</code>，改为 <code>include=etc/php-fpm.d/*.conf</code></p>
+<blockquote>
+<p>include=NONE/etc/php-fpm.d/<em>.conf<br>改为<br>include=etc/php-fpm.d/</em>.conf</p>
+</blockquote>
+<h6 id="3-添加-www-conf，并且修改权限"><a href="#3-添加-www-conf，并且修改权限" class="headerlink" title="3. 添加 www.conf，并且修改权限"></a>3. 添加 <a href="http://www.conf，并且修改权限" target="_blank" rel="noopener">www.conf，并且修改权限</a></h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/etc/php-fpm.d</span><br><span class="line">$ cp www.conf.default www.conf</span><br><span class="line">$ vim www.conf</span><br></pre></td></tr></table></figure>
+<p>找到并修改以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">; Unix user/group of processes</span><br><span class="line">; Note: The user is mandatory. If the group is not <span class="built_in">set</span>, the default user<span class="string">'s group</span></span><br><span class="line"><span class="string">;       will be used.</span></span><br><span class="line"><span class="string">user = nobody</span></span><br><span class="line"><span class="string">group = nobody</span></span><br></pre></td></tr></table></figure>
+<h6 id="4-启动-php-fpm"><a href="#4-启动-php-fpm" class="headerlink" title="4. 启动 php-fpm"></a>4. 启动 php-fpm</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/<span class="built_in">local</span>/bin/php-fpm</span><br></pre></td></tr></table></figure>
+<h6 id="5-配置-Nginx-使其支持-PHP-应用"><a href="#5-配置-Nginx-使其支持-PHP-应用" class="headerlink" title="5. 配置 Nginx 使其支持 PHP 应用"></a>5. 配置 Nginx 使其支持 PHP 应用</h6><p><code>$ vim /usr/local/nginx/conf/nginx.conf</code>，修改默认的 location 块，使其支持 .php 文件：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="attribute">root</span>   html;</span><br><span class="line">    <span class="attribute">index</span>  index.php index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块"><a href="#6-配置-php-文件的请求将被传送到后端的-PHP-FPM-模块" class="headerlink" title="6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块"></a>6. 配置 .php 文件的请求将被传送到后端的 PHP-FPM 模块</h6><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~* \.php$</span> &#123;</span><br><span class="line">    <span class="attribute">fastcgi_index</span>   index.php;</span><br><span class="line">    <span class="attribute">fastcgi_pass</span>    <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">    <span class="attribute">include</span>         fastcgi_params;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_FILENAME    <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">    <span class="attribute">fastcgi_param</span>   SCRIPT_NAME        <span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="7-重启-Nginx。"><a href="#7-重启-Nginx。" class="headerlink" title="7. 重启 Nginx。"></a>7. 重启 Nginx。</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s stop</span><br><span class="line">$ sudo /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+<h6 id="8-创建测试文件"><a href="#8-创建测试文件" class="headerlink" title="8. 创建测试文件"></a>8. 创建测试文件</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm /usr/<span class="built_in">local</span>/nginx/html/index.html</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"&lt;?php phpinfo(); ?&gt;"</span> &gt;&gt; /usr/<span class="built_in">local</span>/nginx/html/index.php</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/25/Nginx与php结合/1.png" alt="php.info"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/01/25/Nginx与php结合/" data-id="cjtglyf2i000szwvwa5273wcv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hexo的认知" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/25/hexo的认知/" class="article-date">
@@ -132,7 +215,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjt54fbb6001dokvwcisob0bi" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/hexo的认知/" data-id="cjtglyf31001mzwvwou1w3nue" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -185,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjt54fbfy005nokvwqtm4sbpr" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/网页无法播放MP4的解决方案/" data-id="cjtglyf5q005zzwvwhp3iyzyk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MP4/">MP4</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/video/">video</a></li></ul>
@@ -249,7 +332,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjt54fber005cokvwgemeejdz" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/25/php安装/" data-id="cjtglyf51004vzwvwvon45fmw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -294,7 +377,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjt54fb950001okvw1t5876vs" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Centos7依赖全家桶/" data-id="cjtglyf1o0000zwvwm3zzf2jc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum/">yum</a></li></ul>
@@ -349,7 +432,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjt54fbap000zokvwf4rd55nc" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Nodejs安装/" data-id="cjtglyf2p0013zwvw92onzap3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li></ul>
@@ -418,7 +501,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjt54fbbz0027okvwrhv41mbi" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/nginx安装/" data-id="cjtglyf4x004qzwvw6lkz1iob" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
@@ -481,7 +564,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/24/Docker安装/" data-id="cjt54fb9g0004okvwhv92jc8b" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/24/Docker安装/" data-id="cjtglyf24000azwvwfnsniv9j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
@@ -561,7 +644,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-Eloquent/" data-id="cjt54fbbg001pokvwhkaa94r7" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/20/laravel-Eloquent/" data-id="cjtglyf34001ozwvwqbhazec8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -649,78 +732,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-migration/" data-id="cjt54fbbq001xokvwyt26sgdp" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-laravel-demo3" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/20/laravel-demo3/" class="article-date">
-  <time datetime="2019-01-20T00:28:20.000Z" itemprop="datePublished">2019-01-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/php/">php</a>►<a class="article-category-link" href="/categories/php/laravel/">laravel</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/20/laravel-demo3/">Laravel 入门示例（三）：常用的blade语法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="yield-语法"><a href="#yield-语法" class="headerlink" title="@yield 语法"></a>@yield 语法</h1><p>中文理解为区域，在母版页（layouts）中会使用。类似 Vue 中的 <code>&lt;slot name=&#39;content&#39;&gt;</code> 标签。 </p>
-<p>新建 <strong>\resources\views\layouts\app.blade.php</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/css/bootstrap.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    @yield('content')</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>\resources\views\sites\about.blade.php</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>about me &#123;&#123;$first&#125;&#125; &#123;&#123;$last&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
-<h3 id="语法说明："><a href="#语法说明：" class="headerlink" title="语法说明："></a>语法说明：</h3><ul>
-<li><strong>@extends</strong>：继承 <code>\resources\views\layouts\app.blade.php</code> 模板；</li>
-<li><strong>@section</strong>：将内容填充到 <code>@yield(&#39;content&#39;)</code> 中；</li>
-<li><strong>@stop</strong>：通常一个 <code>@section</code> 对应一个 <code>$stop</code>；</li>
-</ul>
-<p>可以发现 <strong>bootstrap</strong> 的样式起到效果了：</p>
-<p><img src="/2019/01/20/laravel-demo3/1.png" alt=""></p>
-<hr>
-
-<h1 id="特定的页面加载特定的js文件"><a href="#特定的页面加载特定的js文件" class="headerlink" title="特定的页面加载特定的js文件"></a>特定的页面加载特定的js文件</h1><p>其实非常简单，只需要在 <code>layouts</code> 中新增多个@yield，在特定的页面选择性填充这个区域即可。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/css/bootstrap.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/twitter-bootstrap/3.3.6/js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    @yield('content')</span><br><span class="line">    @yield('footer')</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>about me &#123;&#123;$first&#125;&#125; &#123;&#123;$last&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">@stop</span><br><span class="line"></span><br><span class="line">@section('footer')</span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">alert(<span class="string">'yesh！！'</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/20/laravel-demo3/2.png" alt=""></p>
-<hr>
-
-<h1 id="if-语法"><a href="#if-语法" class="headerlink" title="@if 语法"></a>@if 语法</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    @if ($first == "Zhou")</span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>about me &#123;&#123;$first&#125;&#125; &#123;&#123;$last&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    @else</span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>nothing<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    @endif</span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
-<hr>
-
-<h1 id="foreach-语法"><a href="#foreach-语法" class="headerlink" title="@foreach 语法"></a>@foreach 语法</h1><p>先在控制器中导出数组 </p>
-<p>\app\Http\Controllers\SitesController.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">about</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    $people = [<span class="string">'Taylor Otwell'</span>, <span class="string">'Jeffray Way'</span>, <span class="string">'Happy Petter'</span>];</span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'sites/about'</span>, compact(<span class="string">'people'</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通常 @foreach 会结合 @if 使用，否则会出现多余的html标签的情况</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@extends('layouts/app')</span><br><span class="line">@section('content')</span><br><span class="line">    @if (count($people) &gt; 0)</span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            @foreach ($people as $p)</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; $p &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            @endforeach</span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    @endif</span><br><span class="line">@stop</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/20/laravel-demo3/3.png" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/20/laravel-demo3/" data-id="cjt54fbbk001rokvwtgs0c9lj" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/20/laravel-migration/" data-id="cjtglyf3c0022zwvwfmwwdc8c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
@@ -747,7 +759,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ssr/">ssr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/npm/">npm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ssr/">ssr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -757,7 +769,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
     </div>
   </div>
 
@@ -770,7 +782,11 @@
       <ul>
         
           <li>
-            <a href="/2019/03/12/flutterdebuger/">flutterdebuger</a>
+            <a href="/2019/03/20/npmpublish/">npm 发布包和删除包（2019最新攻略）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/12/flutterdebuger/">flutter Android debuger</a>
           </li>
         
           <li>
@@ -845,10 +861,6 @@
             <a href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
           </li>
         
-          <li>
-            <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -858,7 +870,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 13.33px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 13.33px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 13.33px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 13.33px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
     </div>
   </div>
 

@@ -5,19 +5,29 @@
   
 
   
-  <title>Archives | cy&#39;lee 贝尔塔猫</title>
+  <title>npm 发布包和删除包（2019最新攻略） | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="贝尔塔猫,前端,web,Vue,React">
-<meta name="keywords" content="贝尔塔猫,前端,web,Vue,React">
-<meta property="og:type" content="website">
-<meta property="og:title" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:url" content="http://cylee.top/archives/page/2/index.html">
+  <meta name="description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复1、直接上 npmjs.com 官网">
+<meta name="keywords" content="npm,nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="npm 发布包和删除包（2019最新攻略）">
+<meta property="og:url" content="http://cylee.top/2019/03/20/npmpublish/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="贝尔塔猫,前端,web,Vue,React">
+<meta property="og:description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复1、直接上 npmjs.com 官网">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/006ar8zggy1g18zx67djmj30ry075756.jpg">
+<meta property="og:image" content="https://github.com/sindresorhus/npm-name-cli/raw/master/screenshot.gif">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/006ar8zggy1g19101gkfzj30g003m0sr.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/006ar8zggy1g1911ff0s4j31h20fdwgp.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/006ar8zggy1g191w9ghp3j318n0myacc.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g191xx4oacj30gt0nidh6.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/006ar8zggy1g192bkruiyj30cd09ydh9.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g192dhbrgyj30c106sq3w.jpg">
+<meta property="og:updated_time" content="2019-03-20T02:48:47.366Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cy&#39;lee 贝尔塔猫">
-<meta name="twitter:description" content="贝尔塔猫,前端,web,Vue,React">
+<meta name="twitter:title" content="npm 发布包和删除包（2019最新攻略）">
+<meta name="twitter:description" content="📖 阅读本文大概需要 6 分钟。  操作概览 验证你的包名是否重复。 npm 官网注册账号（略）。 npm init 初始化你的包。 发布 npm publish。 如何发布新版本？ 如何删除你的发布包？ 什么是 2FA？什么是 Authenticator App？什么是 One-time Password？ （后记）补充说明  一、验证你的包名是否重复1、直接上 npmjs.com 官网">
+<meta name="twitter:image" content="http://wx1.sinaimg.cn/large/006ar8zggy1g18zx67djmj30ry075756.jpg">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
   
@@ -62,216 +72,126 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/11/Docker每天五分钟8/" class="archive-article-date">
-  <time datetime="2019-02-11T12:29:04.000Z" itemprop="datePublished">Feb 11</time>
+        <section id="main"><article id="post-npmpublish" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/20/npmpublish/" class="article-date">
+  <time datetime="2019-03-20T02:48:27.000Z" itemprop="datePublished">2019-03-20</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/npm/">npm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/11/Docker每天五分钟8/">《Docker每天五分钟》八：Dockerfile 中的命令三兄贵</a>
+    <h1 class="article-title" itemprop="name">
+      npm 发布包和删除包（2019最新攻略）
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/04/碎片化经验广场/" class="archive-article-date">
-  <time datetime="2019-02-04T03:02:04.000Z" itemprop="datePublished">Feb 4</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/04/碎片化经验广场/">碎片化经验广场</a>
-    </h1>
-  
+        <hr>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/03/Docker每天五分钟7/" class="archive-article-date">
-  <time datetime="2019-02-03T11:35:05.000Z" itemprop="datePublished">Feb 3</time>
-</a>
+<blockquote>
+<p>📖 阅读本文大概需要 6 分钟。</p>
+</blockquote>
+<h3 id="操作概览"><a href="#操作概览" class="headerlink" title="操作概览"></a>操作概览</h3><ol>
+<li>验证你的包名是否重复。</li>
+<li>npm 官网注册账号（略）。</li>
+<li>npm init 初始化你的包。</li>
+<li>发布 npm publish。</li>
+<li>如何发布新版本？</li>
+<li>如何删除你的发布包？</li>
+<li>什么是 2FA？什么是 Authenticator App？什么是 One-time Password？</li>
+<li>（后记）补充说明</li>
+</ol>
+<h4 id="一、验证你的包名是否重复"><a href="#一、验证你的包名是否重复" class="headerlink" title="一、验证你的包名是否重复"></a>一、验证你的包名是否重复</h4><p>1、直接上 <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npmjs.com</a> 官网搜索</p>
+<p><img src="http://wx1.sinaimg.cn/large/006ar8zggy1g18zx67djmj30ry075756.jpg" alt=""></p>
+<p>2、也可以用一些工具库查找，虽然有点画蛇添足，但某些场景还是适用的。比如动态发布包。</p>
+<ul>
+<li><a href="https://github.com/sindresorhus/npm-name-cli" target="_blank" rel="noopener">npm-name-cli</a></li>
+</ul>
+<p><img src="https://github.com/sindresorhus/npm-name-cli/raw/master/screenshot.gif" alt=""></p>
+<hr>
+<blockquote>
+<p>二、<a href="https://www.npmjs.com/login" target="_blank" rel="noopener">npm 官网</a>注册账号（略）</p>
+</blockquote>
+<hr>
+<h4 id="三、npm-init-初始化你的包。"><a href="#三、npm-init-初始化你的包。" class="headerlink" title="三、npm init 初始化你的包。"></a>三、npm init 初始化你的包。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm init -y</span><br></pre></td></tr></table></figure>
+<h4 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h4><p>重点关注和修改以下三项：</p>
+<ul>
+<li>name：你的包名</li>
+<li>version：（推荐）用 jQuery 的版本规范：<strong>0.0.1</strong></li>
+<li>main：你的入口文件</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"chuanghui-vue-portal"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"src/components/chuanghui-portal.vue"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"ChuangHui Vue Components"</span>,</span><br><span class="line">  <span class="attr">"author"</span>: <span class="string">"lizhaohong &lt;928532756@qq.com&gt;"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="四、发布-npm-publish"><a href="#四、发布-npm-publish" class="headerlink" title="四、发布 npm publish"></a>四、发布 npm publish</h4><p>先添加 npm 账号<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ npm adduser </span><br><span class="line">Username: ...</span><br><span class="line">Password: ...</span><br><span class="line">Email: (this IS public) 928532756@qq.com</span><br><span class="line">Logged <span class="keyword">in</span> as cylee on https://registry.npmjs.org/.</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g19101gkfzj30g003m0sr.jpg" alt=""></p>
+<p>正式发布，就一句话。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm publish</span><br></pre></td></tr></table></figure>
+<p>正常的话，在 npm 个人 package 页面中可以看到上传的包：</p>
+<p><img src="http://wx1.sinaimg.cn/large/006ar8zggy1g1911ff0s4j31h20fdwgp.jpg" alt=""></p>
+<h4 id="五、迭代新版本"><a href="#五、迭代新版本" class="headerlink" title="五、迭代新版本"></a>五、迭代新版本</h4><p>只需要把你 <code>package.json</code> 的 <code>version</code> 版本号改变，如 <strong>0.0.1 -&gt; 0.0.2</strong>，再执行 <code>$ npm publish</code> 即可。</p>
+<hr>
+<h4 id="六、删除发布包"><a href="#六、删除发布包" class="headerlink" title="六、删除发布包"></a>六、删除发布包</h4><blockquote>
+<p>如果你和我一样有强迫症，仅仅是修复一个 bug 就要把版本号从 0.0.1 升级到 0.02。</p>
+<p>心里肯定很纠结，更多的可能是选择删掉包重新上传。</p>
+</blockquote>
+<p>网上介绍删除发布包的方法倒也简单。执行以下即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm unpublish --force</span><br></pre></td></tr></table></figure>
+<p>但你可能出现 <code>ERR：2FA</code> 之类的错误信息？那你可能要先进行一大堆设置了，看下去吧。</p>
+<h4 id="七、什么是-2FA？什么是-Authenticator-App？什么是-One-time-Password？"><a href="#七、什么是-2FA？什么是-Authenticator-App？什么是-One-time-Password？" class="headerlink" title="七、什么是 2FA？什么是 Authenticator App？什么是 One-time Password？"></a>七、什么是 2FA？什么是 Authenticator App？什么是 One-time Password？</h4><p>简单概括：</p>
+<ul>
+<li><strong>2FA</strong>： NPM 发布包管理的权限设置，可以在 NPM 后台配置；</li>
+<li><strong>Authenticator App</strong>：是微软 Microsoft 出品的一款实时密码App，请自行到App商店搜索下载；</li>
+<li><strong>One-time Password</strong>：Authenticator App 输出的实时密码。</li>
+</ul>
+<p>具体设置步骤：<a href="https://docs.npmjs.com/configuring-two-factor-authentication" target="_blank" rel="noopener">官方教程</a></p>
+<p>1、到 App 商店搜索并且下载 Microsoft Authenticator App.</p>
+<p>2、进入 npm 后台，找到如图所示：<br><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g191w9ghp3j318n0myacc.jpg" alt=""></p>
+<p>3、选择 [Authorization and Publishing] - [submit]</p>
+<p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g191xx4oacj30gt0nidh6.jpg" alt=""></p>
+<p>4、打开 Authenticator App，选择 “添加账户” - “其他账户（Google、Facebook 等）”</p>
+<p><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g192bkruiyj30cd09ydh9.jpg" alt=""></p>
+<p>5、扫描 <code>步骤3</code> 后的二维码。</p>
+<p>6、体验  One-time Password。如图所示</p>
+<p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g192dhbrgyj30c106sq3w.jpg" alt=""></p>
+<p>7、使用 One-time Password 删除发布包。需要加上 –otp <one-time password=""></one-time></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm unpublish chuanghui-portal --force --otp 863613</span><br></pre></td></tr></table></figure>
+<h4 id="八、（后记）"><a href="#八、（后记）" class="headerlink" title="八、（后记）"></a>八、（后记）</h4><p>开通了 2FA 以后，你的账号发布包<code>$ npm publish</code> 都是需要使用 One-Time Password的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm publish --otp 863613</span><br></pre></td></tr></table></figure>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/02/Docker每天五分钟6/" class="archive-article-date">
-  <time datetime="2019-02-02T02:24:56.000Z" itemprop="datePublished">Feb 2</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/03/20/npmpublish/" data-id="cjtglyf4j004kzwvwqy9gie5i" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/02/Docker每天五分钟5/" class="archive-article-date">
-  <time datetime="2019-02-02T01:05:18.000Z" itemprop="datePublished">Feb 2</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/12/flutterdebuger/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">flutter Android debuger</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/01/碎片化知识广场/" class="archive-article-date">
-  <time datetime="2019-02-01T07:58:35.000Z" itemprop="datePublished">Feb 1</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/31/Docker每天五分钟4/" class="archive-article-date">
-  <time datetime="2019-01-31T09:09:30.000Z" itemprop="datePublished">Jan 31</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/31/Docker每天五分钟3/" class="archive-article-date">
-  <time datetime="2019-01-31T08:17:00.000Z" itemprop="datePublished">Jan 31</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/31/Docker每天五分钟3/">《Docker每天五分钟》三：hello-world、初识dockerfile</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/31/Docker每天五分钟2/" class="archive-article-date">
-  <time datetime="2019-01-31T07:39:33.000Z" itemprop="datePublished">Jan 31</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/31/Docker每天五分钟2/">《Docker每天五分钟》二：切换 DaoCloud 镜像源</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/31/Docker每天五分钟1/" class="archive-article-date">
-  <time datetime="2019-01-31T07:25:33.000Z" itemprop="datePublished">Jan 31</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
-  </nav>
 
 </section>
         

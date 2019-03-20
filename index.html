@@ -64,6 +64,117 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-npmpublish" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/20/npmpublish/" class="article-date">
+  <time datetime="2019-03-20T02:48:27.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/npm/">npm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/20/npmpublish/">npm 发布包和删除包（2019最新攻略）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<blockquote>
+<p>📖 阅读本文大概需要 6 分钟。</p>
+</blockquote>
+<h3 id="操作概览"><a href="#操作概览" class="headerlink" title="操作概览"></a>操作概览</h3><ol>
+<li>验证你的包名是否重复。</li>
+<li>npm 官网注册账号（略）。</li>
+<li>npm init 初始化你的包。</li>
+<li>发布 npm publish。</li>
+<li>如何发布新版本？</li>
+<li>如何删除你的发布包？</li>
+<li>什么是 2FA？什么是 Authenticator App？什么是 One-time Password？</li>
+<li>（后记）补充说明</li>
+</ol>
+<h4 id="一、验证你的包名是否重复"><a href="#一、验证你的包名是否重复" class="headerlink" title="一、验证你的包名是否重复"></a>一、验证你的包名是否重复</h4><p>1、直接上 <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npmjs.com</a> 官网搜索</p>
+<p><img src="http://wx1.sinaimg.cn/large/006ar8zggy1g18zx67djmj30ry075756.jpg" alt=""></p>
+<p>2、也可以用一些工具库查找，虽然有点画蛇添足，但某些场景还是适用的。比如动态发布包。</p>
+<ul>
+<li><a href="https://github.com/sindresorhus/npm-name-cli" target="_blank" rel="noopener">npm-name-cli</a></li>
+</ul>
+<p><img src="https://github.com/sindresorhus/npm-name-cli/raw/master/screenshot.gif" alt=""></p>
+<hr>
+<blockquote>
+<p>二、<a href="https://www.npmjs.com/login" target="_blank" rel="noopener">npm 官网</a>注册账号（略）</p>
+</blockquote>
+<hr>
+<h4 id="三、npm-init-初始化你的包。"><a href="#三、npm-init-初始化你的包。" class="headerlink" title="三、npm init 初始化你的包。"></a>三、npm init 初始化你的包。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm init -y</span><br></pre></td></tr></table></figure>
+<h4 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h4><p>重点关注和修改以下三项：</p>
+<ul>
+<li>name：你的包名</li>
+<li>version：（推荐）用 jQuery 的版本规范：<strong>0.0.1</strong></li>
+<li>main：你的入口文件</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"chuanghui-vue-portal"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"src/components/chuanghui-portal.vue"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"ChuangHui Vue Components"</span>,</span><br><span class="line">  <span class="attr">"author"</span>: <span class="string">"lizhaohong &lt;928532756@qq.com&gt;"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="四、发布-npm-publish"><a href="#四、发布-npm-publish" class="headerlink" title="四、发布 npm publish"></a>四、发布 npm publish</h4><p>先添加 npm 账号<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ npm adduser </span><br><span class="line">Username: ...</span><br><span class="line">Password: ...</span><br><span class="line">Email: (this IS public) 928532756@qq.com</span><br><span class="line">Logged <span class="keyword">in</span> as cylee on https://registry.npmjs.org/.</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g19101gkfzj30g003m0sr.jpg" alt=""></p>
+<p>正式发布，就一句话。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm publish</span><br></pre></td></tr></table></figure>
+<p>正常的话，在 npm 个人 package 页面中可以看到上传的包：</p>
+<p><img src="http://wx1.sinaimg.cn/large/006ar8zggy1g1911ff0s4j31h20fdwgp.jpg" alt=""></p>
+<h4 id="五、迭代新版本"><a href="#五、迭代新版本" class="headerlink" title="五、迭代新版本"></a>五、迭代新版本</h4><p>只需要把你 <code>package.json</code> 的 <code>version</code> 版本号改变，如 <strong>0.0.1 -&gt; 0.0.2</strong>，再执行 <code>$ npm publish</code> 即可。</p>
+<hr>
+<h4 id="六、删除发布包"><a href="#六、删除发布包" class="headerlink" title="六、删除发布包"></a>六、删除发布包</h4><blockquote>
+<p>如果你和我一样有强迫症，仅仅是修复一个 bug 就要把版本号从 0.0.1 升级到 0.02。</p>
+<p>心里肯定很纠结，更多的可能是选择删掉包重新上传。</p>
+</blockquote>
+<p>网上介绍删除发布包的方法倒也简单。执行以下即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm unpublish --force</span><br></pre></td></tr></table></figure>
+<p>但你可能出现 <code>ERR：2FA</code> 之类的错误信息？那你可能要先进行一大堆设置了，看下去吧。</p>
+<h4 id="七、什么是-2FA？什么是-Authenticator-App？什么是-One-time-Password？"><a href="#七、什么是-2FA？什么是-Authenticator-App？什么是-One-time-Password？" class="headerlink" title="七、什么是 2FA？什么是 Authenticator App？什么是 One-time Password？"></a>七、什么是 2FA？什么是 Authenticator App？什么是 One-time Password？</h4><p>简单概括：</p>
+<ul>
+<li><strong>2FA</strong>： NPM 发布包管理的权限设置，可以在 NPM 后台配置；</li>
+<li><strong>Authenticator App</strong>：是微软 Microsoft 出品的一款实时密码App，请自行到App商店搜索下载；</li>
+<li><strong>One-time Password</strong>：Authenticator App 输出的实时密码。</li>
+</ul>
+<p>具体设置步骤：<a href="https://docs.npmjs.com/configuring-two-factor-authentication" target="_blank" rel="noopener">官方教程</a></p>
+<p>1、到 App 商店搜索并且下载 Microsoft Authenticator App.</p>
+<p>2、进入 npm 后台，找到如图所示：<br><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g191w9ghp3j318n0myacc.jpg" alt=""></p>
+<p>3、选择 [Authorization and Publishing] - [submit]</p>
+<p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g191xx4oacj30gt0nidh6.jpg" alt=""></p>
+<p>4、打开 Authenticator App，选择 “添加账户” - “其他账户（Google、Facebook 等）”</p>
+<p><img src="http://wx3.sinaimg.cn/large/006ar8zggy1g192bkruiyj30cd09ydh9.jpg" alt=""></p>
+<p>5、扫描 <code>步骤3</code> 后的二维码。</p>
+<p>6、体验  One-time Password。如图所示</p>
+<p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g192dhbrgyj30c106sq3w.jpg" alt=""></p>
+<p>7、使用 One-time Password 删除发布包。需要加上 –otp <one-time password=""></one-time></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm unpublish chuanghui-portal --force --otp 863613</span><br></pre></td></tr></table></figure>
+<h4 id="八、（后记）"><a href="#八、（后记）" class="headerlink" title="八、（后记）"></a>八、（后记）</h4><p>开通了 2FA 以后，你的账号发布包<code>$ npm publish</code> 都是需要使用 One-Time Password的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm publish --otp 863613</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/03/20/npmpublish/" data-id="cjtglyf4j004kzwvwqy9gie5i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-flutterdebuger" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/12/flutterdebuger/" class="article-date">
@@ -82,7 +193,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/12/flutterdebuger/">flutterdebuger</a>
+      <a class="article-title" href="/2019/03/12/flutterdebuger/">flutter Android debuger</a>
     </h1>
   
 
@@ -111,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/12/flutterdebuger/" data-id="cjt54fbax0017okvwq6lf84d3" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/12/flutterdebuger/" data-id="cjtglyf2y001izwvwbjm1uq9t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flutter/">flutter</a></li></ul>
@@ -170,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/10/androidssr/" data-id="cjt54fbar0011okvwdspceoib" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/10/androidssr/" data-id="cjtglyf2n0010zwvwbxvn5lrc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssr/">ssr</a></li></ul>
@@ -244,7 +355,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/06/requestjs/" data-id="cjt54fbfa005fokvwyz66y2cd" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/06/requestjs/" data-id="cjtglyf540051zwvw2pgfgjub" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios/">axios</a></li></ul>
@@ -314,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/05/bibaoIIFE/" data-id="cjt54fbav0015okvwh19dsoaa" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/05/bibaoIIFE/" data-id="cjtglyf2t0019zwvws0rx8c37" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
@@ -388,7 +499,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/05/norepeatxhr/" data-id="cjt54fbbw0023okvw70w8qthp" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/05/norepeatxhr/" data-id="cjtglyf4k004mzwvwv55ho0de" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios/">axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xhr/">xhr</a></li></ul>
@@ -449,7 +560,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/21/Dartpub/" data-id="cjt54fb9k0005okvw33keeoam" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/21/Dartpub/" data-id="cjtglyf200005zwvwcj2lrbjq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pub/">pub</a></li></ul>
@@ -501,7 +612,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjt54fb8x0000okvwr5016b54" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/DartWeb/" data-id="cjtglyf1u0001zwvwn1igzie5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dart/">Dart</a></li></ul>
@@ -573,7 +684,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjt54fbfs005iokvw9imw1bs9" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/20/在Windows上搭建Flutter开发环境/" data-id="cjtglyf4z004szwvwv50e1o3l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flutter/">flutter</a></li></ul>
@@ -636,93 +747,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjt54fbal000vokvwnofrrywk" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjtglyf2r0016zwvwjcb2gtav" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vpn/">vpn</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Docker每天五分钟8" class="article is-index article-post article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/11/Docker每天五分钟8/" class="article-date">
-  <time datetime="2019-02-11T12:29:04.000Z" itemprop="datePublished">2019-02-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Docker/">Docker</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/11/Docker每天五分钟8/">《Docker每天五分钟》八：Dockerfile 中的命令三兄贵</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-
-<h1 id="RUN-vs-CMD-vs-ENTRYPOINT"><a href="#RUN-vs-CMD-vs-ENTRYPOINT" class="headerlink" title="RUN vs CMD vs ENTRYPOINT"></a>RUN vs CMD vs ENTRYPOINT</h1><p>简单地说：<br>（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。<br>（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 <code>$ docker run</code> 后面跟的命令行参数替换。比如 <code>$ docker run -it [image] /bash/bin</code>， 那么 CMD 指令会被忽略掉。<br>（3）ENTRYPOINT：配置容器启动时运行的命令。</p>
-<h1 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h1><p>RUN 指令会创建新的镜像层。 通常用于安装应用和软件包。 Dockerfile 中常常包含多个 RUN 指令。</p>
-<p>RUN 有两种格式：<br>（1） <strong>Shell 格式（推荐）： <code>RUN yum update &amp;&amp; yum install gcc-c++\vim\git -y</code></strong><br>（2） Exec 格式： <code>RUN [&quot;yum&quot;, &quot;install&quot;, &quot;gcc-c++&quot;, &quot;vim&quot;, &quot;git&quot;, &quot;-y&quot;]</code></p>
-<blockquote>
-<p>注意，我们反复提到 RUN 指令会创建新的镜像层。镜像层的概念就类似缓存。会在各个地方的dockerfile被反复使用。<br>这里 yum update 放在和安装同一个指令中。能保证每次安装都是最新的包。如果 yum update 单独的RUN。则会创建一个 yum update 的镜像层。当其他地方的d ockerfile 使用 yum update 的时候，就会直接使用该镜像层，而这一层很可能是很久以前缓存的了。</p>
-</blockquote>
-<h1 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h1><p>此命令会在容器启动后运行。 前提是 <code>$ docker run</code> 没有指定其他命令。</p>
-<ul>
-<li>如果 docker run 指定了其他命令， CMD 指定了默认命令将被忽略。</li>
-<li>如果 Docker file 中有多个 CMD 指令，只有最后一个 CMD 有效。</li>
-</ul>
-<p>CMD 有三种格式：<br>（1） <strong>Exec 格式（推荐）： CMD [“/bin/echo”, “Hello World”]</strong><br>（2） 嫁衣格式： CMD [“param1”, “params2”]<br>（3） Shell格式： CMD echo “Hello World”</p>
-<blockquote>
-<p>（2）嫁衣格式是为 ENTRYPOINT 提供参数，此时 ENTRYPOINT 必须使用 Exec 格式。</p>
-</blockquote>
-<p>举例说明 CMD 和 <code>$ docker run</code> 的关系，Dockerfile 片段如下：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMD</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"Hello world"</span></span></span><br></pre></td></tr></table></figure>
-<p>运行容器 <code>$ docker run -it [image]</code> 将输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world</span><br></pre></td></tr></table></figure></p>
-<p>但如果加上命令： <code>$ docker run -it [image] /bin/bash</code>， CMD 会被忽略掉。也就没有输出 <code>Hello world</code> 了</p>
-<h1 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h1><p>ENTRYPOINT 指令可以让容器以应用程序或者服务的形式运行。</p>
-<p>ENTRYPOINT 与 CMD 很相似，它们都可以指定执行的命令和参数。不同的地方在于 ENTRYPOINT 不会被 <code>$ docker run</code> 时指定的命令忽略。</p>
-<p>ENTRYPOINT 有两种格式：<br>（1） <strong>Exec 格式（推荐）： ENTRYPOINT [“executable”, “param1”, “param2”]</strong><br>（2）Shell 格式：ENTRYPOINT command param1 param2</p>
-<blockquote>
-<p>ENTRYPOINT 不同的格式效果差别巨大。 选择使用时必须小心。<br>ENTRYPOINT 的 Exec 格式可以接受 CMD 或 <code>$ docker run</code> 提供的参数。<br>ENTRYPOINT 的 Shell 格式会忽略任何 CMD 或 <code>$ docker run</code> 提供的参数。</p>
-</blockquote>
-<h3 id="ENTRYPOINT-的-Exec-格式"><a href="#ENTRYPOINT-的-Exec-格式" class="headerlink" title="ENTRYPOINT 的 Exec 格式"></a>ENTRYPOINT 的 Exec 格式</h3><p>ENTRYPOINT 的 Exec 格式可以接受 CMD 或 <code>$ docker run</code> 提供的参数。 比如下面的 Dockerfile 片段：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/echo"</span>, <span class="string">"Hello"</span>] CMD [<span class="string">"world"</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>当容器通过 <code>$ docker run -it [image]</code> （无命令）启动时，输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world</span><br></pre></td></tr></table></figure></p>
-<p>而如果通过 <code>$ docker run -it [image] CloudMan</code> 启动时，则输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello CloudMan</span><br></pre></td></tr></table></figure></p>
-<h1 id="Exec-格式-与-变量-shell-解析"><a href="#Exec-格式-与-变量-shell-解析" class="headerlink" title="Exec 格式 与 变量 shell 解析"></a>Exec 格式 与 变量 shell 解析</h1><blockquote>
-<p>请注意，当需要解析变量时，应该使用 Shell 解析，如/bin/sh（bash） </p>
-</blockquote>
-<p>例如下面的 Dockerfile 片段，我们用 ENV 指令设置了环境变量 $name 并不会被解析：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> name Cloud Man <span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/echo"</span>, <span class="string">"Hello, <span class="variable">$name</span>"</span>]</span></span><br></pre></td></tr></table></figure>
-<p>运行容器将输出：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, $name</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注意：环境变量 $name 没有被替换。必须使用 shell 解析。</p>
-</blockquote>
-<p>如果希望使用环境变量，如下修改 Dockerfile：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> name Cloud Man <span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/sh"</span>, <span class="string">"-c"</span>, <span class="string">"echo Hello, <span class="variable">$name</span>"</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>运行容器将输出：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, Cloud Man</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjt54fbac000mokvw3smekdju" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
 
     </footer>
   </div>
@@ -746,7 +774,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget widget-category">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ssr/">ssr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/npm/">npm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ssr/">ssr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -756,7 +784,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget widget-tag">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
     </div>
   </div>
 
@@ -769,7 +797,11 @@
       <ul>
         
           <li>
-            <a href="/2019/03/12/flutterdebuger/">flutterdebuger</a>
+            <a href="/2019/03/20/npmpublish/">npm 发布包和删除包（2019最新攻略）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/12/flutterdebuger/">flutter Android debuger</a>
           </li>
         
           <li>
@@ -844,10 +876,6 @@
             <a href="/2019/01/31/Docker每天五分钟1/">《Docker每天五分钟》一：启动第一个httpd容器</a>
           </li>
         
-          <li>
-            <a href="/2019/01/25/Nginx与php结合/">Nginx与php结合</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -857,7 +885,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget widget-tagcloud">
-      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 13.33px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 13.33px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 13.33px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 13.33px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
     </div>
   </div>
 
