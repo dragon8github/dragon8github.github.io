@@ -9,10 +9,6 @@ body:after {
 body:after {
   clear: both;
 }
-@font-face {
-  font-family: 'HYLeMiaoTiW';
-  src: url("./fonts/HYLeMiaoTiW.ttf");
-}
 html,
 body,
 #container,
