@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
 <meta property="og:description" content="1、先用 artisan 命令新建一个 Controller，命名为 SitesController 1$ php artisan make:controller SitesController 生成的文件在目录： \app\Http\Controllers\SitesController.php，添加内容如下： 12345678910111213&amp;lt;?phpnamespace App\Htt">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-25T09:33:50.503Z">
+<meta property="og:updated_time" content="2019-04-06T01:11:24.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel 入门示例（一）：初识控制器与路由">
 <meta name="twitter:description" content="1、先用 artisan 命令新建一个 Controller，命名为 SitesController 1$ php artisan make:controller SitesController 生成的文件在目录： \app\Http\Controllers\SitesController.php，添加内容如下： 12345678910111213&amp;lt;?phpnamespace App\Htt">
@@ -94,6 +94,7 @@
 <p>生成的文件在目录： <strong>\app\Http\Controllers\SitesController.php</strong>，添加内容如下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SitesController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// Route::get('/', 'SitesController@index');</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> view(<span class="string">'welcome'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里的 welcome 页面是在：<strong>\resources\views\welcome.blade.php</strong></p>
+<a id="more"></a> 
 <p>2、打开 <strong>\routes\web.php</strong>，修改内容为：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Route::get('/', function () &#123;</span></span><br><span class="line"><span class="comment">//     return view('welcome');</span></span><br><span class="line"><span class="comment">// &#125;);</span></span><br><span class="line"></span><br><span class="line">Route::get(<span class="string">'/'</span>, <span class="string">'SitesController@index'</span>);</span><br></pre></td></tr></table></figure>
 <p>刷新页面，一切如故。 </p>
@@ -101,7 +102,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/19/laravel-demo1/" data-id="cjtgm3m95001rl4vwz9en6yvx" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/19/laravel-demo1/" data-id="cjtxr30cx001qzsvw4p3ljzaw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>

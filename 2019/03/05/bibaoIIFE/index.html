@@ -16,7 +16,7 @@
 <meta property="og:description" content="一、使用 IIFE 优雅的解决 setInterval 首次不执行的尴尬。12345678910// 你的函数const f = () =&amp;gt; &amp;#123; ... &amp;#125;// 立即执行并且轮询const timer = (function(fn, t) &amp;#123;    // 为了解决 setInterval 首次不执行的尴尬    fn &amp;amp;&amp;amp; fn()    /">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g0s9womogeg30ku0cwqhw.gif">
-<meta property="og:updated_time" content="2019-03-06T00:49:35.859Z">
+<meta property="og:updated_time" content="2019-04-06T01:13:29.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="善用 JavaScript 特性：闭包与IIFE">
 <meta name="twitter:description" content="一、使用 IIFE 优雅的解决 setInterval 首次不执行的尴尬。12345678910// 你的函数const f = () =&amp;gt; &amp;#123; ... &amp;#125;// 立即执行并且轮询const timer = (function(fn, t) &amp;#123;    // 为了解决 setInterval 首次不执行的尴尬    fn &amp;amp;&amp;amp; fn()    /">
@@ -94,6 +94,7 @@
         <hr>
 
 <p>一、使用 <code>IIFE</code> 优雅的解决 <code>setInterval</code> 首次不执行的尴尬。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 你的函数</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="function"><span class="params">()</span> =&gt;</span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 立即执行并且轮询</span></span><br><span class="line"><span class="keyword">const</span> timer = (<span class="function"><span class="keyword">function</span>(<span class="params">fn, t</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 为了解决 setInterval 首次不执行的尴尬</span></span><br><span class="line">    fn &amp;&amp; fn()</span><br><span class="line">    <span class="comment">// 返回计时器timer</span></span><br><span class="line">    <span class="keyword">return</span> setInterval(fn, t)</span><br><span class="line">&#125;)(f, <span class="number">1500</span>)</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a> 
 <p>二、善用闭包，就可以轻松实现缓存模式、单例模式。</p>
 <p>下面几个例子来体验闭包在实战中的作用。</p>
 <blockquote>
@@ -123,7 +124,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/05/bibaoIIFE/" data-id="cjtgm3m8s0015l4vwsbwrl709" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/05/bibaoIIFE/" data-id="cjtxr30cp001dzsvwrzyjryw6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>

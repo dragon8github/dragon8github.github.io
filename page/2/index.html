@@ -93,49 +93,15 @@
         <hr>
 
 <h1 id="RUN-vs-CMD-vs-ENTRYPOINT"><a href="#RUN-vs-CMD-vs-ENTRYPOINT" class="headerlink" title="RUN vs CMD vs ENTRYPOINT"></a>RUN vs CMD vs ENTRYPOINT</h1><p>简单地说：<br>（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。<br>（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 <code>$ docker run</code> 后面跟的命令行参数替换。比如 <code>$ docker run -it [image] /bash/bin</code>， 那么 CMD 指令会被忽略掉。<br>（3）ENTRYPOINT：配置容器启动时运行的命令。</p>
-<h1 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h1><p>RUN 指令会创建新的镜像层。 通常用于安装应用和软件包。 Dockerfile 中常常包含多个 RUN 指令。</p>
-<p>RUN 有两种格式：<br>（1） <strong>Shell 格式（推荐）： <code>RUN yum update &amp;&amp; yum install gcc-c++\vim\git -y</code></strong><br>（2） Exec 格式： <code>RUN [&quot;yum&quot;, &quot;install&quot;, &quot;gcc-c++&quot;, &quot;vim&quot;, &quot;git&quot;, &quot;-y&quot;]</code></p>
-<blockquote>
-<p>注意，我们反复提到 RUN 指令会创建新的镜像层。镜像层的概念就类似缓存。会在各个地方的dockerfile被反复使用。<br>这里 yum update 放在和安装同一个指令中。能保证每次安装都是最新的包。如果 yum update 单独的RUN。则会创建一个 yum update 的镜像层。当其他地方的d ockerfile 使用 yum update 的时候，就会直接使用该镜像层，而这一层很可能是很久以前缓存的了。</p>
-</blockquote>
-<h1 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h1><p>此命令会在容器启动后运行。 前提是 <code>$ docker run</code> 没有指定其他命令。</p>
-<ul>
-<li>如果 docker run 指定了其他命令， CMD 指定了默认命令将被忽略。</li>
-<li>如果 Docker file 中有多个 CMD 指令，只有最后一个 CMD 有效。</li>
-</ul>
-<p>CMD 有三种格式：<br>（1） <strong>Exec 格式（推荐）： CMD [“/bin/echo”, “Hello World”]</strong><br>（2） 嫁衣格式： CMD [“param1”, “params2”]<br>（3） Shell格式： CMD echo “Hello World”</p>
-<blockquote>
-<p>（2）嫁衣格式是为 ENTRYPOINT 提供参数，此时 ENTRYPOINT 必须使用 Exec 格式。</p>
-</blockquote>
-<p>举例说明 CMD 和 <code>$ docker run</code> 的关系，Dockerfile 片段如下：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMD</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"Hello world"</span></span></span><br></pre></td></tr></table></figure>
-<p>运行容器 <code>$ docker run -it [image]</code> 将输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world</span><br></pre></td></tr></table></figure></p>
-<p>但如果加上命令： <code>$ docker run -it [image] /bin/bash</code>， CMD 会被忽略掉。也就没有输出 <code>Hello world</code> 了</p>
-<h1 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h1><p>ENTRYPOINT 指令可以让容器以应用程序或者服务的形式运行。</p>
-<p>ENTRYPOINT 与 CMD 很相似，它们都可以指定执行的命令和参数。不同的地方在于 ENTRYPOINT 不会被 <code>$ docker run</code> 时指定的命令忽略。</p>
-<p>ENTRYPOINT 有两种格式：<br>（1） <strong>Exec 格式（推荐）： ENTRYPOINT [“executable”, “param1”, “param2”]</strong><br>（2）Shell 格式：ENTRYPOINT command param1 param2</p>
-<blockquote>
-<p>ENTRYPOINT 不同的格式效果差别巨大。 选择使用时必须小心。<br>ENTRYPOINT 的 Exec 格式可以接受 CMD 或 <code>$ docker run</code> 提供的参数。<br>ENTRYPOINT 的 Shell 格式会忽略任何 CMD 或 <code>$ docker run</code> 提供的参数。</p>
-</blockquote>
-<h3 id="ENTRYPOINT-的-Exec-格式"><a href="#ENTRYPOINT-的-Exec-格式" class="headerlink" title="ENTRYPOINT 的 Exec 格式"></a>ENTRYPOINT 的 Exec 格式</h3><p>ENTRYPOINT 的 Exec 格式可以接受 CMD 或 <code>$ docker run</code> 提供的参数。 比如下面的 Dockerfile 片段：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/echo"</span>, <span class="string">"Hello"</span>] CMD [<span class="string">"world"</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>当容器通过 <code>$ docker run -it [image]</code> （无命令）启动时，输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello world</span><br></pre></td></tr></table></figure></p>
-<p>而如果通过 <code>$ docker run -it [image] CloudMan</code> 启动时，则输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello CloudMan</span><br></pre></td></tr></table></figure></p>
-<h1 id="Exec-格式-与-变量-shell-解析"><a href="#Exec-格式-与-变量-shell-解析" class="headerlink" title="Exec 格式 与 变量 shell 解析"></a>Exec 格式 与 变量 shell 解析</h1><blockquote>
-<p>请注意，当需要解析变量时，应该使用 Shell 解析，如/bin/sh（bash） </p>
-</blockquote>
-<p>例如下面的 Dockerfile 片段，我们用 ENV 指令设置了环境变量 $name 并不会被解析：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> name Cloud Man <span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/echo"</span>, <span class="string">"Hello, <span class="variable">$name</span>"</span>]</span></span><br></pre></td></tr></table></figure>
-<p>运行容器将输出：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, $name</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注意：环境变量 $name 没有被替换。必须使用 shell 解析。</p>
-</blockquote>
-<p>如果希望使用环境变量，如下修改 Dockerfile：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> name Cloud Man <span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/bin/sh"</span>, <span class="string">"-c"</span>, <span class="string">"echo Hello, <span class="variable">$name</span>"</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>运行容器将输出：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, Cloud Man</span><br></pre></td></tr></table></figure></p>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/02/11/Docker每天五分钟8/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjtgm3m8g000ml4vwyslk43np" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjtxr30cd000ozsvwl7oe145q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -184,7 +150,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjtgm3mbm005sl4vw5qgkwxbd" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/04/碎片化经验广场/" data-id="cjtxr30dh002szsvwn4vjk0qt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li></ul>
@@ -234,37 +200,15 @@
 </ol>
 <p>从这个过程可以看出，<strong>如果 <code>dockerfile</code> 由于某种原因执行到某个指令失败了，我们也能够得到前一个指令成功执行构建出的镜像。</strong></p>
 <p>这样当我们修复完bug再次执行构建的时候，也能依靠docker的缓存特性跳过已完成的镜像。这对开发和调试 <code>dockerfile</code> 是非常友好且有帮助的。我们可以通过控制台的打印和测试，快速定位错误和分析原因。</p>
-<hr>
-
-<p>我们来看一个调试示例，以 buysbox 为 base 镜像：</p>
-<blockquote>
-<p>BusyBox 是一个集成了三百多个最常用Linux命令和工具的软件。BusyBox 包含了一些简单的工具，例如ls、cat和echo等等，还包含了一些更大、更复杂的工具，例grep、find、mount以及telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。</p>
-</blockquote>
-<p>新建一个 <code>Dockerfile</code> 和一个测试文件 <code>testfile</code>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># echo test &gt; testfile</span></span><br><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># vim Dockerfile</span></span><br></pre></td></tr></table></figure></p>
-<p>Dockerfile 内容如下：</p>
-<blockquote>
-<p>FROM busybox<br>RUN touch tmpfile<br>RUN /bin/bash -c echo “continue to build…”<br>COPY testfile /</p>
-</blockquote>
-<p>开始构建调试<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker build -t image-debug .</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019/02/03/Docker每天五分钟7/1.png" alt="/bin/sh: /bin/bash: not found"></p>
-<p>我们可以轻松发现在执行第三句指令： <code>RUN /bin/bash -c echo &quot;continue to build...&quot;</code> 的时候发生了异常，</p>
-<p>错误信息是: <code>/bin/sh: /bin/bash: not found</code></p>
-<p>很显然我们得知了 buysbox 系统中不包含 /bin/bash 程序。然后再进一步的修正。</p>
-<hr>
-
-<p>上述这种错误是比较简单且显而易见的，大部分的bug都是难以肉眼观察，我们希望进一步的调试。</p>
-<p>根据 <code>Dockerfile</code> 构建镜像的特性，尽管由于某种原因执行到某个指令失败了，我们也能够得到前一个指令成功执行构建出的镜像。</p>
-<p>在此例子中，就是由 <code>RUN touch tmpfile</code> 指令构成的镜像 <code>6fa9f3938b8b</code>：</p>
-<p><img src="/2019/02/03/Docker每天五分钟7/2.png" alt="RUN touch tmpfile"></p>
-<p>我们也可以从 <code>docker images</code> 中查看最后成功的镜像：</p>
-<p><img src="/2019/02/03/Docker每天五分钟7/3.png" alt="docker images"></p>
-<p>然后我们进入镜像之中进一步的操作体验和调试：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker run -it 6fa9f3938b8b</span></span><br><span class="line">/ <span class="comment"># /bin/bash -c echo "continue to build..."</span></span><br><span class="line">sh: /bin/bash: not found</span><br><span class="line">/ <span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<p>依然能得出 <code>/bin/bash: not found</code> 的错误定位结果。</p>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/02/03/Docker每天五分钟7/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjtgm3m8l000ul4vwkvhcn326" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjtxr30c8000izsvw4o193y3b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -311,21 +255,15 @@
 <p>FROM centos<br>RUN yum install -y vim</p>
 </blockquote>
 <p>开始构建</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t centos-with-vim .</span><br></pre></td></tr></table></figure>
-<ul>
-<li>-t：指明镜像的名字，该示例为 <code>centos-with-vim</code>；</li>
-<li>请注意最后一个<code>.</code> 它指明在当前路径寻找 Dockerfile；</li>
-</ul>
-<p>经过漫长的安装之后。我们查看一下镜像列表 <code>$ docker images</code>:</p>
-<p><img src="/2019/02/02/Docker每天五分钟6/1.png" alt="docker images"></p>
-<h3 id="docker-的缓存特性："><a href="#docker-的缓存特性：" class="headerlink" title="docker 的缓存特性："></a>docker 的<code>缓存</code>特性：</h3><p>可以看到 Docker 分为了两个镜像： <code>centos</code> 和 <code>centos-with-vim</code>。</p>
-<p>其中 <code>centos</code> 镜像我们称为base镜像。而 <code>centos-with-vim</code> 就是基于base镜像构建的。</p>
-<p>如果在构建之前你的本地镜像已经存在base镜像。那么会直接使用，无须重新下载和构建。这也是 docker 的重要<code>缓存</code>特性。</p>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/02/02/Docker每天五分钟6/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjtgm3m8f000kl4vwfvidnst1" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟6/" data-id="cjtxr30cg000uzsvwy2fu9sup" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -373,34 +311,15 @@
 </ul>
 <h6 id="（1）运行容器"><a href="#（1）运行容器" class="headerlink" title="（1）运行容器"></a>（1）运行容器</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker run -it centos</span></span><br><span class="line"></span><br><span class="line">Unable to find image <span class="string">'centos:latest'</span> locally</span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pulling fs layer </span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pull complete </span><br><span class="line">Digest: sha256:184e5f35598e333bfa7de10d8fb1cebb5ee4df5bc0f970bf2b1e7c7345136426</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> centos:latest</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
 <p>自动下载了最新版本的 Centos 镜像，并且运行和进入了容器（ea9b3dcd88ad）。</p>
-<h6 id="2-修改容器"><a href="#2-修改容器" class="headerlink" title="(2) 修改容器"></a>(2) 修改容器</h6><p>这里示例安装 vim </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># vim</span></span><br><span class="line">bash: vim: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># yum install -y vim</span></span><br><span class="line">...</span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
-<h6 id="3-保存为新镜像"><a href="#3-保存为新镜像" class="headerlink" title="(3) 保存为新镜像"></a>(3) 保存为新镜像</h6><p>让容器继续运行着，然后 <code>新建窗口</code> 来查看当前运行的镜像。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker ps</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019/02/02/Docker每天五分钟5/1.png" alt="silly_aryabhata"></p>
-<p><code>silly_aryabhata</code> 是 Docker 为我们的容器随机分配的名字。</p>
-<p>执行 <code>docker commit</code> 命令将容器保存为镜像。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker commit silly_aryabhata centos-with-vi</span></span><br><span class="line"></span><br><span class="line">sha256:3badf3a0b2d0a59bd3cd106e70d088c32da2e59676746e7613a30f7eb5d3e2b0</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/02/02/Docker每天五分钟5/2.png" alt="centos-with-vi"></p>
-<p>对比两个镜像，从 <code>SIZE</code> 上看到镜像因为安装了 <code>vim</code> 软件而变大了。</p>
-<hr>
-
-<p>以上演示了如何用 <code>docker commit</code> 创建新镜像。</p>
-<blockquote>
-<p>然而，Docker 并不建议用户通过 <code>docker commit</code> 这种方式构建镜像。</p>
-</blockquote>
-<h3 id="原因如下："><a href="#原因如下：" class="headerlink" title="原因如下："></a>原因如下：</h3><ol>
-<li>这是一种手工创建镜像的方式，容易出错，效率低且重复性弱。比如要在ubuntu镜像中也加入vim，还得重复前面所有步骤。</li>
-<li>使用者并不知道镜像是如何创建出来的，里面提供什么服务，包含什么程序，里面是否有恶意程序？也就是说无法对镜像进行审计，存在安全隐患。</li>
-</ol>
-<p>既然 <code>docker commit</code> 不是推荐的方法，我们为什么还要花时间学习呢？</p>
-<blockquote>
-<p>即便是用 dockerfile（推荐方法）构建镜像，底层也是 <code>docker commit</code> 一层一层构建镜像的。学习 <code>docker commit</code> 能够帮助我们更加深入的理解构建过程和镜像的分层结构。</p>
-</blockquote>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/02/02/Docker每天五分钟5/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjtgm3m8c000gl4vwege4wk47" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjtxr30cf000tzsvwvmrv4xzu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -452,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjtgm3mbj005ql4vwl77sq0w7" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/01/碎片化知识广场/" data-id="cjtxr30de002mzsvwx1inv8lm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpmposer/">cpmposer</a></li></ul>
@@ -546,72 +465,15 @@
 <blockquote>
 <p>Dockerfile 支持以 ‘#’ 开头注释</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th style="text-align:center">功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FORM</td>
-<td style="text-align:center">指定 base 镜像</td>
-</tr>
-<tr>
-<td>MAINTAINER</td>
-<td style="text-align:center">设置镜像的作者，可以是任意字符串</td>
-</tr>
-<tr>
-<td>RUN</td>
-<td style="text-align:center">（命令三兄弟之一）在容器中运行指定命令。</td>
-</tr>
-<tr>
-<td>CMD</td>
-<td style="text-align:center">（命令三兄弟之一）在容器启动时运行指定的命令。</td>
-</tr>
-<tr>
-<td>ENTRYPOINT</td>
-<td style="text-align:center">（命令三兄弟之一）设置容器启动时运行的命令。</td>
-</tr>
-<tr>
-<td>COPY</td>
-<td style="text-align:center">将文件复制到镜像，<code>COPY src desc</code> 与 <code>COPY [&quot;src&quot;, &quot;desc&quot;]</code></td>
-</tr>
-<tr>
-<td>ADD</td>
-<td style="text-align:center">与COPY类似，将文件复制到镜像。不同的是如果src是归档文件（zip、taz、xz等），文件会被自动解压</td>
-</tr>
-<tr>
-<td>ENV</td>
-<td style="text-align:center">设置环境变量，环境变量可被后面的指令使用如： <br> <code>ENV MY_VERSION 1.9.1 RUN yum install -y mypackage=$MY_VERSION</code></td>
-</tr>
-<tr>
-<td>WORKDIR</td>
-<td style="text-align:center">设置镜像中当前工作目录（服务于COPY、ADD、CMD、RUN、ENTRYPOINT等指令）。</td>
-</tr>
-<tr>
-<td>EXPOSE</td>
-<td style="text-align:center">指定容器中的进程会监听某个端口， Docker 可以将该端口暴漏出来。</td>
-</tr>
-<tr>
-<td>VOLUME</td>
-<td style="text-align:center">将文件或目录声明为 volume。</td>
-</tr>
-</tbody>
-</table>
-<p>注意点：</p>
-<ul>
-<li>Dockerfile 中可以有多个 CMD 指令，但只有最后一个生效。</li>
-<li>Dockerfile 中可以有多个 ENTRYPOINT 指令，但只有最后一个生效。</li>
-<li>CMD 指令会被 <code>$ docker run [image] ...</code> 之后的参数替换掉。 如  <code>$ docker run [image] /bash/bin</code></li>
-<li>CMD 或 docker run 之后的参数会被当做参数传递给ENTRYPOINT。</li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/01/31/Docker每天五分钟4/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjtgm3m89000bl4vw5l04d30n" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟4/" data-id="cjtxr30cb000mzsvwzwiis5hd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -652,21 +514,15 @@
         <hr>
 
 <p>hello-world 是 Docker 官方提供的一个镜像。通常用来验证 Docker 是否安装成功。 我们先通过 <code>$ docker pull</code> 从 Docker Hub 下载它。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull hello-world</span><br></pre></td></tr></table></figure></p>
-<p>使用 <code>$ docker images</code> 查看镜像是否下载成功。 发现才不到2kb！ </p>
-<p><img src="/2019/01/31/Docker每天五分钟3/1.png" alt="Size 1.84kB"></p>
-<p>通过 <code>$ docker run</code> 运行它。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker run hello-world</span><br><span class="line"></span><br><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<hr>
-
-<p>Dockerfile 是镜像的描述文件，定义了如何构建 Docker 镜像。</p>
-<blockquote>
-<p>注：可以在 <a href="https://hub.docker.com/_/hello-world?tab=description" target="_blank" rel="noopener">dockerhub</a> 中查看 Dockerfile 内容</p>
-</blockquote>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/01/31/Docker每天五分钟3/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjtgm3m8b000fl4vwvaq11tuv" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟3/" data-id="cjtxr30c1000czsvwqziaka8v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -707,16 +563,15 @@
         <hr>
 
 <p>切换国内 <a href="https://dashboard.daocloud.io/settings/profile" target="_blank" rel="noopener">DaoCloud</a> 镜像服务。 <a href="https://account.daocloud.io/signup" target="_blank" rel="noopener">免费注册</a>后进入控制台，找到右上角的<a href="https://www.daocloud.io/mirror" target="_blank" rel="noopener">加速器图标</a>。</p>
-<p><img src="/2019/01/31/Docker每天五分钟2/3.png" alt="加速器"></p>
-<p>然后找到Linux的配置命令。</p>
-<p><img src="/2019/01/31/Docker每天五分钟2/1.png" alt="配置 Docker 加速器"></p>
-<p>你的配置命令也许和我的不一样哦。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io</span><br><span class="line"></span><br><span class="line">$ sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/01/31/Docker每天五分钟2/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjtgm3m88000al4vwfd2hcfmt" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟2/" data-id="cjtxr30c4000dzsvwhc0xkaig" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -759,16 +614,15 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -d -p 8080:80 httpd</span><br></pre></td></tr></table></figure>
 <p>1）从 Docker Hub 下载 httpd 镜像。镜像中已经安装好了 Apache HTTP Server.<br>2）启动容器，并将容器的80端口映射到宿主机的8080端口。</p>
 <p>这样当我们访问宿主机的8080端口时，就能看到HTTP服务页面了。</p>
-<blockquote>
-<p>如果外网ip访问不了。请确保你服务器的安全组，以及本机的防火墙配置。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl localhost:8080</span><br><span class="line"></span><br><span class="line">&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/31/Docker每天五分钟1/2.png" alt="It works!"></p>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/01/31/Docker每天五分钟1/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjtgm3m840004l4vwl0mjp6pl" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/01/31/Docker每天五分钟1/" data-id="cjtxr30c6000hzsvwq496n2d5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>

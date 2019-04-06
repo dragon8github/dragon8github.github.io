@@ -7,13 +7,13 @@
   
   <title>更优雅的防止请求(XHR)重复 —— 请求队列 | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题：重复请求的问题在开发中很常见，浪费网络资源倒是其次，最怕的是前一次的点击逻辑，把后面的逻辑覆盖了。  譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。 用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……   常见的防止重复请求的解决方案">
-<meta name="keywords" content="xhr,axios">
+  <meta name="description" content="问题：重复请求的问题在开发中很常见，浪费网络资源倒是其次，最怕的是前一次的点击逻辑，把后面的逻辑覆盖了。  譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。 用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……">
+<meta name="keywords" content="axios,xhr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="更优雅的防止请求(XHR)重复 —— 请求队列">
 <meta property="og:url" content="http://cylee.top/2019/03/05/norepeatxhr/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="问题：重复请求的问题在开发中很常见，浪费网络资源倒是其次，最怕的是前一次的点击逻辑，把后面的逻辑覆盖了。  譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。 用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……   常见的防止重复请求的解决方案">
+<meta property="og:description" content="问题：重复请求的问题在开发中很常见，浪费网络资源倒是其次，最怕的是前一次的点击逻辑，把后面的逻辑覆盖了。  譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。 用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g0rnnuad9uj30dl06xgmp.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0isbtuj2kg300w00wq2p.gif">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/006ar8zggy1g0rqu574qbj314m0htmz1.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0rr60x3knj30y30huwfa.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zggy1g0rr5yplkjj30y30hudgw.jpg">
-<meta property="og:updated_time" content="2019-03-05T03:51:33.284Z">
+<meta property="og:updated_time" content="2019-04-06T01:13:51.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="更优雅的防止请求(XHR)重复 —— 请求队列">
-<meta name="twitter:description" content="问题：重复请求的问题在开发中很常见，浪费网络资源倒是其次，最怕的是前一次的点击逻辑，把后面的逻辑覆盖了。  譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。 用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……   常见的防止重复请求的解决方案">
+<meta name="twitter:description" content="问题：重复请求的问题在开发中很常见，浪费网络资源倒是其次，最怕的是前一次的点击逻辑，把后面的逻辑覆盖了。  譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。 用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……">
 <meta name="twitter:image" content="http://wx2.sinaimg.cn/large/006ar8zggy1g0rnnuad9uj30dl06xgmp.jpg">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
@@ -101,6 +101,7 @@
 <p>譬如，你在列表中点击了“吴彦祖”，然后再快速点击了“吴孟达”。假设“吴彦祖”的数据请求需要3秒，而“吴孟达”只需要2秒，那么结果就是，页面会先渲染出“吴彦祖”，而后又马上“吴孟达”的数据覆盖。</p>
 <p><strong>用户本来是想查看“吴彦祖”的照片，而界面展示的却是“吴孟达”……</strong></p>
 </blockquote>
+<a id="more"></a> 
 <p><img src="http://wx2.sinaimg.cn/large/006ar8zggy1g0rnnuad9uj30dl06xgmp.jpg" alt=""></p>
 <p>常见的防止重复请求的解决方案，就是展示一个蒙版或者Loading层，拦截用户进一步操作。直到逻辑全部跑通为止。</p>
 <p>但在大数据屏幕中，如果拦截用户操作，并且赫然出现一个菊花图，是很Fu*k的体验。作为一个开发我自己看到菊花都烦：</p>
@@ -132,7 +133,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/03/05/norepeatxhr/" data-id="cjtgm3m9l002il4vwujtgu90c" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/03/05/norepeatxhr/" data-id="cjtxr30dd002lzsvwb6qfs0dr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios/">axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xhr/">xhr</a></li></ul>

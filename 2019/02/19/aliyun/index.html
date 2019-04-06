@@ -7,20 +7,20 @@
   
   <title>阿里云 香港服务器 Centos7 3分钟搞定vpn | cy&#39;lee 贝尔塔猫</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="教程传送门：阿里云主机搭建VPN服务在免费EC2上搭建自己的VPN 1、安装python 和 Pip1$ yum install python-setuptools &amp;amp;&amp;amp; easy_install pip 2、安装 shadowsocks1$ pip install shadowsocks 3、添加 shadowsocks 的配置文件123456789101112$ vi /">
+  <meta name="description" content="教程传送门：阿里云主机搭建VPN服务在免费EC2上搭建自己的VPN">
 <meta name="keywords" content="centos,aliyun,vpn,shadowsocks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阿里云 香港服务器 Centos7 3分钟搞定vpn">
 <meta property="og:url" content="http://cylee.top/2019/02/19/aliyun/index.html">
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
-<meta property="og:description" content="教程传送门：阿里云主机搭建VPN服务在免费EC2上搭建自己的VPN 1、安装python 和 Pip1$ yum install python-setuptools &amp;amp;&amp;amp; easy_install pip 2、安装 shadowsocks1$ pip install shadowsocks 3、添加 shadowsocks 的配置文件123456789101112$ vi /">
+<meta property="og:description" content="教程传送门：阿里云主机搭建VPN服务在免费EC2上搭建自己的VPN">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://cylee.top/2019/02/19/aliyun/1.png">
 <meta property="og:image" content="http://cylee.top/2019/02/19/aliyun/2.png">
-<meta property="og:updated_time" content="2019-02-26T06:04:08.223Z">
+<meta property="og:updated_time" content="2019-04-06T01:13:29.171Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里云 香港服务器 Centos7 3分钟搞定vpn">
-<meta name="twitter:description" content="教程传送门：阿里云主机搭建VPN服务在免费EC2上搭建自己的VPN 1、安装python 和 Pip1$ yum install python-setuptools &amp;amp;&amp;amp; easy_install pip 2、安装 shadowsocks1$ pip install shadowsocks 3、添加 shadowsocks 的配置文件123456789101112$ vi /">
+<meta name="twitter:description" content="教程传送门：阿里云主机搭建VPN服务在免费EC2上搭建自己的VPN">
 <meta name="twitter:image" content="http://cylee.top/2019/02/19/aliyun/1.png">
   
     <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
@@ -96,6 +96,7 @@
 
 
 <p>教程传送门：<br><a href="https://blog.csdn.net/ztx114/article/details/80423705" target="_blank" rel="noopener">阿里云主机搭建VPN服务</a><br><a href="https://my.oschina.net/imcf/blog/659230" target="_blank" rel="noopener">在免费EC2上搭建自己的VPN</a></p>
+<a id="more"></a> 
 <h4 id="1、安装python-和-Pip"><a href="#1、安装python-和-Pip" class="headerlink" title="1、安装python 和 Pip"></a>1、安装python 和 Pip</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install python-setuptools &amp;&amp; easy_install pip</span><br></pre></td></tr></table></figure>
 <h4 id="2、安装-shadowsocks"><a href="#2、安装-shadowsocks" class="headerlink" title="2、安装 shadowsocks"></a>2、安装 shadowsocks</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install shadowsocks</span><br></pre></td></tr></table></figure>
 <h4 id="3、添加-shadowsocks-的配置文件"><a href="#3、添加-shadowsocks-的配置文件" class="headerlink" title="3、添加 shadowsocks 的配置文件"></a>3、添加 shadowsocks 的配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/shadowsocks.json</span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;server_port&quot;: 443,</span><br><span class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;: 1080,</span><br><span class="line">    &quot;password&quot;: &quot;daweiyixiangshihao&quot;,</span><br><span class="line">    &quot;timeout&quot;: 300,</span><br><span class="line">    &quot;method&quot;: &quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;: false,</span><br><span class="line">    &quot;workers&quot;: 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -113,11 +114,16 @@
 <h4 id="6、本机下载-shadowsocks-exe"><a href="#6、本机下载-shadowsocks-exe" class="headerlink" title="6、本机下载  shadowsocks.exe"></a>6、本机下载  shadowsocks.exe</h4><p>链接：<a href="https://pan.baidu.com/s/17y-v40jPGIHcftuE7gGiEA" target="_blank" rel="noopener">https://pan.baidu.com/s/17y-v40jPGIHcftuE7gGiEA</a><br>提取码：5gzb </p>
 <h4 id="7、配置-shadowsocks-exe"><a href="#7、配置-shadowsocks-exe" class="headerlink" title="7、配置 shadowsocks.exe"></a>7、配置 shadowsocks.exe</h4><p><img src="/2019/02/19/aliyun/1.png" alt=""></p>
 <h4 id="8、访问google-com-测试"><a href="#8、访问google-com-测试" class="headerlink" title="8、访问google.com 测试"></a>8、访问google.com 测试</h4><p><img src="/2019/02/19/aliyun/2.png" alt=""></p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>test.sh</p>
+<blockquote>
+<p>$ vi test.sh<br>$ chmod 777 test.sh</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">yum install python-setuptools &amp;&amp; easy_install pip</span><br><span class="line"></span><br><span class="line">pip install shadowsocks</span><br><span class="line"></span><br><span class="line">cat&gt;/etc/shadowsocks.json&lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;server_port&quot;: 443,</span><br><span class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;: 1080,</span><br><span class="line">    &quot;password&quot;: &quot;daweiyixiangshihao&quot;,</span><br><span class="line">    &quot;timeout&quot;: 300,</span><br><span class="line">    &quot;method&quot;: &quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;: false,</span><br><span class="line">    &quot;workers&quot;: 1</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line"></span><br><span class="line">systemctl stop firewalld.service</span><br><span class="line"></span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjtgm3m8q0012l4vwbhhab918" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/19/aliyun/" data-id="cjtxr30ck0012zsvwbbbkgx2z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vpn/">vpn</a></li></ul>

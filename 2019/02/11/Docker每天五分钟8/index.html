@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
 <meta property="og:description" content="RUN vs CMD vs ENTRYPOINT简单地说：（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 $ docker run 后面跟的命令行参数替换。比如 $ docker run -it [image] /bash/bin， 那么 CMD 指令会被忽略掉。（3）ENTRYPOINT：配置容器启动">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-11T15:06:51.296Z">
+<meta property="og:updated_time" content="2019-04-06T01:09:30.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Docker每天五分钟》八：Dockerfile 中的命令三兄贵">
 <meta name="twitter:description" content="RUN vs CMD vs ENTRYPOINT简单地说：（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 $ docker run 后面跟的命令行参数替换。比如 $ docker run -it [image] /bash/bin， 那么 CMD 指令会被忽略掉。（3）ENTRYPOINT：配置容器启动">
@@ -92,6 +92,7 @@
         <hr>
 
 <h1 id="RUN-vs-CMD-vs-ENTRYPOINT"><a href="#RUN-vs-CMD-vs-ENTRYPOINT" class="headerlink" title="RUN vs CMD vs ENTRYPOINT"></a>RUN vs CMD vs ENTRYPOINT</h1><p>简单地说：<br>（1）RUN： 该命令会创建一个镜像层，适合在安装软件包的时候使用。<br>（2）CMD： 配置容器启动后默认执行的命令及其参数，但 CMD 会被 <code>$ docker run</code> 后面跟的命令行参数替换。比如 <code>$ docker run -it [image] /bash/bin</code>， 那么 CMD 指令会被忽略掉。<br>（3）ENTRYPOINT：配置容器启动时运行的命令。</p>
+<a id="more"></a> 
 <h1 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h1><p>RUN 指令会创建新的镜像层。 通常用于安装应用和软件包。 Dockerfile 中常常包含多个 RUN 指令。</p>
 <p>RUN 有两种格式：<br>（1） <strong>Shell 格式（推荐）： <code>RUN yum update &amp;&amp; yum install gcc-c++\vim\git -y</code></strong><br>（2） Exec 格式： <code>RUN [&quot;yum&quot;, &quot;install&quot;, &quot;gcc-c++&quot;, &quot;vim&quot;, &quot;git&quot;, &quot;-y&quot;]</code></p>
 <blockquote>
@@ -134,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjtgm3m8g000ml4vwyslk43np" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/11/Docker每天五分钟8/" data-id="cjtxr30cd000ozsvwl7oe145q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>

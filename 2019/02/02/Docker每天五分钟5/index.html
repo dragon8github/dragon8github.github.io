@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://cylee.top/2019/02/02/Docker每天五分钟5/1.png">
 <meta property="og:image" content="http://cylee.top/2019/02/02/Docker每天五分钟5/2.png">
-<meta property="og:updated_time" content="2019-02-02T02:32:33.690Z">
+<meta property="og:updated_time" content="2019-04-06T01:09:14.978Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Docker每天五分钟》五：docker commit 制作镜像">
 <meta name="twitter:description" content="docker commit 命令是创建新镜像最直接的方法，其过程包含三个步骤：  运行容器 修改容器 将容器保存为新镜像  （1）运行容器1234567891011[root@10-255-0-217 dc2-user]# docker run -it centosUnable to find image &apos;centos:latest&apos; locallylatest: Pulling from">
@@ -102,6 +102,7 @@
 </ul>
 <h6 id="（1）运行容器"><a href="#（1）运行容器" class="headerlink" title="（1）运行容器"></a>（1）运行容器</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker run -it centos</span></span><br><span class="line"></span><br><span class="line">Unable to find image <span class="string">'centos:latest'</span> locally</span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pulling fs layer </span><br><span class="line">latest: Pulling from library/centos</span><br><span class="line">a02a4930cb5d: Pull complete </span><br><span class="line">Digest: sha256:184e5f35598e333bfa7de10d8fb1cebb5ee4df5bc0f970bf2b1e7c7345136426</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> centos:latest</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
 <p>自动下载了最新版本的 Centos 镜像，并且运行和进入了容器（ea9b3dcd88ad）。</p>
+<a id="more"></a> 
 <h6 id="2-修改容器"><a href="#2-修改容器" class="headerlink" title="(2) 修改容器"></a>(2) 修改容器</h6><p>这里示例安装 vim </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># vim</span></span><br><span class="line">bash: vim: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">[root@ea9b3dcd88ad /]<span class="comment"># yum install -y vim</span></span><br><span class="line">...</span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
 <h6 id="3-保存为新镜像"><a href="#3-保存为新镜像" class="headerlink" title="(3) 保存为新镜像"></a>(3) 保存为新镜像</h6><p>让容器继续运行着，然后 <code>新建窗口</code> 来查看当前运行的镜像。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@10-255-0-217 dc2-user]<span class="comment"># docker ps</span></span><br></pre></td></tr></table></figure></p>
@@ -129,7 +130,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjtgm3m8c000gl4vwege4wk47" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/02/Docker每天五分钟5/" data-id="cjtxr30cf000tzsvwvmrv4xzu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>

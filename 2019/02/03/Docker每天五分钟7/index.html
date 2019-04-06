@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://cylee.top/2019/02/03/Docker每天五分钟7/1.png">
 <meta property="og:image" content="http://cylee.top/2019/02/03/Docker每天五分钟7/2.png">
 <meta property="og:image" content="http://cylee.top/2019/02/03/Docker每天五分钟7/3.png">
-<meta property="og:updated_time" content="2019-02-03T15:46:53.141Z">
+<meta property="og:updated_time" content="2019-04-06T01:09:26.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Docker每天五分钟》七：调试 dockerfile">
 <meta name="twitter:description" content="总结一下 dockerfile 的构建镜像的过程：  从 base 镜像运行一个容器。 执行一条指令，对容器做修改。 执行类似 docker commit 的操作，生成一个新的镜像层。 Docker 再基于刚刚提交的镜像运行一个新容器。 重复 2 ~ 4 步，直到 dockerfile 中所有的指令执行完毕。  从这个过程可以看出，如果 dockerfile 由于某种原因执行到某个指令失败了，">
@@ -105,6 +105,7 @@
 </ol>
 <p>从这个过程可以看出，<strong>如果 <code>dockerfile</code> 由于某种原因执行到某个指令失败了，我们也能够得到前一个指令成功执行构建出的镜像。</strong></p>
 <p>这样当我们修复完bug再次执行构建的时候，也能依靠docker的缓存特性跳过已完成的镜像。这对开发和调试 <code>dockerfile</code> 是非常友好且有帮助的。我们可以通过控制台的打印和测试，快速定位错误和分析原因。</p>
+<a id="more"></a> 
 <hr>
 
 <p>我们来看一个调试示例，以 buysbox 为 base 镜像：</p>
@@ -135,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjtgm3m8l000ul4vwkvhcn326" class="article-share-link">Share</a>
+      <a data-url="http://cylee.top/2019/02/03/Docker每天五分钟7/" data-id="cjtxr30c8000izsvw4o193y3b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
