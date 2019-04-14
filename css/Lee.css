@@ -1,5 +1,8 @@
 html,
-body,
+body {
+  margin: 0;
+  padding: 0;
+}
 #container,
 .line,
 code,
@@ -9,6 +12,13 @@ input {
   height: 100%;
   font-family: 'comic sans ms', 'HYLeMiaoTiW', sans-serif !important;
   font-size: 17px;
+}
+#header-title {
+  margin: auto !important;
+  top: 20% !important;
+}
+#wrap {
+  position: relative !important;
 }
 .fr {
   float: right;

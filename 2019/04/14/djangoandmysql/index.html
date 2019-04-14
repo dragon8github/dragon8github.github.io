@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>djangoandmysql | cy&#39;lee 贝尔塔猫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="📖 阅读本文大概需要 26 分钟。  参考文章： https://blog.51cto.com/eagle6899/2146972 https://blog.csdn.net/qq_36963372/article/details/82558085 第一步：配置 setting.py12345678910111213141516# Database# https://docs.django">
+<meta name="keywords" content="django,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="djangoandmysql">
+<meta property="og:url" content="http://cylee.top/2019/04/14/djangoandmysql/index.html">
+<meta property="og:site_name" content="cy&#39;lee 贝尔塔猫">
+<meta property="og:description" content="📖 阅读本文大概需要 26 分钟。  参考文章： https://blog.51cto.com/eagle6899/2146972 https://blog.csdn.net/qq_36963372/article/details/82558085 第一步：配置 setting.py12345678910111213141516# Database# https://docs.django">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006ar8zgly1g22e0ocrewj30k00clmzu.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/006ar8zgly1g22e019t2kj30n607ndhp.jpg">
+<meta property="og:updated_time" content="2019-04-14T11:33:31.945Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="djangoandmysql">
+<meta name="twitter:description" content="📖 阅读本文大概需要 26 分钟。  参考文章： https://blog.51cto.com/eagle6899/2146972 https://blog.csdn.net/qq_36963372/article/details/82558085 第一步：配置 setting.py12345678910111213141516# Database# https://docs.django">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006ar8zgly1g22e0ocrewj30k00clmzu.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="cy&#39;lee 贝尔塔猫" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cy&#39;lee 贝尔塔猫</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">前端哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-djangoandmysql" class="article is-content article-post article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/14/djangoandmysql/" class="article-date">
+  <time datetime="2019-04-14T11:33:04.000Z" itemprop="datePublished">2019-04-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/django/">django</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      djangoandmysql
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+
+<blockquote>
+<p>📖 阅读本文大概需要 26 分钟。</p>
+</blockquote>
+<p>参考文章：</p>
+<p><a href="https://blog.51cto.com/eagle6899/2146972" target="_blank" rel="noopener">https://blog.51cto.com/eagle6899/2146972</a></p>
+<p><a href="https://blog.csdn.net/qq_36963372/article/details/82558085" target="_blank" rel="noopener">https://blog.csdn.net/qq_36963372/article/details/82558085</a></p>
+<h4 id="第一步：配置-setting-py"><a href="#第一步：配置-setting-py" class="headerlink" title="第一步：配置 setting.py"></a>第一步：配置 setting.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Database</span></span><br><span class="line"><span class="comment"># https://docs.djangoproject.com/en/2.2/ref/settings/#databases</span></span><br><span class="line"></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="comment"># 'ENGINE': 'django.db.backends.sqlite3',</span></span><br><span class="line">        <span class="comment"># 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),</span></span><br><span class="line">        </span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'mydatabase'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'root'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'root'</span>,</span><br><span class="line">        <span class="string">'HOST'</span>: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">        <span class="string">'PORT'</span>: <span class="string">'3306'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第二步：执行-migrate"><a href="#第二步：执行-migrate" class="headerlink" title="第二步：执行 migrate"></a>第二步：执行 migrate</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py migrate</span><br></pre></td></tr></table></figure>
+<p>不出意外会让你安装 <code>mysqlclient</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install mysqlclient</span><br></pre></td></tr></table></figure>
+<p>你能下载成功，但可能安装失败。提示类似 <strong><code>“_mysql.c(29): fatal error C1083: 无法打开包括文件: “mysql.h”: No such file
+or directory”</code></strong>  的信息。</p>
+<blockquote>
+<p>总而言之，这是 window 开发者需要背负的穷罪。</p>
+</blockquote>
+<p>解决方案都在这里：<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient" target="_blank" rel="noopener">https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient</a></p>
+<p>我们的目标是手动选择一个适合的 mysqlclient.whl ，然后编译。</p>
+<hr>
+<h4 id="1、先安装-wheel，才可以编译-whl-文件"><a href="#1、先安装-wheel，才可以编译-whl-文件" class="headerlink" title="1、先安装 wheel，才可以编译 *.whl 文件"></a>1、先安装 wheel，才可以编译 *.whl 文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install wheel</span><br></pre></td></tr></table></figure>
+<h4 id="2、安装Microsoft-Visual-C"><a href="#2、安装Microsoft-Visual-C" class="headerlink" title="2、安装Microsoft Visual C++"></a>2、安装Microsoft Visual C++</h4><p>Python 2.7：Microsoft Visual C++ 2008 (<a href="https://www.microsoft.com/en-us/download/details.aspx?id=15336" target="_blank" rel="noopener">x64</a>, <a href="https://www.microsoft.com/en-us/download/details.aspx?id=29" target="_blank" rel="noopener">x86</a>, and <a href="https://www.microsoft.com/en-us/download/details.aspx?id=26368" target="_blank" rel="noopener">SP1</a>) </p>
+<p>Python 3.x：Visual C++ 2017 (<a href="https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads" target="_blank" rel="noopener">x64 or x86</a>) </p>
+<h4 id="3、查看-pip-支持的版本"><a href="#3、查看-pip-支持的版本" class="headerlink" title="3、查看 pip 支持的版本"></a>3、查看 pip 支持的版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># AMD64</span><br><span class="line">import pip._internal</span><br><span class="line">print(pip._internal.pep425tags.get_supported())</span><br><span class="line"></span><br><span class="line"># WIN32</span><br><span class="line">import pip</span><br><span class="line">print(pip.pep425tags.get_supported())</span><br></pre></td></tr></table></figure>
+<p>环境不同，输出不同，我的输入如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(&apos;cp37&apos;, &apos;cp37m&apos;, &apos;win32&apos;), (&apos;cp37&apos;, &apos;none&apos;, &apos;win32&apos;), (&apos;py3&apos;, &apos;none&apos;, &apos;win32&apos;), (&apos;cp37&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;cp3&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py37&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py3&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py36&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py35&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py34&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py33&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py32&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py31&apos;, &apos;none&apos;, &apos;any&apos;), (&apos;py30&apos;, &apos;none&apos;, &apos;any&apos;)]</span><br></pre></td></tr></table></figure>
+<p>根据我的支持表，我找到了文件： <a href="https://download.lfd.uci.edu/pythonlibs/u2hcgva4/mysqlclient-1.4.2-cp37-cp37m-win32.whl" target="_blank" rel="noopener">mysqlclient-1.4.2-cp37-cp37m-win32.whl</a></p>
+<p>你可以在这里查找：<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient" target="_blank" rel="noopener">https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient</a></p>
+<p>也可以在pip仓库查找各种历史版本：<a href="https://pypi.org/project/mysqlclient/#files" target="_blank" rel="noopener">https://pypi.org/project/mysqlclient/#files</a></p>
+<p>下载之后，进行安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install mysqlclient-1.4.2-cp37-cp37m-win32.whl</span><br></pre></td></tr></table></figure>
+<p>成功了你会看到如下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Processing c:\users\lee\downloads\mysqlclient-1.4.2-cp37-cp37m-win32.whl</span><br><span class="line">Installing collected packages: mysqlclient</span><br><span class="line">Successfully installed mysqlclient-1.4.2</span><br></pre></td></tr></table></figure></p>
+<p>如果是不正确的版本，你会出现如下报错：</p>
+<p><strong><code>mysqlclient-1.3.11-cp36-cp36m-win32.whl is not a supported wheel on this platform.</code></strong></p>
+<p>不需要担心，慢慢找到匹配 pip 的即可。</p>
+<hr>
+<p>一切尘埃落定之后，重新执行一下最初的 migratemigrate 命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py migrate</span><br></pre></td></tr></table></figure>
+<p>如果你的 mysql 版本是 5.5（笔者用 phpstudy 最新版也只有5.5）。还会出现一个 SQL 错误的信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">django.db.migrations.exceptions.MigrationSchemaMissing: Unable to create the django_migrations table ((1064, &quot;You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax</span><br><span class="line">to use near &apos;(6) NOT NULL)&apos; at line 1&quot;))</span><br></pre></td></tr></table></figure>
+<p>MySQL5.5并不支持Django2.1生成的这种SQL语句。我选择安装了 mysql lastest 版本。既 (mysql8.0.15)[<a href="https://dev.mysql.com/downloads/mysql/]" target="_blank" rel="noopener">https://dev.mysql.com/downloads/mysql/]</a></p>
+<p>如果不会安装，请参考我的另一篇建议笔记：<a href="https://www.cnblogs.com/CyLee/p/7421949.html" target="_blank" rel="noopener">mysql 编译安装 window篇</a></p>
+<p>或者参考网站 mysql 安装教程。总之要确保运行中的 mysql 服务版本是 5.5 以上。</p>
+<p>在确保你的 mysql 是最新且能访问之后。重新执行一下该命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+<p>如果成功会看到如下信息：</p>
+<p><img src="http://wx4.sinaimg.cn/large/006ar8zgly1g22e0ocrewj30k00clmzu.jpg" alt=""></p>
+<p>再看看你的数据库，django 生成了不少实用的表。</p>
+<p><img src="http://wx2.sinaimg.cn/large/006ar8zgly1g22e019t2kj30n607ndhp.jpg" alt=""></p>
+<p>（完）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cylee.top/2019/04/14/djangoandmysql/" data-id="cjugupgki0010osvwo8yn7kqe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/20/npmpublish/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">npm 发布包和删除包（2019最新攻略）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget widget-category">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/">Dart</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Dart/Flutter/">Flutter</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/">video</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/video/MP4/">MP4</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/centos/vpn/">vpn</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpmposer/">cpmposer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/django/">django</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/npm/">npm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/php/laravel/">laravel</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/ssr/">ssr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xhr/">xhr</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/">碎片化</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/碎片化/经验/">经验</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget widget-tag">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MP4/">MP4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aliyun/">aliyun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios/">axios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpmposer/">cpmposer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pub/">pub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowsocks/">shadowsocks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/">vpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xhr/">xhr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum/">yum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/碎片化/">碎片化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget widget-posts">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/14/djangoandmysql/">djangoandmysql</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/20/npmpublish/">npm 发布包和删除包（2019最新攻略）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/12/flutterdebuger/">flutter Android debuger</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/10/androidssr/">androidssr</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/06/requestjs/">请求缓存策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/05/bibaoIIFE/">善用 JavaScript 特性：闭包与IIFE</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/05/norepeatxhr/">更优雅的防止请求(XHR)重复 —— 请求队列</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/21/Dartpub/">Dart（Flutter） pub 包管理</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/20/DartWeb/">Dart for the web  一小时入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/20/在Windows上搭建Flutter开发环境/">在 Windows 上搭建 Flutter 开发环境</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/19/aliyun/">阿里云 香港服务器 Centos7 3分钟搞定vpn</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/11/Docker每天五分钟8/">《Docker每天五分钟》八：Dockerfile 中的命令三兄贵</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/04/碎片化经验广场/">碎片化经验广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/03/Docker每天五分钟7/">《Docker每天五分钟》七：调试 dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟6/">《Docker每天五分钟》六：第一个 Dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/02/Docker每天五分钟5/">《Docker每天五分钟》五：docker commit 制作镜像</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/01/碎片化知识广场/">碎片化知识广场</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟4/">《Docker每天五分钟》四：常用api</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟3/">《Docker每天五分钟》三：hello-world、初识dockerfile</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/31/Docker每天五分钟2/">《Docker每天五分钟》二：切换 DaoCloud 镜像源</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget widget-tagcloud">
+      <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/MP4/" style="font-size: 10px;">MP4</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/aliyun/" style="font-size: 10px;">aliyun</a> <a href="/tags/axios/" style="font-size: 13.33px;">axios</a> <a href="/tags/centos/" style="font-size: 16.67px;">centos</a> <a href="/tags/cpmposer/" style="font-size: 13.33px;">cpmposer</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/flutter/" style="font-size: 13.33px;">flutter</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/laravel/" style="font-size: 16.67px;">laravel</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/pub/" style="font-size: 10px;">pub</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/video/" style="font-size: 10px;">video</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/xhr/" style="font-size: 10px;">xhr</a> <a href="/tags/yum/" style="font-size: 10px;">yum</a> <a href="/tags/碎片化/" style="font-size: 10px;">碎片化</a> <a href="/tags/经验/" style="font-size: 10px;">经验</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget widget-archives">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <canvas class="fireworks" style="position: fixed; left: 0px; top: 0px; z-index: 1; pointer-events: none;" width="2880" height="832"></canvas>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 贝尔塔猫<br>
+      Powered by <a href="http://www.baidu.comhttp://cylee.top" target="_blank">cylee.top</a>
+
+      <div class="fr js-go-top">按下 [Home] 键返回顶部</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/Lee.js"></script>
+
+
+  </div>
+</body>
+</html>
